@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/animsition.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel="icon" href="img/icon.png">
+        <link rel="stylesheet" href="css/theme.css">
 
         <link rel="stylesheet" href="css/upcoming-events.css">
     <link rel="stylesheet" href="css/ambient-animation.css">
@@ -62,30 +63,7 @@
         <body data-spy="scroll" data-target="#navbar" data-offset="30">
 
             <!-- Navigation -->
-            <div class="nav-menu fixed-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nav class="navbar navbar-dark navbar-expand-lg">
-                                <a class="navbar-brand" href="index.html#home"><img src="" class="img-fluid" alt=""><b>Community Connect</b></a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbar">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="cte.html">How it Works</span></a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="#home">Upcoming Events<span class="sr-only">(current)</span></a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="./eventfinder.html">Resources</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="navbar-placeholder"></div>
 
             <!-- Hero Section with Particles -->
             <header class="bg-gradient2" id="home">
@@ -105,14 +83,6 @@
 
             <!-- Timeline Section -->
             <section class="timeline-section">
-                <div class="ambient-background">
-                    <div class="ambient-circle"></div>
-                    <div class="ambient-circle"></div>
-                    <div class="ambient-circle"></div>
-                    <div class="ambient-circle"></div>
-                    <div class="ambient-circle"></div>
-                    <div class="ambient-circle"></div>
-                </div>
                 <div class="container">
                     <div class="timeline">
                         <div class="timeline-item">
@@ -277,15 +247,12 @@
             <a href="#home" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
 
             <!-- Footer -->
-            <footer class="my-5 text-center">
-                <small>
-                    <a href="" style="text-decoration:none" class="m-2 text-white">Community Connect © 2025. Building stronger communities together.</a>
-                </small>
-            </footer>
+            <div id="footer-placeholder"></div>
 
             <!-- Scripts -->
             <script src="./js/sketch.js"></script>
             <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/components.js"></script>
             <script src="js/event-modal.js"></script>
             <script src="./js/bootstrap.bundle.min.js"></script>
             <script src="./js/owl.carousel.min.js"></script>
@@ -336,7 +303,18 @@
                     };
 
                     var MAX_PARTICLES = 280;
-                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
+                    
+                    // Theme-aware particle colors
+                    function getParticleColors() {
+                        const theme = document.documentElement.getAttribute('data-theme');
+                        if (theme === 'dark') {
+                            return ['rgba(232, 240, 234, 0.6)', 'rgba(184, 200, 186, 0.6)', 'rgba(143, 170, 145, 0.6)'];
+                        } else {
+                            return ['#f0f4ed', '#91b08a', '#6d8c5f'];
+                        }
+                    }
+                    
+                    var COLOURS = getParticleColors();
                     var particles = [];
                     var pool = [];
 
@@ -395,6 +373,20 @@
                             }
                         }
                     };
+                    
+                    // Update particle colors when theme changes
+                    const observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            if (mutation.attributeName === 'data-theme') {
+                                COLOURS = getParticleColors();
+                            }
+                        });
+                    });
+                    
+                    observer.observe(document.documentElement, {
+                        attributes: true,
+                        attributeFilter: ['data-theme']
+                    });
                 }
             </script>
 
@@ -431,12 +423,6 @@
                 } else {
                     var NAME = document.getElementById("ani");
                     NAME.className = "";
-
-                    var NAME = document.getElementById("resources");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
-
-                    var NAME = document.getElementById("submit");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
                 }
             </script>
 

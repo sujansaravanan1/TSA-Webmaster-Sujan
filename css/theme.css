@@ -1,0 +1,384 @@
+:root {
+    /* Light mode - Sage Modern palette */
+    --bg-primary: #FAFDF8;
+    --bg-secondary: #F5F9F3;
+    --bg-gradient-start: #4a6741;
+    --bg-gradient-end: #6d8c5f;
+    --text-primary: #2C3E2F;
+    --text-secondary: #5A6B5D;
+    --text-muted: #666;
+    --text-white: #FFFFFF;
+    --accent: #7C9A7E;
+    --accent-dark: #5A7A5C;
+    --accent-light: #91b08a;
+    --card-bg: #FFFFFF;
+    --card-bg-alt: #f0f4ed;
+    --card-border: rgba(109, 140, 95, 0.12);
+    --nav-bg: rgba(74,103,65,0.95);
+    --nav-bg-scrolled: #273423;
+    --nav-gradient-start: rgba(74,103,65,0.5);
+    --nav-gradient-end: rgba(109,140,95,0.5);
+    --footer-text: #FFFFFF;
+    --input-bg: #fafafa;
+    --input-border: #e0e0e0;
+    --input-focus: #6d8c5f;
+    --button-bg-start: #4a6741;
+    --button-bg-end: #6d8c5f;
+    --shadow-color: rgba(74, 103, 65, 0.1);
+    --shadow-hover: rgba(74, 103, 65, 0.28);
+}
+
+[data-theme="dark"] {
+    /* Dark mode palette - HIGH CONTRAST between sections */
+    --bg-primary: #1A1F1C;          /* Almost black for main sections - BIG CONTRAST */
+    --bg-secondary: #243028;        /* Dark sage for secondary sections */
+    --bg-gradient-start: #1A251C;   /* Very dark gradient for hero */
+    --bg-gradient-end: #2C3E2F;     /* Dark sage gradient */
+    --text-primary: #E8F0EA;        /* Light sage text */
+    --text-secondary: #B8C8BA;      /* Medium light sage text */
+    --text-muted: #91b08a;          /* Muted sage text */
+    --text-white: #FFFFFF;          /* Pure white for contrast */
+    --accent: #91b08a;              /* Light sage accent */
+    --accent-dark: #7C9A7E;         /* Medium sage accent */
+    --accent-light: #A8C4AA;        /* Very light sage accent */
+    --card-bg: #2C3E2F;             /* Medium dark sage for cards - CONTRASTS with bg-primary */
+    --card-bg-alt: #3A4D3C;         /* Lighter sage alternative */
+    --card-border: rgba(145, 176, 138, 0.25);
+    --nav-bg: rgba(26, 37, 28, 0.95);
+    --nav-bg-scrolled: #000000;
+    --nav-gradient-start: rgba(26, 37, 28, 0.5);
+    --nav-gradient-end: rgba(44, 62, 47, 0.5);
+    --footer-text: #E8F0EA;
+    --input-bg: #243028;
+    --input-border: #3A4D3C;
+    --input-focus: #91b08a;
+    --button-bg-start: #5A7A5C;     /* Lighter green for visibility */
+    --button-bg-end: #7C9A7E;       /* Even lighter green */
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.6);
+}
+
+/* Smooth transitions for theme switch */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Apply theme variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+html, body {
+    background: linear-gradient(to right, var(--bg-gradient-start), var(--bg-gradient-end));
+}
+
+/* Hero/Header sections - dark gradient in dark mode */
+.bg-gradient2,
+.backgrounddiv2,
+header.bg-gradient2 {
+    background: linear-gradient(to right, var(--bg-gradient-start), var(--bg-gradient-end)) !important;
+}
+
+/* Ensure hero text stays white in both modes */
+.info h1,
+.info h2,
+.info p,
+.about h1,
+.about h2,
+.about p,
+header.info h1,
+header.info h2 {
+    color: var(--text-white) !important;
+}
+
+/* Navbar styles - matches hero gradient when not scrolled */
+.nav-menu.fixed-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    z-index: 9999;
+    background: linear-gradient(to right, var(--nav-gradient-start), var(--nav-gradient-end));
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.nav-menu.fixed-top.scrolled {
+    position: fixed;
+    background: var(--nav-bg-scrolled) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Footer */
+footer {
+    color: var(--footer-text);
+}
+
+.footer-link {
+    color: var(--footer-text) !important;
+}
+
+/* Cards - WHITE in light mode, SAGE GREEN in dark mode (contrasts with almost-black bg) */
+.card, 
+.form-container, 
+.resource-card, 
+.story-card,
+.stat-card,
+.chart-card,
+.timeline-content {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    box-shadow: 0 12px 45px var(--shadow-color);
+}
+
+.resource-card:hover,
+.story-card:hover,
+.stat-card:hover,
+.timeline-content:hover {
+    box-shadow: 0 25px 75px var(--shadow-hover);
+}
+
+/* Flip cards special handling */
+.flip-card-front {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"] .flip-card-front {
+    background: rgba(44, 62, 47, 0.5);
+    border: 1px solid rgba(145, 176, 138, 0.2);
+}
+
+.flip-card-back {
+    background: linear-gradient(135deg, var(--button-bg-start) 0%, var(--button-bg-end) 100%);
+}
+
+/* Sections - Creates CLEAR distinction between sections */
+.section.bg-white, 
+.form-section,
+.stats-section,
+.intro-section {
+    background: var(--bg-primary) !important;
+}
+
+/* Light sections in light mode, darker sage in dark mode */
+.section.light-bg {
+    background: var(--bg-secondary) !important;
+}
+
+/* Dark mode specific: make alternating sections more distinct */
+[data-theme="dark"] .section.light-bg {
+    background: #243028 !important; /* Darker sage - different from bg-primary */
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6,
+.section-heading,
+.section-title,
+.card-title,
+.form-intro h2,
+.timeline-content h2 {
+    color: var(--text-primary) !important;
+}
+
+p,
+.lead,
+.card-description,
+.form-intro p,
+.light-font {
+    color: var(--text-secondary) !important;
+}
+
+span:not(.icon-sun):not(.icon-moon):not(.sr-only) {
+    color: var(--text-secondary) !important;
+}
+
+.text-white {
+    color: var(--text-white) !important;
+}
+
+/* Forms & Inputs */
+.form-control,
+.search-bar input {
+    background: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-control:focus,
+.search-bar input:focus {
+    border-color: var(--input-focus) !important;
+    background: var(--card-bg) !important;
+}
+
+.form-control::placeholder,
+.search-bar input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.form-group label {
+    color: var(--text-primary) !important;
+}
+
+/* Buttons */
+.btn-submit,
+.btn-primary,
+.btn-secondary {
+    background: linear-gradient(135deg, var(--button-bg-start) 0%, var(--button-bg-end) 100%) !important;
+    color: var(--text-white) !important;
+}
+
+.btn-outline-primary,
+.btn-outline-light {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+    background: transparent !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-light:hover {
+    background: var(--accent) !important;
+    color: var(--text-white) !important;
+}
+
+/* Category buttons */
+.category-btn {
+    background: var(--card-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--text-secondary) !important;
+}
+
+.category-btn:hover {
+    border-color: var(--accent) !important;
+    color: var(--text-primary) !important;
+}
+
+.category-btn.active {
+    background: linear-gradient(135deg, var(--button-bg-start) 0%, var(--button-bg-end) 100%) !important;
+    color: var(--text-white) !important;
+    border-color: transparent !important;
+}
+
+/* Success/Alert messages */
+.success-message {
+    background: var(--card-bg-alt) !important;
+    border-color: var(--accent) !important;
+}
+
+.success-message h2,
+.success-message p {
+    color: var(--text-primary) !important;
+}
+
+/* Success icon color fix for dark mode */
+.success-message .success-icon {
+    color: var(--accent) !important;
+}
+
+/* Timeline specific */
+.timeline-date {
+    background: linear-gradient(135deg, var(--button-bg-start) 0%, var(--button-bg-end) 100%) !important;
+    color: var(--text-white) !important;
+}
+
+.timeline-location {
+    color: var(--accent) !important;
+}
+
+.timeline:before {
+    background: var(--accent) !important;
+}
+
+/* Timeline section background */
+.timeline-section {
+    background: var(--bg-primary) !important;
+}
+
+/* Stats */
+.stat-number {
+    color: var(--accent) !important;
+}
+
+.stat-label {
+    color: var(--text-secondary) !important;
+}
+
+/* Card icons and links */
+.card-icon {
+    color: var(--accent) !important;
+}
+
+.card-link {
+    color: var(--accent) !important;
+}
+
+.card-link:hover {
+    color: var(--text-primary) !important;
+}
+
+.card-category {
+    background: rgba(109, 140, 95, 0.12) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .card-category {
+    background: rgba(145, 176, 138, 0.25) !important;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+    background: var(--accent) !important;
+    border: 2px solid var(--accent-dark) !important;
+    padding: 8px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 15px;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--accent-dark) !important;
+    transform: scale(1.05);
+}
+
+.dark-mode-toggle i {
+    font-size: 16px;
+    color: white;
+}
+
+[data-theme="light"] .icon-moon { display: none; }
+[data-theme="dark"] .icon-sun { display: none; }
+
+/* Expanded details */
+.expanded-details {
+    background: var(--card-bg-alt) !important;
+    border-left-color: var(--accent) !important;
+}
+
+.detail-item {
+    color: var(--text-secondary) !important;
+}
+
+.detail-item i {
+    color: var(--accent) !important;
+}
+
+.detail-label {
+    color: var(--text-primary) !important;
+}
+
+/* No results */
+.no-results {
+    background: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Additional contrast helpers for dark mode */
+[data-theme="dark"] .section {
+    border-top: 1px solid rgba(145, 176, 138, 0.1);
+}

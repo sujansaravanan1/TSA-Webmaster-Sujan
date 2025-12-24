@@ -1,3 +1,22 @@
+// Get particle colors based on theme
+function getParticleColors() {
+    const theme = document.documentElement.getAttribute('data-theme') || 'light';
+    if (theme === 'dark') {
+        return ['#3A4D3C', '#4A6741', '#5A7A5C'];
+    }
+    return ['#f0f4ed', '#91b08a', '#6d8c5f'];
+}
+
+// Then update your COLOURS variable to:
+var COLOURS = getParticleColors();
+
+// And listen for theme changes:
+window.addEventListener('storage', function(e) {
+    if (e.key === 'theme') {
+        COLOURS = getParticleColors();
+    }
+});
+
 
 
 (function ( root, factory ) {

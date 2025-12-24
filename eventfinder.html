@@ -18,29 +18,9 @@
     <link rel="stylesheet" href="css/example.css">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/animsition.min.css">
+    <link rel="stylesheet" href="css/theme.css">
 
     <style>
-
-        /* Navbar - Hide on scroll down */
-        .nav-menu.fixed-top {
-            position: absolute; /* start absolute so it’s over the header */
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px 0;
-            z-index: 9999;
-            background: linear-gradient(to right, rgba(74,103,65,0.5), rgba(109,140,95,0.5)); /* gradient when at top */
-            transition: all 0.3s ease;
-            box-shadow: none;
-        }
-
-        .nav-menu.fixed-top.scrolled {
-            position: fixed; /* fixed once scrolled */
-            background: #273423; /* solid color */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-
         body {
             font-family: 'Outfit', sans-serif;
             background: linear-gradient(to right, #4a6741, #6d8c5f);
@@ -48,8 +28,6 @@
             overflow-x: hidden;
             position: relative;
         }
-
-
 
         /* Animated Background Shapes */
         .bg-shape {
@@ -503,28 +481,7 @@
 
     <div id="ani" class="animsition">
         <!-- Navbar -->
-        <div class="nav-menu fixed-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <nav class="navbar navbar-dark navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html"><img src="" class="img-fluid" alt=""><b>Community Connect</b></a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="cte.html">How it Works</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
-                                    <li class="nav-item"> <a class="nav-link active" href="#home">Resources<span class="sr-only">(current)</span></a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
-                                </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="navbar-placeholder"></div>
 
         <!-- Hero Section with Particles -->
         <header class="bg-gradient2" id="home">
@@ -575,15 +532,12 @@
         </div>
 
         <!-- Footer -->
-        <footer class="my-5 text-center">
-            <small>
-                <a href="" style="text-decoration:none" class="m-2 text-white">Community Connect © 2025. Building stronger communities together.</a>
-            </small>
-        </footer>
+        <div id="footer-placeholder"></div>
     </div>
 
     <!-- Scripts -->
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/components.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/animsition.min.js"></script>
     <script src="js/sketch.js"></script>
@@ -690,17 +644,6 @@
                 }
             };
         }
-    </script>
-
-    <script>
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('.nav-menu.fixed-top');
-            if (window.scrollY > 50) {  // adjust threshold
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
     </script>
 
     <script>

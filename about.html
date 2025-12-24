@@ -3,643 +3,621 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Community Connect - Submit a Resource</title>
+        
+        <!-- Font Awesome MUST be loaded -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+        
+        <!-- Other stylesheets -->
         <link rel="stylesheet" href="css/example.css">
         <link rel="stylesheet" href="css/carousel.css">
         <link rel="stylesheet" href="css/competitions.css">
         <link rel="stylesheet" href="css/animsition.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel="icon" href="img/icon.png">
+        
+        <!-- Theme CSS - MUST be included -->
+        <link rel="stylesheet" href="css/theme.css">
+        
+        <!-- Components JS - Load in head -->
+        <script defer src="js/components.js"></script>
 
         <style type="text/css">
-            html, body {
-                background: linear-gradient(to right, #4a6741, #6d8c5f);
-            }
+        html, body {
+            background: linear-gradient(to right, #4a6741, #6d8c5f);
+        }
 
-            /* Form Styles */
-            .form-section {
-                background: white;
-                padding: 80px 0;
-            }
+        /* Form Styles */
+        .form-section {
+            background: white;
+            padding: 80px 0;
+        }
 
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(74, 103, 65, 0.1);
+        }
+
+        .form-intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-intro h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #4a6741;
+            margin-bottom: 15px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .form-intro p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #4a6741;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-group label .required {
+            color: #dc3545;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #6d8c5f;
+            box-shadow: 0 0 0 0.2rem rgba(109, 140, 95, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        .char-counter {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .char-counter.over-limit {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(74, 103, 65, 0.4);
+        }
+
+        .btn-submit:disabled {
+            background: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+            background: #f0f4ed;
+            border-radius: 15px;
+            border: 2px solid #6d8c5f;
+        }
+
+        .success-message .success-icon {
+            font-size: 72px;
+            color: #6d8c5f;
+            margin-bottom: 20px;
+        }
+
+        .success-message h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #4a6741;
+            margin-bottom: 15px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .success-message p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-secondary {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 103, 65, 0.4);
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake-animation {
+            animation: shake 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
             .form-container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 40px;
-                background: white;
-                border-radius: 15px;
-                box-shadow: 0 4px 20px rgba(74, 103, 65, 0.1);
-            }
-
-            .form-intro {
-                text-align: center;
-                margin-bottom: 40px;
+                padding: 20px;
             }
 
             .form-intro h2 {
-                font-size: 32px;
-                font-weight: 600;
-                color: #4a6741;
-                margin-bottom: 15px;
-                font-family: 'Space Grotesk', sans-serif;
-            }
-
-            .form-intro p {
-                font-size: 16px;
-                color: #666;
-                line-height: 1.6;
-                font-family: 'Outfit', sans-serif;
-            }
-
-            .form-group {
-                margin-bottom: 25px;
-            }
-
-            .form-group label {
-                display: block;
-                font-weight: 600;
-                color: #4a6741;
-                margin-bottom: 8px;
-                font-size: 15px;
-                font-family: 'Outfit', sans-serif;
-            }
-
-            .form-group label .required {
-                color: #dc3545;
-            }
-
-            .form-control {
-                width: 100%;
-                padding: 12px 15px;
-                border: 2px solid #ddd;
-                border-radius: 8px;
-                font-size: 15px;
-                font-family: 'Outfit', sans-serif;
-                transition: all 0.3s ease;
-            }
-
-            .form-control:focus {
-                outline: none;
-                border-color: #6d8c5f;
-                box-shadow: 0 0 0 0.2rem rgba(109, 140, 95, 0.25);
-            }
-
-            .form-control::placeholder {
-                color: #999;
-                font-style: italic;
-            }
-
-            textarea.form-control {
-                resize: vertical;
-                min-height: 120px;
-            }
-
-            select.form-control {
-                cursor: pointer;
-            }
-
-            .char-counter {
-                font-size: 13px;
-                color: #666;
-                margin-top: 5px;
-                text-align: right;
-                font-family: 'Outfit', sans-serif;
-            }
-
-            .char-counter.over-limit {
-                color: #dc3545;
-                font-weight: 600;
-            }
-
-            .error-message {
-                color: #dc3545;
-                font-size: 14px;
-                margin-top: 5px;
-                display: none;
-                font-family: 'Outfit', sans-serif;
-            }
-
-            .form-control.is-invalid {
-                border-color: #dc3545;
-            }
-
-            .btn-submit {
-                width: 100%;
-                padding: 15px;
-                font-size: 18px;
-                font-weight: 600;
-                color: white;
-                background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-top: 10px;
-                font-family: 'Outfit', sans-serif;
-            }
-
-            .btn-submit:hover {
-                transform: scale(1.02);
-                box-shadow: 0 8px 20px rgba(74, 103, 65, 0.4);
-            }
-
-            .btn-submit:disabled {
-                background: #999;
-                cursor: not-allowed;
-                transform: none;
-            }
-
-            /* Success Message */
-            .success-message {
-                display: none;
-                text-align: center;
-                padding: 60px 40px;
-                background: #f0f4ed;
-                border-radius: 15px;
-                border: 2px solid #6d8c5f;
-            }
-
-            .success-message .success-icon {
-                font-size: 72px;
-                color: #6d8c5f;
-                margin-bottom: 20px;
-            }
-
-            .success-message h2 {
-                font-size: 32px;
-                font-weight: 600;
-                color: #4a6741;
-                margin-bottom: 15px;
-                font-family: 'Space Grotesk', sans-serif;
-            }
-
-            .success-message p {
-                font-size: 18px;
-                color: #666;
-                margin-bottom: 30px;
-                font-family: 'Outfit', sans-serif;
+                font-size: 26px;
             }
 
             .btn-secondary {
-                padding: 12px 30px;
-                font-size: 16px;
-                font-weight: 600;
-                color: white;
-                background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin: 0 10px;
-                text-decoration: none;
-                display: inline-block;
-                font-family: 'Outfit', sans-serif;
+                display: block;
+                margin: 10px 0;
             }
+        }
+    </style>
 
-            .btn-secondary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(74, 103, 65, 0.4);
-            }
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/officers.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
 
-            /* Shake Animation */
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-10px); }
-                75% { transform: translateX(10px); }
-            }
+<div id="ani" class="animsition">
+    <body data-spy="scroll" data-target="#navbar" data-offset="30">
 
-            .shake-animation {
-                animation: shake 0.3s;
-            }
+        <!-- Navigation -->
+        <div id="navbar-placeholder"></div>
 
-            /* Responsive */
-            @media (max-width: 768px) {
-                .form-container {
-                    padding: 20px;
-                }
+        <!-- Hero Section with Particles -->
+        <header class="bg-gradient2" id="home">
+            <div class="backgrounddiv2">
+                <div id="container">
+                    <header class="info">
+                        <hgroup class="about">
+                            <h1>Submit a Resource</h1>
+                            <p class="text-white" style="font-size: 18px; margin-top: 15px;">Help others discover valuable community resources</p>
+                        </hgroup>
+                    </header>
+                </div>
+            </div>
+        </header>
 
-                .form-intro h2 {
-                    font-size: 26px;
-                }
+        <!-- Form Section -->
+        <div class="form-section">
+            <div class="container">
+                <div class="form-container">
+                    <!-- Form Introduction -->
+                    <div class="form-intro">
+                        <h2>Share a Community Resource</h2>
+                        <p>Know of a great community resource? Help others by sharing programs, services, and organizations that have made a positive impact. All submissions are reviewed before being added to our Resource Hub.</p>
+                    </div>
 
-                .btn-secondary {
-                    display: block;
-                    margin: 10px 0;
-                }
-            }
-        </style>
+                    <!-- Form -->
+                    <form id="submitResourceForm">
+                        <!-- Resource Name -->
+                        <div class="form-group">
+                            <label for="resourceName">Resource Name <span class="required">*</span></label>
+                            <input type="text" id="resourceName" class="form-control required-field" placeholder="e.g., Community Food Bank" required>
+                            <div class="error-message" id="resourceNameError">Please enter a resource name</div>
+                        </div>
 
-        <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/themify-icons.css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link href="css/style.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="css/officers.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    </head>
+                        <!-- Category -->
+                        <div class="form-group">
+                            <label for="category">Category <span class="required">*</span></label>
+                            <select id="category" class="form-control required-field" required>
+                                <option value="">Select a category...</option>
+                                <option value="Education">Education</option>
+                                <option value="Health">Health</option>
+                                <option value="Housing">Housing</option>
+                                <option value="Employment">Employment</option>
+                                <option value="Food & Nutrition">Food & Nutrition</option>
+                                <option value="Youth Programs">Youth Programs</option>
+                                <option value="Senior Services">Senior Services</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="error-message" id="categoryError">Please select a category</div>
+                        </div>
 
-    <div id="ani" class="animsition">
-        <body data-spy="scroll" data-target="#navbar" data-offset="30">
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="description">Description <span class="required">*</span></label>
+                            <textarea id="description" class="form-control required-field" rows="5" maxlength="500" placeholder="Describe the resource, who it serves, and what services it provides..." required></textarea>
+                            <div class="char-counter" id="charCount">0/500 characters</div>
+                            <div class="error-message" id="descriptionError">Please provide a description</div>
+                        </div>
 
-            <!-- Navigation -->
-            <div class="nav-menu fixed-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nav class="navbar navbar-dark navbar-expand-lg">
-                                <a class="navbar-brand" href="index.html#home"><img src="" class="img-fluid" alt=""><b>Community Connect</b></a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbar">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="cte.html">How it Works</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="./eventfinder.html">Resources</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="#home">Submit<span class="sr-only">(current)</span></a> </li>
-                                    </ul>
-                                </div>
-                            </nav>
+                        <!-- Contact Information -->
+                        <div class="form-group">
+                            <label for="contact">Contact Information (optional)</label>
+                            <input type="text" id="contact" class="form-control" placeholder="Phone number, email, or website">
+                        </div>
+
+                        <!-- Location/Address -->
+                        <div class="form-group">
+                            <label for="location">Location or Address (optional)</label>
+                            <input type="text" id="location" class="form-control" placeholder="Where is this resource located?">
+                        </div>
+
+                        <!-- Hours of Operation -->
+                        <div class="form-group">
+                            <label for="hours">Hours/Availability (optional)</label>
+                            <input type="text" id="hours" class="form-control" placeholder="e.g., Monday-Friday 9 AM - 5 PM">
+                        </div>
+
+                        <!-- Your Name -->
+                        <div class="form-group">
+                            <label for="yourName">Your Name <span class="required">*</span></label>
+                            <input type="text" id="yourName" class="form-control required-field" placeholder="Your first and last name" required>
+                            <div class="error-message" id="yourNameError">Please enter your name</div>
+                        </div>
+
+                        <!-- Your Email -->
+                        <div class="form-group">
+                            <label for="yourEmail">Your Email <span class="required">*</span></label>
+                            <input type="email" id="yourEmail" class="form-control required-field" placeholder="your.email@example.com" required>
+                            <div class="error-message" id="yourEmailError">Please enter a valid email address</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="submitBtn" class="btn-submit">Submit Resource</button>
+                    </form>
+
+                    <!-- Success Message (hidden by default) -->
+                    <div class="success-message" id="successMessage">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2>Thank You!</h2>
+                        <p>Your resource submission has been received. We'll review it and add it to our Resource Hub soon.</p>
+                        <div>
+                            <button class="btn-secondary" onclick="resetForm()">Submit Another Resource</button>
+                            <a href="eventfinder.html" class="btn-secondary">Back to Resources</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Hero Section with Particles -->
-            <header class="bg-gradient2" id="home">
-                <div class="backgrounddiv2">
-                    <div id="container">
-                        <header class="info">
-                            <hgroup class="about">
-                                <h1>Submit a Resource</h1>
-                                <p class="text-white" style="font-size: 18px; margin-top: 15px;">Help others discover valuable community resources</p>
-                            </hgroup>
-                        </header>
-                    </div>
-                </div>
-            </header>
+        <!-- Footer -->
+        <div id="footer-placeholder"></div>
 
-            <!-- Form Section -->
-            <div class="form-section">
-                <div class="container">
-                    <div class="form-container">
-                        <!-- Form Introduction -->
-                        <div class="form-intro">
-                            <h2>Share a Community Resource</h2>
-                            <p>Know of a great community resource? Help others by sharing programs, services, and organizations that have made a positive impact. All submissions are reviewed before being added to our Resource Hub.</p>
-                        </div>
+        <!-- Scripts -->
+        <script src="./js/sketch.js"></script>
+        <script src="./js/timeline.js"></script>
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/owl.carousel.min.js"></script>
+        <script src="./js/script.js"></script>
+        <script src="./js/cards.js"></script>
+        <script src="js/components.js"></script>
 
-                        <!-- Form -->
-                        <form id="submitResourceForm">
-                            <!-- Resource Name -->
-                            <div class="form-group">
-                                <label for="resourceName">Resource Name <span class="required">*</span></label>
-                                <input type="text" id="resourceName" class="form-control required-field" placeholder="e.g., Community Food Bank" required>
-                                <div class="error-message" id="resourceNameError">Please enter a resource name</div>
-                            </div>
+        <!-- Particle Animation Script -->
+        <script>
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            } else {
+                function Particle(x, y, radius) {
+                    this.init(x, y, radius);
+                }
 
-                            <!-- Category -->
-                            <div class="form-group">
-                                <label for="category">Category <span class="required">*</span></label>
-                                <select id="category" class="form-control required-field" required>
-                                    <option value="">Select a category...</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Health">Health</option>
-                                    <option value="Housing">Housing</option>
-                                    <option value="Employment">Employment</option>
-                                    <option value="Food & Nutrition">Food & Nutrition</option>
-                                    <option value="Youth Programs">Youth Programs</option>
-                                    <option value="Senior Services">Senior Services</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                                <div class="error-message" id="categoryError">Please select a category</div>
-                            </div>
+                Particle.prototype = {
+                    init: function(x, y, radius) {
+                        this.alive = true;
+                        this.radius = radius || 10;
+                        this.wander = 0.15;
+                        this.theta = random(TWO_PI);
+                        this.drag = 0.92;
+                        this.color = '#fff';
+                        this.x = x || 0.0;
+                        this.y = y || 0.0;
+                        this.vx = 0.0;
+                        this.vy = 0.0;
+                    },
 
-                            <!-- Description -->
-                            <div class="form-group">
-                                <label for="description">Description <span class="required">*</span></label>
-                                <textarea id="description" class="form-control required-field" rows="5" maxlength="500" placeholder="Describe the resource, who it serves, and what services it provides..." required></textarea>
-                                <div class="char-counter" id="charCount">0/500 characters</div>
-                                <div class="error-message" id="descriptionError">Please provide a description</div>
-                            </div>
+                    move: function() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        this.vx *= this.drag;
+                        this.vy *= this.drag;
+                        this.theta += random(-0.5, 0.5) * this.wander;
+                        this.vx += sin(this.theta) * 0.1;
+                        this.vy += cos(this.theta) * 0.1;
+                        this.radius *= 0.96;
+                        this.alive = this.radius > 0.5;
+                    },
 
-                            <!-- Contact Information -->
-                            <div class="form-group">
-                                <label for="contact">Contact Information (optional)</label>
-                                <input type="text" id="contact" class="form-control" placeholder="Phone number, email, or website">
-                            </div>
+                    draw: function(ctx) {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
+                        ctx.fillStyle = this.color;
+                        ctx.fill();
+                    }
+                };
 
-                            <!-- Location/Address -->
-                            <div class="form-group">
-                                <label for="location">Location or Address (optional)</label>
-                                <input type="text" id="location" class="form-control" placeholder="Where is this resource located?">
-                            </div>
+                var MAX_PARTICLES = 280;
+                var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
+                var particles = [];
+                var pool = [];
 
-                            <!-- Hours of Operation -->
-                            <div class="form-group">
-                                <label for="hours">Hours/Availability (optional)</label>
-                                <input type="text" id="hours" class="form-control" placeholder="e.g., Monday-Friday 9 AM - 5 PM">
-                            </div>
+                var demo = Sketch.create({
+                    container: document.getElementById('container'),
+                    retina: 'auto'
+                });
 
-                            <!-- Your Name -->
-                            <div class="form-group">
-                                <label for="yourName">Your Name <span class="required">*</span></label>
-                                <input type="text" id="yourName" class="form-control required-field" placeholder="Your first and last name" required>
-                                <div class="error-message" id="yourNameError">Please enter your name</div>
-                            </div>
+                demo.setup = function() {
+                    var i, x, y;
+                    for (i = 0; i < 50; i++) {
+                        x = (demo.width * 0.5) + random(-100, 100);
+                        y = (demo.height * 0.5) + random(-100, 100);
+                        demo.spawn(x, y);               
+                    }
+                };
 
-                            <!-- Your Email -->
-                            <div class="form-group">
-                                <label for="yourEmail">Your Email <span class="required">*</span></label>
-                                <input type="email" id="yourEmail" class="form-control required-field" placeholder="your.email@example.com" required>
-                                <div class="error-message" id="yourEmailError">Please enter a valid email address</div>
-                            </div>
+                demo.spawn = function(x, y) {
+                    var particle, theta, force;
+                    if (particles.length >= MAX_PARTICLES)
+                        pool.push(particles.shift());
+                    particle = pool.length ? pool.pop() : new Particle();
+                    particle.init(x, y, random(5, 40));
+                    particle.wander = random(0.5, 2.0);
+                    particle.color = random(COLOURS);
+                    particle.drag = random(0.9, 0.99);
+                    theta = random(TWO_PI);
+                    force = random(2, 8);
+                    particle.vx = sin(theta) * force;
+                    particle.vy = cos(theta) * force;
+                    particles.push(particle);
+                };
 
-                            <!-- Submit Button -->
-                            <button type="submit" id="submitBtn" class="btn-submit">Submit Resource</button>
-                        </form>
+                demo.update = function() {
+                    var i, particle;
+                    for (i = particles.length - 1; i >= 0; i--) {
+                        particle = particles[i];
+                        if (particle.alive) particle.move();
+                        else pool.push(particles.splice(i, 1)[0]);
+                    }
+                };
 
-                        <!-- Success Message (hidden by default) -->
-                        <div class="success-message" id="successMessage">
-                            <div class="success-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h2>Thank You!</h2>
-                            <p>Your resource submission has been received. We'll review it and add it to our Resource Hub soon.</p>
-                            <div>
-                                <button class="btn-secondary" onclick="resetForm()">Submit Another Resource</button>
-                                <a href="eventfinder.html" class="btn-secondary">Back to Resources</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                demo.draw = function() {
+                    demo.globalCompositeOperation = 'lighter';
+                    for (var i = particles.length - 1; i >= 0; i--) {
+                        particles[i].draw(demo);
+                    }
+                };
 
-            <!-- Footer -->
-            <footer class="my-5 text-center">
-                <small>
-                    <a href="" style="text-decoration:none" class="m-2 text-white">Community Connect © 2025. Building stronger communities together.</a>
-                </small>
-            </footer>
+                demo.mousemove = function() {
+                    var particle, theta, force, touch, max, i, j, n;
+                    for (i = 0, n = demo.touches.length; i < n; i++) {
+                        touch = demo.touches[i], max = random(1, 4);
+                        for (j = 0; j < max; j++) {
+                            demo.spawn(touch.x, touch.y);
+                        }
+                    }
+                };
+            }
+        </script>
 
-            <!-- Scripts -->
-            <script src="./js/sketch.js"></script>
-            <script src="./js/timeline.js"></script>
-            <script src="js/jquery-3.2.1.min.js"></script>
-            <script src="./js/bootstrap.bundle.min.js"></script>
-            <script src="./js/owl.carousel.min.js"></script>
-            <script src="./js/script.js"></script>
-            <script src="./js/cards.js"></script>
-
-            <!-- Particle Animation Script -->
-            <script>
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        <!-- Form Validation and Submission Script -->
+        <script>
+            // Character counter for description
+            $('#description').on('keyup', function() {
+                var count = $(this).val().length;
+                $('#charCount').text(count + '/500 characters');
+                if (count > 500) {
+                    $('#charCount').addClass('over-limit');
                 } else {
-                    function Particle(x, y, radius) {
-                        this.init(x, y, radius);
-                    }
-
-                    Particle.prototype = {
-                        init: function(x, y, radius) {
-                            this.alive = true;
-                            this.radius = radius || 10;
-                            this.wander = 0.15;
-                            this.theta = random(TWO_PI);
-                            this.drag = 0.92;
-                            this.color = '#fff';
-                            this.x = x || 0.0;
-                            this.y = y || 0.0;
-                            this.vx = 0.0;
-                            this.vy = 0.0;
-                        },
-
-                        move: function() {
-                            this.x += this.vx;
-                            this.y += this.vy;
-                            this.vx *= this.drag;
-                            this.vy *= this.drag;
-                            this.theta += random(-0.5, 0.5) * this.wander;
-                            this.vx += sin(this.theta) * 0.1;
-                            this.vy += cos(this.theta) * 0.1;
-                            this.radius *= 0.96;
-                            this.alive = this.radius > 0.5;
-                        },
-
-                        draw: function(ctx) {
-                            ctx.beginPath();
-                            ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
-                            ctx.fillStyle = this.color;
-                            ctx.fill();
-                        }
-                    };
-
-                    var MAX_PARTICLES = 280;
-                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
-                    var particles = [];
-                    var pool = [];
-
-                    var demo = Sketch.create({
-                        container: document.getElementById('container'),
-                        retina: 'auto'
-                    });
-
-                    demo.setup = function() {
-                        var i, x, y;
-                        for (i = 0; i < 50; i++) {
-                            x = (demo.width * 0.5) + random(-100, 100);
-                            y = (demo.height * 0.5) + random(-100, 100);
-                            demo.spawn(x, y);
-                        }
-                    };
-
-                    demo.spawn = function(x, y) {
-                        var particle, theta, force;
-                        if (particles.length >= MAX_PARTICLES)
-                            pool.push(particles.shift());
-                        particle = pool.length ? pool.pop() : new Particle();
-                        particle.init(x, y, random(5, 40));
-                        particle.wander = random(0.5, 2.0);
-                        particle.color = random(COLOURS);
-                        particle.drag = random(0.9, 0.99);
-                        theta = random(TWO_PI);
-                        force = random(2, 8);
-                        particle.vx = sin(theta) * force;
-                        particle.vy = cos(theta) * force;
-                        particles.push(particle);
-                    };
-
-                    demo.update = function() {
-                        var i, particle;
-                        for (i = particles.length - 1; i >= 0; i--) {
-                            particle = particles[i];
-                            if (particle.alive) particle.move();
-                            else pool.push(particles.splice(i, 1)[0]);
-                        }
-                    };
-
-                    demo.draw = function() {
-                        demo.globalCompositeOperation = 'lighter';
-                        for (var i = particles.length - 1; i >= 0; i--) {
-                            particles[i].draw(demo);
-                        }
-                    };
-
-                    demo.mousemove = function() {
-                        var particle, theta, force, touch, max, i, j, n;
-                        for (i = 0, n = demo.touches.length; i < n; i++) {
-                            touch = demo.touches[i], max = random(1, 4);
-                            for (j = 0; j < max; j++) {
-                                demo.spawn(touch.x, touch.y);
-                            }
-                        }
-                    };
+                    $('#charCount').removeClass('over-limit');
                 }
-            </script>
+            });
 
-            <!-- Form Validation and Submission Script -->
-            <script>
-                // Character counter for description
-                $('#description').on('keyup', function() {
-                    var count = $(this).val().length;
-                    $('#charCount').text(count + '/500 characters');
-                    if (count > 500) {
-                        $('#charCount').addClass('over-limit');
-                    } else {
-                        $('#charCount').removeClass('over-limit');
-                    }
-                });
+            // Form validation and submission
+            $('#submitResourceForm').on('submit', function(e) {
+                e.preventDefault();
 
-                // Form validation and submission
-                $('#submitResourceForm').on('submit', function(e) {
-                    e.preventDefault();
+                // Reset error states
+                $('.form-control').removeClass('is-invalid');
+                $('.error-message').hide();
 
-                    // Reset error states
-                    $('.form-control').removeClass('is-invalid');
-                    $('.error-message').hide();
+                var isValid = true;
 
-                    var isValid = true;
-
-                    // Validate required fields
-                    if ($('#resourceName').val().trim() === '') {
-                        $('#resourceName').addClass('is-invalid');
-                        $('#resourceNameError').show();
-                        isValid = false;
-                    }
-
-                    if ($('#category').val() === '') {
-                        $('#category').addClass('is-invalid');
-                        $('#categoryError').show();
-                        isValid = false;
-                    }
-
-                    if ($('#description').val().trim() === '') {
-                        $('#description').addClass('is-invalid');
-                        $('#descriptionError').show();
-                        isValid = false;
-                    }
-
-                    if ($('#yourName').val().trim() === '') {
-                        $('#yourName').addClass('is-invalid');
-                        $('#yourNameError').show();
-                        isValid = false;
-                    }
-
-                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailPattern.test($('#yourEmail').val().trim())) {
-                        $('#yourEmail').addClass('is-invalid');
-                        $('#yourEmailError').show();
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        // Show loading state
-                        $('#submitBtn').text('Submitting...').prop('disabled', true);
-
-                        // Simulate submission (replace with actual backend call)
-                        setTimeout(function() {
-                            $('#submitResourceForm').fadeOut(function() {
-                                $('#successMessage').fadeIn();
-                            });
-                            $('html, body').animate({
-                                scrollTop: $('#successMessage').offset().top - 100
-                            }, 500);
-                        }, 1000);
-                    } else {
-                        // Shake animation for form
-                        $('#submitResourceForm').addClass('shake-animation');
-                        setTimeout(function() {
-                            $('#submitResourceForm').removeClass('shake-animation');
-                        }, 300);
-
-                        // Focus on first invalid field
-                        $('.is-invalid').first().focus();
-                    }
-                });
-
-                // Reset form function
-                function resetForm() {
-                    $('#submitResourceForm')[0].reset();
-                    $('#charCount').text('0/500 characters');
-                    $('.form-control').removeClass('is-invalid');
-                    $('.error-message').hide();
-                    $('#submitBtn').text('Submit Resource').prop('disabled', false);
-                    $('#successMessage').fadeOut(function() {
-                        $('#submitResourceForm').fadeIn();
-                    });
-                    $('html, body').animate({
-                        scrollTop: $('.form-intro').offset().top - 100
-                    }, 500);
+                // Validate required fields
+                if ($('#resourceName').val().trim() === '') {
+                    $('#resourceName').addClass('is-invalid');
+                    $('#resourceNameError').show();
+                    isValid = false;
                 }
-            </script>
 
-            <!-- Animsition Script -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-            <script src="js/animsition.min.js"></script>
-            <script>
-                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                if ($('#category').val() === '') {
+                    $('#category').addClass('is-invalid');
+                    $('#categoryError').show();
+                    isValid = false;
+                }
 
-                if (isChrome) {
-                    $(document).ready(function() {
-                        $(".animsition").animsition({
-                            inClass: 'zoom-in',
-                            outClass: 'zoom-out',
-                            inDuration: 1500,
-                            outDuration: 800,
-                            linkElement: '.animsition-link',
-                            loading: true,
-                            loadingParentElement: 'body',
-                            loadingClass: 'animsition-loading',
-                            loadingInner: '',
-                            timeout: false,
-                            timeoutCountdown: 5000,
-                            onLoadEvent: true,
-                            browser: ['animation-duration', '-webkit-animation-duration'],
-                            overlay: false,
-                            overlayClass: 'animsition-overlay-slide',
-                            overlayParentElement: 'body',
-                            transition: function(url) {
-                                window.location.href = url;
-                            }
+                if ($('#description').val().trim() === '') {
+                    $('#description').addClass('is-invalid');
+                    $('#descriptionError').show();
+                    isValid = false;
+                }
+
+                if ($('#yourName').val().trim() === '') {
+                    $('#yourName').addClass('is-invalid');
+                    $('#yourNameError').show();
+                    isValid = false;
+                }
+
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test($('#yourEmail').val().trim())) {
+                    $('#yourEmail').addClass('is-invalid');
+                    $('#yourEmailError').show();
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Show loading state
+                    $('#submitBtn').text('Submitting...').prop('disabled', true);
+
+                    // Simulate submission (replace with actual backend call)
+                    setTimeout(function() {
+                        $('#submitResourceForm').fadeOut(function() {
+                            $('#successMessage').fadeIn();
                         });
-                    });
+                        $('html, body').animate({
+                            scrollTop: $('#successMessage').offset().top - 100
+                        }, 500);
+                    }, 1000);
                 } else {
-                    var NAME = document.getElementById("ani");
-                    NAME.className = "";
+                    // Shake animation for form
+                    $('#submitResourceForm').addClass('shake-animation');
+                    setTimeout(function() {
+                        $('#submitResourceForm').removeClass('shake-animation');
+                    }, 300);
 
-                    var NAME = document.getElementById("resources");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
-
-                    var NAME = document.getElementById("submit");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
+                    // Focus on first invalid field
+                    $('.is-invalid').first().focus();
                 }
-            </script>
+            });
 
-        </body>
-    </div>
-</html>
+            // Reset form function
+            function resetForm() {
+                $('#submitResourceForm')[0].reset();
+                $('#charCount').text('0/500 characters');
+                $('.form-control').removeClass('is-invalid');
+                $('.error-message').hide();
+                $('#submitBtn').text('Submit Resource').prop('disabled', false);
+                $('#successMessage').fadeOut(function() {
+                    $('#submitResourceForm').fadeIn();
+                });
+                $('html, body').animate({
+                    scrollTop: $('.form-intro').offset().top - 100
+                }, 500);
+            }
+        </script>
+
+        <!-- Animsition Script -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="js/animsition.min.js"></script>
+        <script>
+            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+            if (isChrome) {
+                $(document).ready(function() {
+                    $(".animsition").animsition({
+                        inClass: 'zoom-in',
+                        outClass: 'zoom-out',
+                        inDuration: 1500,
+                        outDuration: 800,
+                        linkElement: '.animsition-link',
+                        loading: true,
+                        loadingParentElement: 'body',
+                        loadingClass: 'animsition-loading',
+                        loadingInner: '',
+                        timeout: false,
+                        timeoutCountdown: 5000,
+                        onLoadEvent: true,
+                        browser: ['animation-duration', '-webkit-animation-duration'],
+                        overlay: false,
+                        overlayClass: 'animsition-overlay-slide',
+                        overlayParentElement: 'body',
+                        transition: function(url) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            } else {
+                var NAME = document.getElementById("ani");
+                NAME.className = "";
+            }
+        </script>
+
+    </body>
+</div>

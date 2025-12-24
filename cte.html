@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/timeline.css">
         <link rel="stylesheet" href="css/animsition.min.css">
         <link rel="icon" href="img/icon.png">
+        <link rel="stylesheet" href="css/theme.css">
 
         <style type="text/css">
             /* Font Declarations */
@@ -72,7 +73,7 @@
                 background: rgba(255, 255, 255, 0.15);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
-                color: white;
+                color: white !important;
                 overflow: hidden;
             }
 
@@ -91,7 +92,7 @@
                 background: linear-gradient(135deg, rgba(74, 103, 65, 0.95) 0%, rgba(109, 140, 95, 0.95) 100%);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
-                color: white;
+                color: white !important;
                 transform: rotateY(180deg);
                 overflow: hidden;
             }
@@ -114,14 +115,14 @@
                 font-size: 72px;
                 font-weight: bold;
                 opacity: 0.15;
-                color: rgba(255, 255, 255, 0.8);
+                color: rgba(255, 255, 255, 0.8) !important;
                 text-shadow: 0 2px 10px rgba(0,0,0,0.1);
             }
 
             .card-icon {
                 font-size: 72px;
                 margin-bottom: 25px;
-                color: white;
+                color: white !important;
                 text-shadow: 0 4px 15px rgba(145, 176, 138, 0.5);
                 transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
@@ -135,7 +136,7 @@
                 font-size: 28px;
                 font-weight: 700;
                 margin: 0;
-                color: white;
+                color: white !important;
                 text-shadow: 0 2px 10px rgba(0,0,0,0.2);
                 letter-spacing: 0.5px;
                 font-family: 'Space Grotesk', sans-serif;
@@ -145,7 +146,7 @@
                 font-size: 24px;
                 font-weight: 700;
                 margin-bottom: 20px;
-                color: white;
+                color: white !important;
                 text-shadow: 0 2px 10px rgba(0,0,0,0.3);
                 letter-spacing: 0.5px;
                 font-family: 'Space Grotesk', sans-serif;
@@ -155,7 +156,7 @@
                 font-size: 16px;
                 line-height: 1.8;
                 margin: 0;
-                color: rgba(255, 255, 255, 0.95);
+                color: rgba(255, 255, 255, 0.95) !important;
                 text-shadow: 0 1px 5px rgba(0,0,0,0.2);
                 font-family: 'Outfit', sans-serif;
             }
@@ -202,6 +203,38 @@
             .flip-card:nth-child(3) { transition-delay: 0.3s; }
             .flip-card:nth-child(4) { transition-delay: 0.45s; }
 
+            /* Impact section with gradient */
+            .impact-cta-section {
+                background: linear-gradient(135deg, #f0f4ed 0%, #d9e5d4 100%);
+                padding: 100px 0;
+            }
+
+            [data-theme="dark"] .impact-cta-section {
+                background: linear-gradient(135deg, #243028 0%, #2C3E2F 100%);
+            }
+
+            .impact-cta-section h2 {
+                color: #4a6741;
+                font-size: 42px;
+                margin-bottom: 30px;
+            }
+
+            [data-theme="dark"] .impact-cta-section h2 {
+                color: #E8F0EA;
+            }
+
+            .impact-cta-section p {
+                font-size: 20px;
+                line-height: 1.9;
+                color: #555;
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            [data-theme="dark"] .impact-cta-section p {
+                color: #B8C8BA;
+            }
+
             /* Use external CSS from example.css for typewriter, info, and about - no overrides needed */
         </style>
 
@@ -213,7 +246,6 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link href="css/style.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-        <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
     </head>
@@ -222,30 +254,7 @@
         <body data-spy="scroll" data-target="#navbar" data-offset="30">
 
             <!-- Navigation -->
-            <div class="nav-menu fixed-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nav class="navbar navbar-dark navbar-expand-lg">
-                                <a class="navbar-brand" href="index.html"><img src="" class="img-fluid" alt=""><b>Community Connect</b></a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbar">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="#home">How it Works<span class="sr-only">(current)</span></a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="./eventfinder.html">Resources</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="navbar-placeholder"></div>
 
             <!-- Hero Section with Particles -->
             <header class="bg-gradient2" id="home">
@@ -344,13 +353,13 @@
             </div>
 
             <!-- Impact Section -->
-            <div class="intro-section" style="background: linear-gradient(135deg, #f0f4ed 0%, #d9e5d4 100%); padding: 100px 0;">
+            <div class="intro-section impact-cta-section">
                 <div class="container">
-                    <h2 style="color: #4a6741; font-size: 42px; margin-bottom: 30px;">Making a Real Difference</h2>
-                    <p style="font-size: 20px; line-height: 1.9; color: #555; max-width: 900px; margin: 0 auto 30px;">
+                    <h2>Making a Real Difference</h2>
+                    <p style="margin-bottom: 30px;">
                         Community Connect isn't just a platform—it's a movement. Every connection made, every hour volunteered, and every project completed creates ripples of positive change throughout our community. Whether you're seeking support or offering your skills, you're part of a network of thousands working together to build a brighter future.
                     </p>
-                    <p style="font-size: 20px; line-height: 1.9; color: #555; max-width: 900px; margin: 0 auto;">
+                    <p>
                         From students finding mentorship to neighbors helping neighbors, from local nonprofits gaining volunteers to families accessing vital resources—Community Connect bridges gaps and strengthens bonds. Join us today and discover how simple it is to make an impact that matters.
                     </p>
                     <div style="margin-top: 50px;">
@@ -361,15 +370,12 @@
             </div>
 
             <!-- Footer -->
-            <footer class="my-5 text-center">
-                <small>
-                    <a href="" style="text-decoration:none" class="m-2 text-white">Community Connect © 2025. Building stronger communities together.</a>
-                </small>
-            </footer>
+            <div id="footer-placeholder"></div>
 
             <!-- Scripts -->
             <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
             <script src='http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
+            <script src="js/components.js"></script>
             <script src="./js/sketch.js"></script>
             <script src="./js/jquery-3.2.1.min.js"></script>
             <script src="./js/bootstrap.bundle.min.js"></script>
@@ -539,12 +545,6 @@
                 } else {
                     var NAME = document.getElementById("ani");
                     NAME.className = "";
-
-                    var NAME = document.getElementById("resources");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
-
-                    var NAME = document.getElementById("submit");
-                    NAME.className = "btn btn-outline-light my-3 my-sm-0 ml-lg-3";
                 }
             </script>
 
