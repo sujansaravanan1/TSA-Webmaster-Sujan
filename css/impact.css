@@ -16,7 +16,7 @@
     border-radius: 15px;
     padding: 30px 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(74, 103, 65, 0.1);
     transform: translateY(30px);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -31,13 +31,13 @@
 
 .stat-icon {
     font-size: 2.5em;
-    color: #007bff;
+    color: #4a6741;
     margin-bottom: 15px;
     position: relative;
 }
 
 .stat-icon i {
-    background: linear-gradient(45deg, #007bff, #00b4d8);
+    background: linear-gradient(45deg, #4a6741, #6d8c5f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -47,13 +47,14 @@
     font-weight: bold;
     color: #2d3436;
     margin: 10px 0;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .stat-label {
     color: #636e72;
     font-size: 1.1em;
     margin-top: 5px;
+    font-family: 'Outfit', sans-serif;
 }
 
 .stat-progress {
@@ -62,7 +63,7 @@
     left: 0;
     width: 0%;
     height: 4px;
-    background: linear-gradient(90deg, #007bff, #00b4d8);
+    background: linear-gradient(90deg, #6d8c5f, #91b08a);
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -76,7 +77,7 @@
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(74, 103, 65, 0.1);
     transform: translateY(30px);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -88,26 +89,28 @@
 }
 
 .chart-card h3 {
-    color: #2d3436;
+    color: #4a6741;
     margin-bottom: 20px;
     font-size: 1.4em;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 /* Success Stories */
 .section-title {
     text-align: center;
     margin-bottom: 40px;
-    color: #2d3436;
+    color: #4a6741;
     font-size: 2em;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .story-card {
     background: white;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(74, 103, 65, 0.1);
     margin-bottom: 30px;
     transform: translateY(30px);
     opacity: 0;
@@ -134,7 +137,7 @@
     left: 0;
     right: 0;
     height: 50%;
-    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    background: linear-gradient(to top, rgba(74, 103, 65, 0.7), transparent);
 }
 
 .story-content {
@@ -142,15 +145,17 @@
 }
 
 .story-content h3 {
-    color: #2d3436;
+    color: #4a6741;
     margin-bottom: 10px;
     font-size: 1.3em;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .story-content p {
     color: #636e72;
     line-height: 1.6;
     margin: 0;
+    font-family: 'Outfit', sans-serif;
 }
 
 /* Animations */
@@ -196,7 +201,7 @@
 /* Card Hover Effects */
 .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(74, 103, 65, 0.2);
 }
 
 .stat-card:hover .stat-icon i {
@@ -205,7 +210,7 @@
 
 .story-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(74, 103, 65, 0.2);
 }
 
 .story-card:hover .story-image {

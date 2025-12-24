@@ -5,9 +5,9 @@
     <title>Community Connect - Resource Hub</title>
     <link rel="icon" href="img/icon.png">
 
-    <!-- Fonts - Match Home Page -->
+    <!-- Fonts - Sage Modern Theme -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
     <!-- Font Awesome -->
@@ -20,24 +20,36 @@
     <link rel="stylesheet" href="css/animsition.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+
+        /* Navbar - Hide on scroll down */
+        .nav-menu.fixed-top {
+            position: absolute; /* start absolute so it’s over the header */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+            z-index: 9999;
+            background: linear-gradient(to right, rgba(74,103,65,0.5), rgba(109,140,95,0.5)); /* gradient when at top */
+            transition: all 0.3s ease;
+            box-shadow: none;
         }
 
+        .nav-menu.fixed-top.scrolled {
+            position: fixed; /* fixed once scrolled */
+            background: #273423; /* solid color */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+
         body {
-            font-family: 'Rubik', 'Open Sans', sans-serif;
-            background: linear-gradient(to right, #1488CC , #2B32B2);
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(to right, #4a6741, #6d8c5f);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Navbar - Hide on scroll down */
-        .nav-menu {
-            transition: transform 0.3s ease-in-out;
-        }
+
 
         /* Animated Background Shapes */
         .bg-shape {
@@ -51,7 +63,7 @@
         .shape-1 {
             width: 400px;
             height: 400px;
-            background: linear-gradient(135deg, #1488CC, #2B32B2);
+            background: linear-gradient(135deg, #4a6741, #6d8c5f);
             top: -100px;
             left: -100px;
             animation: float 20s ease-in-out infinite;
@@ -60,7 +72,7 @@
         .shape-2 {
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, #2B32B2, #633991);
+            background: linear-gradient(135deg, #6d8c5f, #91b08a);
             top: 40%;
             right: -80px;
             animation: float 15s ease-in-out infinite reverse;
@@ -69,7 +81,7 @@
         .shape-3 {
             width: 250px;
             height: 250px;
-            background: linear-gradient(135deg, #1488CC, #5DADE2);
+            background: linear-gradient(135deg, #4a6741, #91b08a);
             bottom: -80px;
             left: 20%;
             animation: float 18s ease-in-out infinite;
@@ -81,7 +93,7 @@
             66% { transform: translate(-20px, 40px) rotate(240deg); }
         }
 
-        /* White Section for Content - Clear Separation */
+        /* White Section for Content */
         .form-section {
             background: white;
             padding: 80px 0;
@@ -90,15 +102,12 @@
             z-index: 1;
         }
 
-        /* Header Styles - Use external CSS from example.css, no overrides needed */
-
         /* Search Section */
         .search-section {
             max-width: 900px;
             margin: 0 auto 50px auto;
             padding: 30px;
         }
-
 
         .search-bar {
             position: relative;
@@ -111,15 +120,15 @@
             border: 2px solid #e0e0e0;
             border-radius: 50px;
             transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background: #fafafa;
         }
 
         .search-bar input:focus {
             outline: none;
-            border-color: #1488CC;
+            border-color: #6d8c5f;
             background: white;
-            box-shadow: 0 0 0 4px rgba(20, 136, 204, 0.1);
+            box-shadow: 0 0 0 4px rgba(109, 140, 95, 0.1);
             transform: scale(1.02);
         }
 
@@ -128,7 +137,7 @@
             right: 28px;
             top: 50%;
             transform: translateY(-50%);
-            color: #1488CC;
+            color: #6d8c5f;
             font-size: 1.4rem;
         }
 
@@ -153,6 +162,7 @@
             color: #555;
             position: relative;
             overflow: hidden;
+            font-family: 'Outfit', sans-serif;
         }
 
         .category-btn::before {
@@ -163,7 +173,7 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(20, 136, 204, 0.1);
+            background: rgba(109, 140, 95, 0.1);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
@@ -174,17 +184,17 @@
         }
 
         .category-btn:hover {
-            border-color: #1488CC;
-            color: #1488CC;
+            border-color: #6d8c5f;
+            color: #4a6741;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(20, 136, 204, 0.2);
+            box-shadow: 0 6px 20px rgba(109, 140, 95, 0.2);
         }
 
         .category-btn.active {
-            background: linear-gradient(135deg, #1488CC 0%, #2B32B2 100%);
+            background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
             border-color: transparent;
             color: white;
-            box-shadow: 0 6px 25px rgba(20, 136, 204, 0.4);
+            box-shadow: 0 6px 25px rgba(74, 103, 65, 0.4);
             transform: translateY(-2px);
         }
 
@@ -207,9 +217,9 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-radius: 26px;
-            border: 1px solid rgba(20, 136, 204, 0.12);
+            border: 1px solid rgba(109, 140, 95, 0.12);
             padding: 42px 32px;
-            box-shadow: 0 12px 45px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 45px rgba(74, 103, 65, 0.1);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             overflow: hidden;
@@ -224,7 +234,7 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #1488CC, #2B32B2);
+            background: linear-gradient(90deg, #4a6741, #6d8c5f);
             transform: scaleX(0);
             transition: transform 0.4s ease;
             border-radius: 24px 24px 0 0;
@@ -241,7 +251,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(20, 136, 204, 0.03), rgba(43, 50, 178, 0.03));
+            background: linear-gradient(135deg, rgba(74, 103, 65, 0.03), rgba(109, 140, 95, 0.03));
             opacity: 0;
             transition: opacity 0.4s ease;
             border-radius: 24px;
@@ -253,13 +263,13 @@
 
         .resource-card:hover {
             transform: translateY(-18px) scale(1.03);
-            box-shadow: 0 25px 75px rgba(20, 136, 204, 0.28), 0 0 40px rgba(20, 136, 204, 0.15);
-            border-color: rgba(20, 136, 204, 0.35);
+            box-shadow: 0 25px 75px rgba(74, 103, 65, 0.28), 0 0 40px rgba(109, 140, 95, 0.15);
+            border-color: rgba(109, 140, 95, 0.35);
         }
 
         .card-icon {
             font-size: 3.5rem;
-            color: #1488CC;
+            color: #6d8c5f;
             margin-bottom: 25px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-block;
@@ -267,29 +277,31 @@
 
         .resource-card:hover .card-icon {
             transform: scale(1.15) rotate(5deg);
-            color: #2B32B2;
-            filter: drop-shadow(0 4px 8px rgba(20, 136, 204, 0.3));
+            color: #4a6741;
+            filter: drop-shadow(0 4px 8px rgba(109, 140, 95, 0.3));
         }
 
         .card-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #2B32B2;
+            color: #4a6741;
             margin-bottom: 15px;
             line-height: 1.3;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .card-category {
             display: inline-block;
             padding: 7px 18px;
-            background: rgba(20, 136, 204, 0.12);
-            color: #1488CC;
+            background: rgba(109, 140, 95, 0.12);
+            color: #4a6741;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 18px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-family: 'Outfit', sans-serif;
         }
 
         .card-description {
@@ -297,18 +309,20 @@
             color: #666;
             line-height: 1.7;
             margin-bottom: 25px;
+            font-family: 'Outfit', sans-serif;
         }
 
         .card-link {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            color: #1488CC;
+            color: #6d8c5f;
             font-weight: 600;
             text-decoration: none;
             font-size: 1rem;
             transition: all 0.3s ease;
             position: relative;
+            font-family: 'Outfit', sans-serif;
         }
 
         .card-link::after {
@@ -318,7 +332,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #1488CC, #2B32B2);
+            background: linear-gradient(90deg, #4a6741, #6d8c5f);
             transition: width 0.3s ease;
         }
 
@@ -328,7 +342,7 @@
 
         .card-link:hover {
             gap: 15px;
-            color: #2B32B2;
+            color: #4a6741;
         }
 
         .card-link i {
@@ -354,8 +368,8 @@
         }
 
         .expanded-details {
-            background: rgba(20, 136, 204, 0.05);
-            border-left: 4px solid #1488CC;
+            background: rgba(109, 140, 95, 0.05);
+            border-left: 4px solid #6d8c5f;
             padding: 20px;
             margin: 20px 0;
             border-radius: 8px;
@@ -369,17 +383,18 @@
             font-size: 0.95rem;
             margin: 12px 0;
             line-height: 1.5;
+            font-family: 'Outfit', sans-serif;
         }
 
         .detail-item i {
-            color: #1488CC;
+            color: #6d8c5f;
             font-size: 1.1rem;
             width: 20px;
         }
 
         .detail-label {
             font-weight: 600;
-            color: #2B32B2;
+            color: #4a6741;
             min-width: 80px;
         }
 
@@ -387,7 +402,7 @@
         .no-results {
             text-align: center;
             padding: 80px 20px;
-            color: #2B32B2;
+            color: #4a6741;
             display: none;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 24px;
@@ -404,13 +419,14 @@
             font-size: 2rem;
             margin-bottom: 12px;
             font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .no-results p {
             font-size: 1.15rem;
             opacity: 0.7;
+            font-family: 'Outfit', sans-serif;
         }
-
 
         /* Ripple effect animation */
         .ripple {
@@ -430,10 +446,10 @@
         }
 
         .ripple-light {
-            background: rgba(20, 136, 204, 0.3);
+            background: rgba(109, 140, 95, 0.3);
         }
 
-        /* Footer - Match Submit Page */
+        /* Footer */
         footer {
             text-align: center;
             padding: 40px 0;
@@ -453,14 +469,6 @@
         }
 
         @media (max-width: 768px) {
-            .resource-hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .resource-hero p {
-                font-size: 1.05rem;
-            }
-
             .search-section {
                 padding: 30px 25px;
                 margin: -40px 20px 40px 20px;
@@ -483,10 +491,6 @@
             .resource-card {
                 padding: 30px 25px;
             }
-
-            .cta-section {
-                padding: 50px 30px;
-            }
         }
     </style>
 </head>
@@ -508,30 +512,27 @@
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div class="collapse navbar-collapse" id="navbar">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item"><a class="nav-link" href="./index.html">HOME</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="./cte.html">HOW IT WORKS</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="upcoming-events.html">UPCOMING EVENTS</a></li>
-                                    <li class="nav-item"><a class="nav-link active" href="./eventfinder.html">RESOURCES <span class="sr-only">(current)</span></a></li>
-                                    <li class="nav-item"><a id="submit" href="./about.html" class="animsition-link btn btn-outline-light my-3 my-sm-0 ml-lg-3">SUBMIT</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
+                                    <li class="nav-item"> <a class="nav-link" href="cte.html">How it Works</a> </li>
+                                    <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
+                                    <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
+                                    <li class="nav-item"> <a class="nav-link active" href="#home">Resources<span class="sr-only">(current)</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
                                 </ul>
-                            </div>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Hero Section with Particles - EXACT MATCH TO HOME PAGE -->
+        <!-- Hero Section with Particles -->
         <header class="bg-gradient2" id="home">
             <div class="backgrounddiv2">
                 <div id="container">
                     <header class="info">
                         <hgroup class="about">
-                            <div class="typewriter">
-                                <h1>Explore Resources</h1>
-                            </div>
+                            <h1>Explore Resources</h1>
                             <h2 class="text-white" style="font-size: 24px; font-weight: 300; margin-top: 20px;">Discover community programs and services</h2>
                         </hgroup>
                     </header>
@@ -539,7 +540,7 @@
             </div>
         </header>
 
-        <!-- Resources Section - EXACT LAYOUT FROM SUBMIT PAGE -->
+        <!-- Resources Section -->
         <div class="form-section">
             <div class="container">
                 <!-- Search & Filter -->
@@ -629,7 +630,7 @@
             };
 
             var MAX_PARTICLES = 280;
-            var COLOURS = [ '#ecf0f1', '#2980b9', '#273c75', ];
+            var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
             var particles = [];
             var pool = [];
 
@@ -692,7 +693,18 @@
     </script>
 
     <script>
-        // Resources Data - Enhanced with realistic community-oriented content
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav-menu.fixed-top');
+            if (window.scrollY > 50) {  // adjust threshold
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <script>
+        // Resources Data
         const resources = [
             {
                 title: "Scholarship Discovery Program",
@@ -969,12 +981,10 @@
         function applyFilters() {
             let filtered = resources;
 
-            // Apply category filter
             if (currentCategory !== 'all') {
                 filtered = filtered.filter(r => r.category === currentCategory);
             }
 
-            // Apply search filter
             if (currentSearch) {
                 const lowerSearch = currentSearch.toLowerCase();
                 filtered = filtered.filter(r =>
@@ -994,8 +1004,6 @@
                 this.classList.add('active');
                 currentCategory = this.dataset.category;
                 applyFilters();
-
-                // Add ripple effect
                 createRipple(e, this, false);
             });
         });
@@ -1014,38 +1022,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderResources(resources);
 
-            // Apply ripple to CTA button
-            const ctaBtn = document.querySelector('.cta-btn');
-            if (ctaBtn) {
-                ctaBtn.addEventListener('click', function(e) {
-                    createRipple(e, this, false);
-                });
-            }
-
-            // Hide navbar on scroll down
-            let lastScroll = 0;
-            const navbar = document.querySelector('.nav-menu');
-
-            window.addEventListener('scroll', function() {
-                const currentScroll = window.pageYOffset;
-
-                if (currentScroll <= 0) {
-                    navbar.style.transform = 'translateY(0)';
-                    return;
-                }
-
-                if (currentScroll > lastScroll && currentScroll > 100) {
-                    // Scrolling down
-                    navbar.style.transform = 'translateY(-100%)';
-                } else {
-                    // Scrolling up
-                    navbar.style.transform = 'translateY(0)';
-                }
-
-                lastScroll = currentScroll;
-            });
-
-            // Animsition for Chrome
+            // Animsition
             var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
             if(isChrome) {
                 $(".animsition").animsition({

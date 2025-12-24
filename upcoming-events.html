@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/ambient-animation.css">
 
         <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/themify-icons.css">
@@ -28,7 +28,35 @@
         <link rel="stylesheet" href="css/officers.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            #home {
+                height: 100vh;
+                min-height: 100vh;
+                position: relative;
+            }
+
+            .bg-gradient2,
+            .backgrounddiv2 {
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+            }
+
+            .backgrounddiv2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+            }
+        </style>
     </head>
+    
 
     <div id="ani" class="animsition">
         <body data-spy="scroll" data-target="#navbar" data-offset="30">
@@ -45,10 +73,12 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbar">
                                     <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="index.html#home">HOME</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="cte.html">HOW IT WORKS</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="upcoming-events.html">UPCOMING EVENTS</a> </li>
-                                        <li class="nav-item"><a id="resources" href="./eventfinder.html" class="animsition-link btn btn-outline-light my-3 my-sm-0 ml-lg-3">RESOURCES</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
+                                        <li class="nav-item"> <a class="nav-link active" href="cte.html">How it Works</span></a> </li>
+                                        <li class="nav-item"> <a class="nav-link active" href="#home">Upcoming Events<span class="sr-only">(current)</span></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="./eventfinder.html">Resources</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
                                     </ul>
                                 </div>
                             </nav>
@@ -63,15 +93,15 @@
                     <div id="container">
                         <header class="info">
                             <hgroup class="about">
-                                <div class="typewriter">
-                                    <h1>Upcoming Events</h1>
-                                </div>
-                                <p class="text-white" style="font-size: 18px; margin-top: 15px;">Stay connected with what’s happening in our community.</p>
+                                <h1>Upcoming Events</h1>
+                                <p class="text-white" style="font-size: 18px; margin-top: 15px;">Stay connected with what's happening in our community.</p>
                             </hgroup>
                         </header>
                     </div>
                 </div>
             </header>
+
+            
 
             <!-- Timeline Section -->
             <section class="timeline-section">
@@ -239,66 +269,6 @@
                                                                 </script>
                                                         </div>
                                                 </div>
-                            <div class="timeline-content js--fadeInLeft">
-                                <h2>Community Cleanup Drive</h2>
-                                <div class="timeline-date">Nov 10</div>
-                                <div class="timeline-meta">
-                                    <span class="time">10:00 AM — 1:00 PM</span>
-                                    <span class="timeline-sep">•</span>
-                                    <span class="duration">Volunteers welcome</span>
-                                </div>
-                                <p>Join us for a community-wide cleanup event. We'll provide gloves, bags, and light refreshments. Meet at the south entrance of City Park.</p>
-                                <p class="small"><strong>How to prepare:</strong> Wear sturdy shoes, bring a reusable water bottle. Families encouraged.</p>
-                                <p class="small"><strong>Contact:</strong> <a href="mailto:events@community.org">events@community.org</a> — <a href="#" class="rsvp">RSVP</a></p>
-                                <span class="timeline-location">City Park</span>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-content js--fadeInRight">
-                                <h2>STEM Mentorship Workshop</h2>
-                                <div class="timeline-date">Nov 22</div>
-                                <div class="timeline-meta">
-                                    <span class="time">4:00 PM — 6:30 PM</span>
-                                    <span class="timeline-sep">•</span>
-                                    <span class="duration">Students (12+)</span>
-                                </div>
-                                <p>A workshop for students interested in STEM careers, featuring guest speakers from local universities and hands-on breakout sessions (robotics, coding, and design).</p>
-                                <p class="small">Seats are limited — bring a notepad and charged laptop if you have one.</p>
-                                <p class="small"><strong>Register:</strong> <a href="#" class="rsvp">Register here</a> • <strong>Info:</strong> <a href="mailto:stem@community.org">stem@community.org</a></p>
-                                <span class="timeline-location">Public Library</span>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-content js--fadeInLeft">
-                                <h2>Holiday Food Drive</h2>
-                                <div class="timeline-date">Dec 5</div>
-                                <div class="timeline-meta">
-                                    <span class="time">9:00 AM — 4:00 PM</span>
-                                    <span class="timeline-sep">•</span>
-                                    <span class="duration">Drop-off all day</span>
-                                </div>
-                                <p>Help us collect non-perishable food items for families in need this holiday season. Suggested donations: canned vegetables, rice, pasta, baby formula, and healthy snacks.</p>
-                                <p class="small"><strong>Volunteer:</strong> Sort donations and package care boxes. <strong>Contact:</strong> <a href="mailto:fooddrive@community.org">fooddrive@community.org</a></p>
-                                <span class="timeline-location">Community Center</span>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-content js--fadeInRight">
-                                <h2>Winter Clothing Donation</h2>
-                                <div class="timeline-date">Dec 19</div>
-                                <div class="timeline-meta">
-                                    <span class="time">10:00 AM — 3:00 PM</span>
-                                    <span class="timeline-sep">•</span>
-                                    <span class="duration">All ages</span>
-                                </div>
-                                <p>Donate warm coats, hats, gloves, and blankets. All items will be checked for quality and distributed to local shelters and families in need.</p>
-                                <p class="small">Please ensure donated clothing is clean and in good condition. <strong>Questions?</strong> <a href="mailto:donations@community.org">donations@community.org</a></p>
-                                <span class="timeline-location">Town Hall</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -366,7 +336,7 @@
                     };
 
                     var MAX_PARTICLES = 280;
-                    var COLOURS = ['#ecf0f1', '#2980b9', '#273c75'];
+                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
                     var particles = [];
                     var pool = [];
 
@@ -472,4 +442,5 @@
 
         </body>
     </div>
+    
 </html>

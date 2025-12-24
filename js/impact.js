@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const growthCtx = document.getElementById('growthChart').getContext('2d');
     const distributionCtx = document.getElementById('distributionChart').getContext('2d');
 
-    // Growth Chart
+    // Growth Chart - Sage Modern Theme
     new Chart(growthCtx, {
         type: 'line',
         data: {
@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Community Members',
                 data: [500, 800, 1200, 1500, 1800, 2000, 2200, 2350, 2450, 2500],
-                borderColor: '#007bff',
+                borderColor: '#6d8c5f',
                 tension: 0.4,
                 fill: true,
-                backgroundColor: 'rgba(0, 123, 255, 0.1)'
+                backgroundColor: 'rgba(109, 140, 95, 0.1)'
             }]
         },
         options: {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Distribution Chart
+    // Distribution Chart - Sage Modern Theme
     new Chart(distributionCtx, {
         type: 'doughnut',
         data: {
@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 data: [30, 25, 20, 15, 10],
                 backgroundColor: [
-                    '#007bff',
-                    '#00b4d8',
-                    '#0096c7',
-                    '#48cae4',
-                    '#90e0ef'
+                    '#4a6741',
+                    '#6d8c5f',
+                    '#91b08a',
+                    '#b8d4ad',
+                    '#d9e5d4'
                 ]
             }]
         },

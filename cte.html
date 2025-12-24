@@ -11,8 +11,17 @@
         <link rel="icon" href="img/icon.png">
 
         <style type="text/css">
+            /* Font Declarations */
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Space Grotesk', sans-serif;
+            }
+
+            body, p, a, button, .flip-card-back p {
+                font-family: 'Outfit', sans-serif;
+            }
+
             html, body {
-                background: linear-gradient(to right, #1488CC , #2B32B2);
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
             }
 
             /* Flip Card Styles - Glassmorphism */
@@ -27,10 +36,11 @@
                 height: 380px;
                 perspective: 1200px;
                 margin-bottom: 30px;
+                position: relative;
             }
 
             .flip-card-inner {
-                position: relative;
+                position: absolute;
                 width: 100%;
                 height: 100%;
                 text-align: center;
@@ -54,10 +64,8 @@
                 align-items: center;
                 justify-content: center;
                 padding: 40px;
-                box-shadow: 0 15px 50px rgba(0,0,0,0.2), 0 0 20px rgba(20, 136, 204, 0.3);
+                box-shadow: 0 15px 50px rgba(0,0,0,0.2), 0 0 20px rgba(74, 103, 65, 0.3);
                 border: 1px solid rgba(255,255,255,0.2);
-                top: 0;
-                left: 0;
             }
 
             .flip-card-front {
@@ -65,7 +73,6 @@
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 color: white;
-                position: relative;
                 overflow: hidden;
             }
 
@@ -76,17 +83,16 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(135deg, rgba(20, 136, 204, 0.3) 0%, rgba(43, 50, 178, 0.3) 100%);
+                background: linear-gradient(135deg, rgba(74, 103, 65, 0.3) 0%, rgba(145, 176, 138, 0.3) 100%);
                 z-index: -1;
             }
 
             .flip-card-back {
-                background: linear-gradient(135deg, rgba(20, 136, 204, 0.95) 0%, rgba(43, 50, 178, 0.95) 100%);
+                background: linear-gradient(135deg, rgba(74, 103, 65, 0.95) 0%, rgba(109, 140, 95, 0.95) 100%);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
                 color: white;
                 transform: rotateY(180deg);
-                position: relative;
                 overflow: hidden;
             }
 
@@ -116,13 +122,13 @@
                 font-size: 72px;
                 margin-bottom: 25px;
                 color: white;
-                text-shadow: 0 4px 15px rgba(20, 136, 204, 0.5);
+                text-shadow: 0 4px 15px rgba(145, 176, 138, 0.5);
                 transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             }
 
             .flip-card:hover .card-icon {
                 transform: scale(1.1) rotate(5deg);
-                text-shadow: 0 6px 25px rgba(20, 136, 204, 0.8);
+                text-shadow: 0 6px 25px rgba(145, 176, 138, 0.8);
             }
 
             .flip-card-front h3 {
@@ -132,6 +138,7 @@
                 color: white;
                 text-shadow: 0 2px 10px rgba(0,0,0,0.2);
                 letter-spacing: 0.5px;
+                font-family: 'Space Grotesk', sans-serif;
             }
 
             .flip-card-back h4 {
@@ -141,6 +148,7 @@
                 color: white;
                 text-shadow: 0 2px 10px rgba(0,0,0,0.3);
                 letter-spacing: 0.5px;
+                font-family: 'Space Grotesk', sans-serif;
             }
 
             .flip-card-back p {
@@ -149,6 +157,7 @@
                 margin: 0;
                 color: rgba(255, 255, 255, 0.95);
                 text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+                font-family: 'Outfit', sans-serif;
             }
 
             /* Introduction Section */
@@ -161,8 +170,9 @@
             .intro-section h2 {
                 font-size: 36px;
                 font-weight: 600;
-                color: #2B32B2;
+                color: #4a6741;
                 margin-bottom: 20px;
+                font-family: 'Space Grotesk', sans-serif;
             }
 
             .intro-section p {
@@ -171,6 +181,7 @@
                 max-width: 800px;
                 margin: 0 auto;
                 line-height: 1.8;
+                font-family: 'Outfit', sans-serif;
             }
 
             /* Fade in animations */
@@ -195,7 +206,7 @@
         </style>
 
         <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/themify-icons.css">
@@ -222,11 +233,12 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbar">
                                     <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="./index.html">HOME</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="#home">HOW IT WORKS <span class="sr-only">(current)</span></a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">UPCOMING EVENTS</a> </li>
-                                        <li class="nav-item"><a id="resources" href="./eventfinder.html" class="animsition-link btn btn-outline-light my-3 my-sm-0 ml-lg-3">RESOURCES</a></li>
-                                        <li class="nav-item"><a id="submit" href="./about.html" class="animsition-link btn btn-outline-light my-3 my-sm-0 ml-lg-3">SUBMIT</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
+                                        <li class="nav-item"> <a class="nav-link active" href="#home">How it Works<span class="sr-only">(current)</span></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Impact</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="./eventfinder.html">Resources</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
                                     </ul>
                                 </div>
                             </nav>
@@ -241,9 +253,7 @@
                     <div id="container">
                         <header class="info">
                             <hgroup class="about">
-                                <div class="typewriter">
-                                    <h1>How It Works</h1>
-                                </div>
+                                <h1>How It Works</h1>
                             </hgroup>
                         </header>
                     </div>
@@ -334,9 +344,9 @@
             </div>
 
             <!-- Impact Section -->
-            <div class="intro-section" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 100px 0;">
+            <div class="intro-section" style="background: linear-gradient(135deg, #f0f4ed 0%, #d9e5d4 100%); padding: 100px 0;">
                 <div class="container">
-                    <h2 style="color: #2B32B2; font-size: 42px; margin-bottom: 30px;">Making a Real Difference</h2>
+                    <h2 style="color: #4a6741; font-size: 42px; margin-bottom: 30px;">Making a Real Difference</h2>
                     <p style="font-size: 20px; line-height: 1.9; color: #555; max-width: 900px; margin: 0 auto 30px;">
                         Community Connect isn't just a platform—it's a movement. Every connection made, every hour volunteered, and every project completed creates ripples of positive change throughout our community. Whether you're seeking support or offering your skills, you're part of a network of thousands working together to build a brighter future.
                     </p>
@@ -344,8 +354,8 @@
                         From students finding mentorship to neighbors helping neighbors, from local nonprofits gaining volunteers to families accessing vital resources—Community Connect bridges gaps and strengthens bonds. Join us today and discover how simple it is to make an impact that matters.
                     </p>
                     <div style="margin-top: 50px;">
-                        <a href="./eventfinder.html" class="btn btn-primary" style="margin-right: 15px; padding: 15px 40px; font-weight: 600; font-size: 18px; background: linear-gradient(135deg, #1488CC 0%, #2B32B2 100%); border: none; border-radius: 50px;">Explore Resources</a>
-                        <a href="./about.html" class="btn btn-outline-primary" style="padding: 15px 40px; font-weight: 600; font-size: 18px; border: 2px solid #2B32B2; color: #2B32B2; border-radius: 50px;">Get Started</a>
+                        <a href="./eventfinder.html" class="btn btn-primary" style="margin-right: 15px; padding: 15px 40px; font-weight: 600; font-size: 18px; background: linear-gradient(135deg, #6d8c5f 0%, #91b08a 100%); border: none; border-radius: 50px;">Explore Resources</a>
+                        <a href="./about.html" class="btn btn-outline-primary" style="padding: 15px 40px; font-weight: 600; font-size: 18px; border: 2px solid #4a6741; color: #4a6741; border-radius: 50px;">Get Started</a>
                     </div>
                 </div>
             </div>
@@ -409,7 +419,7 @@
                     };
 
                     var MAX_PARTICLES = 280;
-                    var COLOURS = ['#ecf0f1', '#2980b9', '#273c75'];
+                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
                     var particles = [];
                     var pool = [];
 

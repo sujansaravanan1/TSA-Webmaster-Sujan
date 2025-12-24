@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/impact.css">
         <link rel="stylesheet" href="css/ambient-animation.css">
         <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/themify-icons.css">
         <link rel="stylesheet" href="css/style.css">
@@ -19,6 +19,34 @@
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            #home {
+                height: 100vh;
+                min-height: 100vh;
+                position: relative;
+            }
+
+            .bg-gradient2,
+            .backgrounddiv2 {
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+            }
+
+            .backgrounddiv2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+            }
+        </style>
     </head>
 
     <div id="ani" class="animsition">
@@ -35,11 +63,12 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbar">
                                     <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="index.html#home">HOME</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="cte.html">HOW IT WORKS</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">UPCOMING EVENTS</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="impact.html">OUR IMPACT</a> </li>
-                                        <li class="nav-item"><a id="resources" href="./eventfinder.html" class="animsition-link btn btn-outline-light my-3 my-sm-0 ml-lg-3">RESOURCES</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="./index.html">Home</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="cte.html">How it Works</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
+                                        <li class="nav-item"> <a class="nav-link active" href="#home">Impact<span class="sr-only">(current)</span></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="eventfinder.html">Resources</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="./about.html">Submit</a> </li>
                                     </ul>
                                 </div>
                             </nav>
@@ -54,15 +83,119 @@
                     <div id="container">
                         <header class="info">
                             <hgroup class="about">
-                                <div class="typewriter">
-                                    <h1>Community Impact</h1>
-                                </div>
+                                <h1>Community Impact</h1>
                                 <p class="text-white" style="font-size: 18px; margin-top: 15px;">Making a difference, one step at a time.</p>
                             </hgroup>
                         </header>
                     </div>
                 </div>
             </header>
+
+            <!-- Particle Animation Script -->
+            <script src="./js/sketch.js"></script>
+            <script>
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+                } else {
+                    function Particle(x, y, radius) {
+                        this.init(x, y, radius);
+                    }
+
+                    Particle.prototype = {
+                        init: function(x, y, radius) {
+                            this.alive = true;
+                            this.radius = radius || 10;
+                            this.wander = 0.15;
+                            this.theta = random(TWO_PI);
+                            this.drag = 0.92;
+                            this.color = '#fff';
+                            this.x = x || 0.0;
+                            this.y = y || 0.0;
+                            this.vx = 0.0;
+                            this.vy = 0.0;
+                        },
+
+                        move: function() {
+                            this.x += this.vx;
+                            this.y += this.vy;
+                            this.vx *= this.drag;
+                            this.vy *= this.drag;
+                            this.theta += random(-0.5, 0.5) * this.wander;
+                            this.vx += sin(this.theta) * 0.1;
+                            this.vy += cos(this.theta) * 0.1;
+                            this.radius *= 0.96;
+                            this.alive = this.radius > 0.5;
+                        },
+
+                        draw: function(ctx) {
+                            ctx.beginPath();
+                            ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
+                            ctx.fillStyle = this.color;
+                            ctx.fill();
+                        }
+                    };
+
+                    var MAX_PARTICLES = 280;
+                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
+                    var particles = [];
+                    var pool = [];
+
+                    var demo = Sketch.create({
+                        container: document.getElementById('container'),
+                        retina: 'auto'
+                    });
+
+                    demo.setup = function() {
+                        var i, x, y;
+                        for (i = 0; i < 50; i++) {
+                            x = (demo.width * 0.5) + random(-100, 100);
+                            y = (demo.height * 0.5) + random(-100, 100);
+                            demo.spawn(x, y);
+                        }
+                    };
+
+                    demo.spawn = function(x, y) {
+                        var particle, theta, force;
+                        if (particles.length >= MAX_PARTICLES)
+                            pool.push(particles.shift());
+                        particle = pool.length ? pool.pop() : new Particle();
+                        particle.init(x, y, random(5, 40));
+                        particle.wander = random(0.5, 2.0);
+                        particle.color = random(COLOURS);
+                        particle.drag = random(0.9, 0.99);
+                        theta = random(TWO_PI);
+                        force = random(2, 8);
+                        particle.vx = sin(theta) * force;
+                        particle.vy = cos(theta) * force;
+                        particles.push(particle);
+                    };
+
+                    demo.update = function() {
+                        var i, particle;
+                        for (i = particles.length - 1; i >= 0; i--) {
+                            particle = particles[i];
+                            if (particle.alive) particle.move();
+                            else pool.push(particles.splice(i, 1)[0]);
+                        }
+                    };
+
+                    demo.draw = function() {
+                        demo.globalCompositeOperation = 'lighter';
+                        for (var i = particles.length - 1; i >= 0; i--) {
+                            particles[i].draw(demo);
+                        }
+                    };
+
+                    demo.mousemove = function() {
+                        var particle, theta, force, touch, max, i, j, n;
+                        for (i = 0, n = demo.touches.length; i < n; i++) {
+                            touch = demo.touches[i], max = random(1, 4);
+                            for (j = 0; j < max; j++) {
+                                demo.spawn(touch.x, touch.y);
+                            }
+                        }
+                    }
+                }
+            </script>
 
             <!-- Stats Section -->
             <section class="stats-section">
@@ -177,7 +310,6 @@
             </footer>
 
             <!-- Scripts -->
-            <script src="./js/sketch.js"></script>
             <script src="js/jquery-3.2.1.min.js"></script>
             <script src="./js/bootstrap.bundle.min.js"></script>
             <script src="./js/owl.carousel.min.js"></script>
