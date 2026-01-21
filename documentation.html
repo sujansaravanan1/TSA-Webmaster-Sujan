@@ -3,19 +3,36 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Documentation - Community Connect</title>
+        
+        <!-- Font Awesome MUST be loaded -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+        
+        <!-- Other stylesheets -->
         <link rel="stylesheet" href="css/example.css">
         <link rel="stylesheet" href="css/carousel.css">
+        <link rel="stylesheet" href="css/competitions.css">
         <link rel="stylesheet" href="css/animsition.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel="icon" href="img/icon.png">
+        
+        <!-- Theme CSS - MUST be included -->
+        <link rel="stylesheet" href="css/theme.css">
+        
+        <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Bootstrap and other required styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/themify-icons.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
         
-        <style>
+        <!-- Components JS - Load in head -->
+        <script defer src="js/components.js"></script>
+
+        <style type="text/css">
             html, body {
                 height: 100%;
                 margin: 0;
@@ -26,6 +43,7 @@
                 height: 100vh;
                 min-height: 100vh;
                 position: relative;
+                overflow: hidden;
             }
 
             .bg-gradient2,
@@ -33,12 +51,21 @@
                 height: 100%;
                 width: 100%;
                 background: linear-gradient(to right, #4a6741, #6d8c5f);
+                overflow: hidden;
             }
 
             .backgrounddiv2 {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+
+            #container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
             }
 
             /* PDF Container */
@@ -136,31 +163,21 @@
     <div id="ani" class="animsition">
         <body data-spy="scroll" data-target="#navbar" data-offset="30">
             <!-- Navigation -->
-            <div class="nav-menu fixed-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nav class="navbar navbar-dark navbar-expand-lg">
-                                <a class="navbar-brand" href="index.html#home"><img src="" class="img-fluid" alt=""><b>Community Connect</b></a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbar">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="index.html#home">Home</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="cte.html">How it Works</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="upcoming-events.html">Upcoming Events</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="impact.html">Our Impact</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="eventfinder.html">Resources</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="about.html">Submit</a> </li>
-                                        <li class="nav-item"> <a class="nav-link active" href="documentation.html">Documentation <span class="sr-only">(current)</span></a> </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="navbar-placeholder"></div>
+            <script>
+                fetch('components/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        // Set active state for current page
+                        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            if (link.getAttribute('href') === currentPage) {
+                                link.classList.add('active');
+                            }
+                        });
+                    });
+            </script>
 
             <!-- Hero Section with Particles -->
             <header class="bg-gradient2" id="home">
@@ -292,16 +309,23 @@
                         </div>
 
                         <!-- PDF Viewer -->
-                        <iframe 
-                            src="Work Log.pdf" 
+                        <embed 
+                            src="WorkLog.pdf#toolbar=1&navpanes=1&scrollbar=1" 
                             class="pdf-viewer"
                             type="application/pdf">
-                            <p>Your browser does not support PDFs. Please download the PDF to view it: <a href="Work Log.pdf">Download PDF</a></p>
-                        </iframe>
+                        </embed>
+
+                        <!-- Fallback for browsers that don't support embed -->
+                        <div style="text-align: center; padding: 40px; background: #f0f4ed; border-radius: 10px; margin-top: 20px;">
+                            <p style="font-size: 1.2rem; color: #4a6741; margin-bottom: 20px;">
+                                <i class="fas fa-file-pdf" style="font-size: 3rem; display: block; margin-bottom: 15px;"></i>
+                                If the PDF doesn't display above, please download it using the button below.
+                            </p>
+                        </div>
 
                         <!-- Download Button -->
                         <div class="pdf-download">
-                            <a href="Work Log.pdf" download class="btn-download">
+                            <a href="WorkLog.pdf" download class="btn-download">
                                 <i class="fas fa-download"></i>
                                 Download Work Log
                             </a>
@@ -319,13 +343,12 @@
 
             <!-- Scripts -->
             <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/animsition.min.js"></script>
             <script src="./js/bootstrap.bundle.min.js"></script>
             <script src="./js/owl.carousel.min.js"></script>
             <script src="./js/script.js"></script>
-            <script src="js/animsition.min.js"></script>
 
             <!-- Animsition Script -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
             <script>
                 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
