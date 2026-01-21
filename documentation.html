@@ -1,0 +1,384 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documentation - Community Connect</title>
+        
+        <!-- Font Awesome MUST be loaded -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+        
+        <!-- Other stylesheets -->
+        <link rel="stylesheet" href="css/example.css">
+        <link rel="stylesheet" href="css/carousel.css">
+        <link rel="stylesheet" href="css/competitions.css">
+        <link rel="stylesheet" href="css/animsition.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        <link rel="icon" href="img/icon.png">
+        
+        <!-- Theme CSS - MUST be included -->
+        <link rel="stylesheet" href="css/theme.css">
+        
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Bootstrap and other required styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/themify-icons.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        
+        <!-- Components JS - Load in head -->
+        <script defer src="js/components.js"></script>
+
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                margin: 0;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+            }
+
+            #home {
+                height: 100vh;
+                min-height: 100vh;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .bg-gradient2,
+            .backgrounddiv2 {
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(to right, #4a6741, #6d8c5f);
+                overflow: hidden;
+            }
+
+            .backgrounddiv2 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* PDF Container */
+            .pdf-section {
+                background: white;
+                padding: 60px 0;
+                min-height: calc(100vh - 100px);
+            }
+
+            .pdf-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 40px;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(74, 103, 65, 0.15);
+            }
+
+            .pdf-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .pdf-header h2 {
+                font-size: 2.5rem;
+                font-weight: 600;
+                color: #4a6741;
+                margin-bottom: 15px;
+                font-family: 'Space Grotesk', sans-serif;
+            }
+
+            .pdf-header p {
+                font-size: 1.1rem;
+                color: #666;
+                font-family: 'Outfit', sans-serif;
+            }
+
+            .pdf-viewer {
+                width: 100%;
+                height: 800px;
+                border: 2px solid #d9e5d4;
+                border-radius: 10px;
+                background: #f0f4ed;
+            }
+
+            .pdf-download {
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .btn-download {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 15px 40px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: white;
+                background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
+                border: none;
+                border-radius: 50px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                font-family: 'Outfit', sans-serif;
+            }
+
+            .btn-download:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(74, 103, 65, 0.4);
+                color: white;
+            }
+
+            .btn-download i {
+                font-size: 1.2rem;
+            }
+
+            @media (max-width: 768px) {
+                .pdf-container {
+                    padding: 20px;
+                }
+
+                .pdf-header h2 {
+                    font-size: 2rem;
+                }
+
+                .pdf-viewer {
+                    height: 600px;
+                }
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+    </head>
+
+    <div id="ani" class="animsition">
+        <body data-spy="scroll" data-target="#navbar" data-offset="30">
+            <!-- Navigation -->
+            <div id="navbar-placeholder"></div>
+            <script>
+                fetch('components/navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-placeholder').innerHTML = data;
+                        // Set active state for current page
+                        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            if (link.getAttribute('href') === currentPage) {
+                                link.classList.add('active');
+                            }
+                        });
+                    });
+            </script>
+
+            <!-- Hero Section with Particles -->
+            <header class="bg-gradient2" id="home">
+                <div class="backgrounddiv2">
+                    <div id="container">
+                        <header class="info">
+                            <hgroup class="about">
+                                <h1>Documentation</h1>
+                                <p class="text-white" style="font-size: 18px; margin-top: 15px;">Project work log and development history</p>
+                            </hgroup>
+                        </header>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Particle Animation Script -->
+            <script src="./js/sketch.js"></script>
+            <script>
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+                } else {
+                    function Particle(x, y, radius) {
+                        this.init(x, y, radius);
+                    }
+
+                    Particle.prototype = {
+                        init: function(x, y, radius) {
+                            this.alive = true;
+                            this.radius = radius || 10;
+                            this.wander = 0.15;
+                            this.theta = random(TWO_PI);
+                            this.drag = 0.92;
+                            this.color = '#fff';
+                            this.x = x || 0.0;
+                            this.y = y || 0.0;
+                            this.vx = 0.0;
+                            this.vy = 0.0;
+                        },
+
+                        move: function() {
+                            this.x += this.vx;
+                            this.y += this.vy;
+                            this.vx *= this.drag;
+                            this.vy *= this.drag;
+                            this.theta += random(-0.5, 0.5) * this.wander;
+                            this.vx += sin(this.theta) * 0.1;
+                            this.vy += cos(this.theta) * 0.1;
+                            this.radius *= 0.96;
+                            this.alive = this.radius > 0.5;
+                        },
+
+                        draw: function(ctx) {
+                            ctx.beginPath();
+                            ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
+                            ctx.fillStyle = this.color;
+                            ctx.fill();
+                        }
+                    };
+
+                    var MAX_PARTICLES = 280;
+                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
+                    var particles = [];
+                    var pool = [];
+
+                    var demo = Sketch.create({
+                        container: document.getElementById('container'),
+                        retina: 'auto'
+                    });
+
+                    demo.setup = function() {
+                        var i, x, y;
+                        for (i = 0; i < 50; i++) {
+                            x = (demo.width * 0.5) + random(-100, 100);
+                            y = (demo.height * 0.5) + random(-100, 100);
+                            demo.spawn(x, y);
+                        }
+                    };
+
+                    demo.spawn = function(x, y) {
+                        var particle, theta, force;
+                        if (particles.length >= MAX_PARTICLES)
+                            pool.push(particles.shift());
+                        particle = pool.length ? pool.pop() : new Particle();
+                        particle.init(x, y, random(5, 40));
+                        particle.wander = random(0.5, 2.0);
+                        particle.color = random(COLOURS);
+                        particle.drag = random(0.9, 0.99);
+                        theta = random(TWO_PI);
+                        force = random(2, 8);
+                        particle.vx = sin(theta) * force;
+                        particle.vy = cos(theta) * force;
+                        particles.push(particle);
+                    };
+
+                    demo.update = function() {
+                        var i, particle;
+                        for (i = particles.length - 1; i >= 0; i--) {
+                            particle = particles[i];
+                            if (particle.alive) particle.move();
+                            else pool.push(particles.splice(i, 1)[0]);
+                        }
+                    };
+
+                    demo.draw = function() {
+                        demo.globalCompositeOperation = 'lighter';
+                        for (var i = particles.length - 1; i >= 0; i--) {
+                            particles[i].draw(demo);
+                        }
+                    };
+
+                    demo.mousemove = function() {
+                        var particle, theta, force, touch, max, i, j, n;
+                        for (i = 0, n = demo.touches.length; i < n; i++) {
+                            touch = demo.touches[i], max = random(1, 4);
+                            for (j = 0; j < max; j++) {
+                                demo.spawn(touch.x, touch.y);
+                            }
+                        }
+                    }
+                }
+            </script>
+
+            <!-- PDF Section -->
+            <section class="pdf-section">
+                <div class="container">
+                    <div class="pdf-container">
+                        <div class="pdf-header">
+                            <h2>Work Log</h2>
+                            <p>Complete project development history and timeline</p>
+                        </div>
+
+                        <!-- PDF Viewer -->
+                        <embed 
+                            src="WorkLog.pdf#toolbar=1&navpanes=1&scrollbar=1" 
+                            class="pdf-viewer"
+                            type="application/pdf">
+                        </embed>
+
+                        <!-- Fallback for browsers that don't support embed -->
+                        <div style="text-align: center; padding: 40px; background: #f0f4ed; border-radius: 10px; margin-top: 20px;">
+                            <p style="font-size: 1.2rem; color: #4a6741; margin-bottom: 20px;">
+                                <i class="fas fa-file-pdf" style="font-size: 3rem; display: block; margin-bottom: 15px;"></i>
+                                If the PDF doesn't display above, please download it using the button below.
+                            </p>
+                        </div>
+
+                        <!-- Download Button -->
+                        <div class="pdf-download">
+                            <a href="WorkLog.pdf" download class="btn-download">
+                                <i class="fas fa-download"></i>
+                                Download Work Log
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="my-5 text-center">
+                <small>
+                    <a href="" class="text-white" style="text-decoration:none">Community Connect © 2025. Building stronger communities together.</a>
+                </small>
+            </footer>
+
+            <!-- Scripts -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <script src="js/animsition.min.js"></script>
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script src="./js/owl.carousel.min.js"></script>
+            <script src="./js/script.js"></script>
+
+            <!-- Animsition Script -->
+            <script>
+                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+                if (isChrome) {
+                    $(document).ready(function() {
+                        $(".animsition").animsition({
+                            inClass: 'zoom-in',
+                            outClass: 'zoom-out',
+                            inDuration: 1500,
+                            outDuration: 800,
+                            linkElement: '.animsition-link',
+                            loading: true,
+                            loadingParentElement: 'body',
+                            loadingClass: 'animsition-loading',
+                            loadingInner: '',
+                            timeout: false,
+                            timeoutCountdown: 5000,
+                            onLoadEvent: true,
+                            browser: ['animation-duration', '-webkit-animation-duration'],
+                            overlay: false,
+                            overlayClass: 'animsition-overlay-slide',
+                            overlayParentElement: 'body',
+                            transition: function(url) {
+                                window.location.href = url;
+                            }
+                        });
+                    });
+                }
+            </script>
+
+        </body>
+    </div>
+</html>
