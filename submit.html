@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Resource – Community Connect</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Bootstrap + Animsition -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animsition.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/icon.png">
+
+    <script defer src="js/components.js"></script>
+
+
+
+    <style>
+        /* ============================================
+           VARIABLES
+        ============================================ */
+        :root {
+            --green-deep:  #2d4a28;
+            --green-mid:   #4a6741;
+            --green-light: #6d8c5f;
+            --green-pale:  #91b08a;
+            --green-wash:  #d9e5d4;
+            --green-mist:  #f0f4ed;
+            --white:       #ffffff;
+            --text-dark:   #1a2718;
+            --text-body:   #3d5038;
+            --text-muted:  #7a9171;
+            --section-bg:  #f8fbf7;
+            --radius-md:   14px;
+            --radius-lg:   24px;
+            --transition:  all 0.3s cubic-bezier(0.4,0,0.2,1);
+            --error:       #dc3545;
+            --success:     #28a745;
+        }
+
+        [data-theme="dark"] {
+            --white:      #0f1a0e;
+            --text-dark:  #e8f0e6;
+            --text-body:  #b8c8b5;
+            --text-muted: #7a9171;
+            --section-bg: #131f11;
+            --green-mist: #182416;
+            --green-wash: #263d22;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           HERO
+        ============================================ */
+        .submit-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2d4a28 0%, #4a6741 55%, #6d8c5f 100%);
+        }
+
+        .hero-bg-mesh {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse at 20% 35%, rgba(145,176,138,0.3) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 65%, rgba(45,74,40,0.55) 0%, transparent 50%);
+        }
+
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            pointer-events: none;
+            animation: orbFloat ease-in-out infinite;
+        }
+        .hero-orb-1 { width:340px;height:340px;top:-90px;right:6%;animation-duration:13s; }
+        .hero-orb-2 { width:160px;height:160px;bottom:-30px;left:7%;animation-duration:9s;animation-delay:-3s; }
+        .hero-orb-3 { width:90px;height:90px;top:38%;left:20%;animation-duration:7s;animation-delay:-1s;background:rgba(145,176,138,0.1); }
+
+        @keyframes orbFloat {
+            0%,100% { transform:translateY(0) scale(1); }
+            50% { transform:translateY(-24px) scale(1.04); }
+        }
+
+        .submit-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 48px 20px;
+            max-width: 680px;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero-eyebrow .dot {
+            width:6px;height:6px;border-radius:50%;
+            background:#91b08a;animation:dotPulse 2s ease infinite;
+        }
+
+        @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);} }
+
+        .submit-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(38px, 5.5vw, 66px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+
+        .submit-hero p {
+            font-size: clamp(15px, 2vw, 17px);
+            color: rgba(255,255,255,0.75);
+            line-height: 1.65;
+            margin-bottom: 36px;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+
+        /* Process steps in hero */
+        .hero-steps {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+
+        .hero-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        .hero-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: 14px;
+            width: 2px;
+            height: 28px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .step-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.65);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* ============================================
+           FORM SECTION
+        ============================================ */
+        .form-section {
+            background: var(--section-bg);
+            padding: 80px 0 96px;
+        }
+
+        .form-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* ---- MAIN FORM CARD ---- */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--green-wash);
+            overflow: visible;
+            box-shadow: 0 4px 32px rgba(74,103,65,0.08);
+        }
+
+        .form-card-header {
+            padding: 32px 40px 0;
+            border-bottom: 1px solid var(--green-wash);
+            padding-bottom: 28px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .form-card-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-card-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .form-card-body {
+            padding: 36px 40px;
+        }
+
+        /* Section dividers within form */
+        .form-section-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            margin-top: 32px;
+        }
+
+        .form-section-label:first-of-type { margin-top: 0; }
+
+        .form-section-label .fsl-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .form-section-label span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Two-column row */
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+
+        .required-star { color: var(--error); }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            background: var(--green-mist);
+            border: 2px solid var(--green-wash);
+            border-radius: var(--radius-md);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--green-light);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(109,140,95,0.1);
+        }
+
+        .form-control::placeholder { color: var(--text-muted); font-style: italic; }
+
+        .form-control.is-invalid {
+            border-color: var(--error);
+            background: #fff5f5;
+        }
+
+        .form-control.is-valid {
+            border-color: var(--success);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.6;
+        }
+
+        select.form-control { cursor: pointer; }
+        .form-row-2 .form-group { position: relative; z-index: 1; }
+        .form-row-2 .form-group:focus-within { z-index: 10; }
+        select.form-control:focus { position: relative; z-index: 10; }
+
+        /* Error / hint */
+        .field-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .field-error {
+            font-size: 12px;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        .field-error.visible { display: flex; }
+
+        .char-counter {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .char-counter.warn { color: #e8960c; font-weight: 600; }
+        .char-counter.over { color: var(--error); font-weight: 700; }
+
+        /* Submit button */
+        .btn-submit {
+            width: 100%;
+            padding: 16px 28px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(74,103,65,0.35);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Success state */
+        .success-view {
+            display: none;
+            text-align: center;
+            padding: 64px 40px;
+        }
+
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            margin: 0 auto 24px;
+            animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+        }
+
+        @keyframes popIn { from{opacity:0;transform:scale(0.6);}to{opacity:1;transform:scale(1);} }
+
+        .success-view h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .success-view p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 360px;
+            margin: 0 auto 30px;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-success-primary {
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-success-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(74,103,65,0.3); color:#fff; }
+
+        .btn-success-outline {
+            background: var(--green-mist);
+            color: var(--green-mid);
+            border: 2px solid var(--green-wash);
+            border-radius: var(--radius-md);
+            padding: 12px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-success-outline:hover { border-color:var(--green-light); color:var(--green-deep); }
+
+        /* Shake animation */
+        @keyframes shake {
+            0%,100% { transform:translateX(0); }
+            20%,60% { transform:translateX(-8px); }
+            40%,80% { transform:translateX(8px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+
+        /* ---- SIDEBAR ---- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--green-wash);
+            padding: 24px;
+            box-shadow: 0 2px 16px rgba(74,103,65,0.06);
+        }
+
+        .sidebar-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-card h4 i {
+            color: var(--green-light);
+            font-size: 14px;
+        }
+
+        /* Review checklist */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        .check-item i {
+            color: var(--green-pale);
+            font-size: 12px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Category guide */
+        .cat-guide {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .cat-guide-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-body);
+        }
+
+        .cat-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .cat-Education    { background: linear-gradient(135deg,#1a3d6b,#2d6b9a); }
+        .cat-Career       { background: linear-gradient(135deg,#4a1a6b,#7a2d9a); }
+        .cat-Health       { background: linear-gradient(135deg,#1a4d3a,#2d8c60); }
+        .cat-Volunteering { background: linear-gradient(135deg,#4a6741,#91b08a); }
+        .cat-Community    { background: linear-gradient(135deg,#6b3a1a,#9a6b2d); }
+        .cat-Events       { background: linear-gradient(135deg,#1a4a6b,#2d7a9a); }
+
+        /* Stats card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            border-radius: var(--radius-md);
+            padding: 14px 12px;
+            text-align: center;
+        }
+
+        .stat-box .s-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--green-mid);
+            line-height: 1;
+            display: block;
+        }
+
+        .stat-box .s-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ============================================
+           DARK MODE
+        ============================================ */
+        [data-theme="dark"] .form-card,
+        [data-theme="dark"] .sidebar-card {
+            background: #182416;
+            border-color: #263d22;
+        }
+
+        [data-theme="dark"] .form-control {
+            background: #1e2e1c;
+            border-color: #263d22;
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .form-control:focus {
+            background: #182416;
+        }
+
+        [data-theme="dark"] .stat-box { background: #1e2e1c; border-color: #263d22; }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 900px) {
+            .form-layout { grid-template-columns: 1fr; }
+            .sidebar { order: -1; display: grid; grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .form-card-header, .form-card-body { padding: 24px 22px; }
+            .form-row-2 { grid-template-columns: 1fr; }
+            .sidebar { grid-template-columns: 1fr; }
+            .hero-steps { gap: 0; }
+            .hero-step { padding: 0 14px; }
+        }
+    
+        /* ============================================
+           CUSTOM SCROLLBAR
+        ============================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--green-mist);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--green-mid), var(--green-pale));
+            border-radius: 4px;
+            border: 2px solid var(--green-mist);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--green-deep), var(--green-mid));
+        }
+
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: var(--green-mid) var(--green-mist);
+        }
+</style>
+</head>
+
+<body>
+<div id="navbar-placeholder"></div>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="submit-hero" id="home">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="submit-hero-content">
+        <div class="hero-eyebrow">
+            <span class="dot"></span>
+            Help Grow Our Directory
+        </div>
+        <h1>Submit a Resource</h1>
+        <p>Know of a program or service that's making a difference? Share it with the community. Every submission is reviewed and listed in our free directory.</p>
+
+        <div class="hero-steps">
+            <div class="hero-step">
+                <div class="step-num">1</div>
+                <span class="step-label">Fill the Form</span>
+            </div>
+            <div class="hero-step">
+                <div class="step-num">2</div>
+                <span class="step-label">We Review</span>
+            </div>
+            <div class="hero-step">
+                <div class="step-num">3</div>
+                <span class="step-label">Goes Live</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     FORM SECTION
+============================================ -->
+<div class="form-section">
+    <div class="container">
+        <div class="form-layout">
+
+            <!-- MAIN FORM -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <h2>Resource Details</h2>
+                    <p>Fields marked with <span style="color:var(--error)">*</span> are required. All submissions are reviewed within 48 hours.</p>
+                </div>
+
+                <div class="form-card-body">
+
+                    <!-- SUCCESS VIEW -->
+                    <div class="success-view" id="successView">
+                        <div class="success-icon-wrap">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h2>Resource Added!</h2>
+                        <p>Your resource has been added to the Bothell Community Resource Hub. Head over to browse it alongside all other resources.</p>
+                        <div class="success-actions">
+                            <button class="btn-success-primary" onclick="resetForm()">
+                                <i class="fas fa-plus"></i> Submit Another
+                            </button>
+                            <a href="eventfinder.html" class="btn-success-primary">
+                                <i class="fas fa-th-large"></i> Browse Resources
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- FORM -->
+                    <form id="submitForm" novalidate>
+
+                        <!-- About the Resource -->
+                        <div class="form-section-label">
+                            <div class="fsl-icon"><i class="fas fa-info-circle"></i></div>
+                            <span>About the Resource</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resourceName">Resource Name <span class="required-star">*</span></label>
+                            <input type="text" id="resourceName" class="form-control" placeholder="e.g., Community Food Bank" autocomplete="off">
+                            <div class="field-error" id="err-resourceName"><i class="fas fa-exclamation-circle"></i> Please enter a resource name</div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="category">Category <span class="required-star">*</span></label>
+                                <select id="category" class="form-control">
+                                    <option value="">Select a category…</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Career">Career</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Volunteering">Volunteering</option>
+                                    <option value="Community Projects">Community Projects</option>
+                                    <option value="Events">Events</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="field-error" id="err-category"><i class="fas fa-exclamation-circle"></i> Please select a category</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="audience">Audience</label>
+                                <select id="audience" class="form-control">
+                                    <option value="">Who does it serve?</option>
+                                    <option value="All ages">All ages</option>
+                                    <option value="Children (under 12)">Children (under 12)</option>
+                                    <option value="Youth (12–18)">Youth (12–18)</option>
+                                    <option value="Adults">Adults</option>
+                                    <option value="Seniors (60+)">Seniors (60+)</option>
+                                    <option value="Families">Families</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description <span class="required-star">*</span></label>
+                            <textarea id="description" class="form-control" maxlength="500" placeholder="Describe the resource — what it offers, who it serves, and what makes it valuable to the community…"></textarea>
+                            <div class="char-counter" id="charCount">0 / 500</div>
+                            <div class="field-error" id="err-description"><i class="fas fa-exclamation-circle"></i> Please provide a description</div>
+                        </div>
+
+                        <!-- Contact & Location -->
+                        <div class="form-section-label">
+                            <div class="fsl-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <span>Contact & Location</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="(555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label for="website">Website or Email</label>
+                                <input type="text" id="website" class="form-control" placeholder="https://example.org">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Address or Location</label>
+                            <input type="text" id="location" class="form-control" placeholder="123 Main St, or 'Multiple locations'">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hours">Hours / Availability</label>
+                            <input type="text" id="hours" class="form-control" placeholder="e.g., Mon–Fri 9AM–5PM, Walk-ins welcome">
+                        </div>
+
+                        <!-- Your Information -->
+                        <div class="form-section-label">
+                            <div class="fsl-icon"><i class="fas fa-user"></i></div>
+                            <span>Your Information</span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="yourName">Your Name <span class="required-star">*</span></label>
+                                <input type="text" id="yourName" class="form-control" placeholder="First and last name" autocomplete="name">
+                                <div class="field-error" id="err-yourName"><i class="fas fa-exclamation-circle"></i> Please enter your name</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="yourEmail">Your Email <span class="required-star">*</span></label>
+                                <input type="email" id="yourEmail" class="form-control" placeholder="your@email.com" autocomplete="email">
+                                <div class="field-error" id="err-yourEmail"><i class="fas fa-exclamation-circle"></i> Please enter a valid email</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="relation">Your Relation to This Resource</label>
+                            <select id="relation" class="form-control">
+                                <option value="">How do you know about this resource?</option>
+                                <option value="I work here">I work here</option>
+                                <option value="I volunteer here">I volunteer here</option>
+                                <option value="I've used this resource">I've used this resource</option>
+                                <option value="Someone recommended it to me">Someone recommended it to me</option>
+                                <option value="I found it online">I found it online</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Resource
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+
+                <!-- What to expect -->
+                <div class="sidebar-card">
+                    <h4><i class="fas fa-clipboard-check"></i> What Happens Next</h4>
+                    <div class="checklist">
+                        <div class="check-item"><i class="fas fa-check-circle"></i><span>We receive and log your submission immediately.</span></div>
+                        <div class="check-item"><i class="fas fa-check-circle"></i><span>Our team reviews it within 48 hours for accuracy and relevance.</span></div>
+                        <div class="check-item"><i class="fas fa-check-circle"></i><span>If approved, it's added to the Resource Hub directory.</span></div>
+                        <div class="check-item"><i class="fas fa-check-circle"></i><span>We may contact you at your email if we have questions.</span></div>
+                    </div>
+                </div>
+
+                <!-- Category guide -->
+                <div class="sidebar-card">
+                    <h4><i class="fas fa-tags"></i> Category Guide</h4>
+                    <div class="cat-guide">
+                        <div class="cat-guide-item"><div class="cat-dot cat-Education"><i class="fas fa-graduation-cap"></i></div><span><strong>Education</strong> — Tutoring, scholarships, mentorship</span></div>
+                        <div class="cat-guide-item"><div class="cat-dot cat-Career"><i class="fas fa-briefcase"></i></div><span><strong>Career</strong> — Jobs, internships, workshops</span></div>
+                        <div class="cat-guide-item"><div class="cat-dot cat-Health"><i class="fas fa-heartbeat"></i></div><span><strong>Health</strong> — Clinics, wellness, mental health</span></div>
+                        <div class="cat-guide-item"><div class="cat-dot cat-Volunteering"><i class="fas fa-hands-helping"></i></div><span><strong>Volunteering</strong> — Service, cleanup, companions</span></div>
+                        <div class="cat-guide-item"><div class="cat-dot cat-Community"><i class="fas fa-seedling"></i></div><span><strong>Community</strong> — Projects, gardens, libraries</span></div>
+                        <div class="cat-guide-item"><div class="cat-dot cat-Events"><i class="fas fa-calendar-alt"></i></div><span><strong>Events</strong> — Fairs, meetings, drives</span></div>
+                    </div>
+                </div>
+
+                <!-- Impact stats -->
+                <div class="sidebar-card">
+                    <h4><i class="fas fa-chart-bar"></i> Directory Impact</h4>
+                    <div class="stats-grid">
+                        <div class="stat-box"><span class="s-val">500+</span><span class="s-label">Resources Listed</span></div>
+                        <div class="stat-box"><span class="s-val">48h</span><span class="s-label">Review Time</span></div>
+                        <div class="stat-box"><span class="s-val">12k+</span><span class="s-label">Monthly Visitors</span></div>
+                        <div class="stat-box"><span class="s-val">100%</span><span class="s-label">Free to List</span></div>
+                    </div>
+                </div>
+
+                <!-- Contact us directly -->
+                <!-- Gmail procedure info -->
+                <div class="sidebar-card" style="background: linear-gradient(135deg, #1a3d14, #2d6b28); border-color: rgba(145,176,138,0.3);">
+                    <h4 style="color:#fff;"><i class="fas fa-envelope" style="color:#91b08a;"></i> How Submissions Work</h4>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        <div style="display:flex;align-items:flex-start;gap:10px;">
+                            <div style="width:22px;height:22px;border-radius:50%;background:rgba(145,176,138,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:#91b08a;margin-top:1px;">1</div>
+                            <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6;margin:0;">You submit the form. Your entry is saved to our database and a notification is sent to our team.</p>
+                        </div>
+                        <div style="display:flex;align-items:flex-start;gap:10px;">
+                            <div style="width:22px;height:22px;border-radius:50%;background:rgba(145,176,138,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:#91b08a;margin-top:1px;">2</div>
+                            <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6;margin:0;">Our team reviews it at <strong style="color:#91b08a;">communityconnect.bothell@gmail.com</strong> within 48 hours.</p>
+                        </div>
+                        <div style="display:flex;align-items:flex-start;gap:10px;">
+                            <div style="width:22px;height:22px;border-radius:50%;background:rgba(145,176,138,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:#91b08a;margin-top:1px;">3</div>
+                            <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6;margin:0;">Once approved it automatically appears in the <a href="eventfinder.html" style="color:#91b08a;font-weight:700;">Bothell Resource Hub</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="sidebar-card">
+                    <h4><i class="fas fa-envelope"></i> Questions?</h4>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">If you have trouble with the form or want to submit by email, reach us directly.</p>
+                    <a href="mailto:communityconnect.bothell@gmail.com" style="font-size:13px;color:var(--green-mid);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:7px;margin-bottom:8px;"><i class="fas fa-envelope" style="font-size:12px;"></i>communityconnect.bothell@gmail.com</a>
+                    <a href="tel:+11234567890" style="font-size:13px;color:var(--green-mid);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:7px;"><i class="fas fa-phone" style="font-size:12px;"></i>(425) 806-6600</a>
+                </div>
+
+            </div><!-- /.sidebar -->
+
+        </div><!-- /.form-layout -->
+    </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<!-- Scripts -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script src="js/components.js"></script>
+
+<script>
+// ===== CHARACTER COUNTER =====
+document.getElementById('description').addEventListener('input', function() {
+    const len = this.value.length;
+    const el = document.getElementById('charCount');
+    el.textContent = len + ' / 500';
+    el.className = 'char-counter' + (len > 450 ? ' warn' : '') + (len >= 500 ? ' over' : '');
+});
+
+// ===== LIVE VALIDATION HELPERS =====
+function showError(id) {
+    const field = document.getElementById(id);
+    const err = document.getElementById('err-' + id);
+    if (field) field.classList.add('is-invalid');
+    if (err) err.classList.add('visible');
+}
+
+function clearError(id) {
+    const field = document.getElementById(id);
+    const err = document.getElementById('err-' + id);
+    if (field) { field.classList.remove('is-invalid'); field.classList.add('is-valid'); }
+    if (err) err.classList.remove('visible');
+}
+
+// Clear errors on input
+['resourceName','category','description','yourName','yourEmail'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => clearError(id));
+    if (el) el.addEventListener('change', () => clearError(id));
+});
+
+// ===== FORM SUBMIT =====
+document.getElementById('submitForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Reset
+    ['resourceName','category','description','yourName','yourEmail'].forEach(id => {
+        const f = document.getElementById(id);
+        if (f) { f.classList.remove('is-invalid','is-valid'); }
+        const err = document.getElementById('err-' + id);
+        if (err) err.classList.remove('visible');
+    });
+
+    let valid = true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!document.getElementById('resourceName').value.trim()) { showError('resourceName'); valid = false; }
+    if (!document.getElementById('category').value) { showError('category'); valid = false; }
+    if (!document.getElementById('description').value.trim()) { showError('description'); valid = false; }
+    if (!document.getElementById('yourName').value.trim()) { showError('yourName'); valid = false; }
+    if (!emailRegex.test(document.getElementById('yourEmail').value.trim())) { showError('yourEmail'); valid = false; }
+
+    if (!valid) {
+        this.classList.add('shake');
+        setTimeout(() => this.classList.remove('shake'), 400);
+        // Focus first invalid
+        const first = this.querySelector('.is-invalid');
+        if (first) { first.scrollIntoView({ behavior:'smooth', block:'center' }); first.focus(); }
+        return;
+    }
+
+    // Submitting state
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
+    btn.disabled = true;
+
+    // ── Build resource object ──
+    const iconMap = {
+        'Education':          'fa-graduation-cap',
+        'Career':             'fa-briefcase',
+        'Health':             'fa-heartbeat',
+        'Volunteering':       'fa-hands-helping',
+        'Community Projects': 'fa-seedling',
+        'Events':             'fa-calendar-alt',
+        'Other':              'fa-star'
+    };
+    const cat = document.getElementById('category').value;
+
+    const newResource = {
+        title:          document.getElementById('resourceName').value.trim(),
+        category:       cat,
+        icon:           iconMap[cat] || 'fa-star',
+        description:    document.getElementById('description').value.trim(),
+        phone:          document.getElementById('phone').value.trim()    || 'Contact via email',
+        email:          document.getElementById('website').value.trim()  || '',
+        location:       document.getElementById('location').value.trim() || 'Bothell, WA',
+        hours:          document.getElementById('hours').value.trim()    || 'See website or call',
+        user_submitted: true,
+        submitted_at:   new Date().toISOString()
+    };
+
+    // ── Write to Supabase (cross-device, real-time) ──
+    const SUPABASE_URL = 'https://hcibttszplptswcefbfp.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjaWJ0dHN6cGxwdHN3Y2VmYmZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MDU3NTcsImV4cCI6MjA4NzI4MTc1N30.wn9CvXNsWGTM4lTOVDLbj8Ag5BrsDpelEZtP-0Wk9Ro';
+
+    async function saveResource() {
+        try {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/resources`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type':  'application/json',
+                    'apikey':        SUPABASE_KEY,
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Prefer':        'return=representation'
+                },
+                body: JSON.stringify(newResource)
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            console.log('Saved to Supabase ✅');
+        } catch (err) {
+            console.warn('Supabase write failed, using localStorage:', err.message);
+            try {
+                const existing = JSON.parse(localStorage.getItem('cc_resources') || '[]');
+                existing.push(newResource);
+                localStorage.setItem('cc_resources', JSON.stringify(existing));
+            } catch(e2) { /* ignore */ }
+        }
+
+        // Always show success
+        document.getElementById('submitForm').style.display = 'none';
+        const sv = document.getElementById('successView');
+        sv.style.display = 'block';
+        sv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    saveResource();
+});
+
+// ===== RESET =====
+function resetForm() {
+    document.getElementById('submitForm').reset();
+    document.getElementById('charCount').textContent = '0 / 500';
+    document.getElementById('charCount').className = 'char-counter';
+    ['resourceName','category','description','yourName','yourEmail'].forEach(id => {
+        const f = document.getElementById(id);
+        if (f) f.classList.remove('is-invalid','is-valid');
+        const err = document.getElementById('err-' + id);
+        if (err) err.classList.remove('visible');
+    });
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Resource';
+    btn.disabled = false;
+    document.getElementById('successView').style.display = 'none';
+    document.getElementById('submitForm').style.display = 'block';
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== ANIMSITION =====
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+if (isChrome && typeof $ !== 'undefined') {
+    $(document).ready(function() {
+        $(".animsition").animsition({
+            inClass:'zoom-in',outClass:'zoom-out',
+            inDuration:1500,outDuration:800,
+            linkElement:'.animsition-link',
+            loading:true,loadingParentElement:'body',
+            loadingClass:'animsition-loading',loadingInner:'',
+            timeout:false,timeoutCountdown:5000,onLoadEvent:true,
+            browser:['animation-duration','-webkit-animation-duration'],
+            overlay:false,overlayClass:'animsition-overlay-slide',
+            overlayParentElement:'body',
+            transition:function(url){window.location.href=url;}
+        });
+    });
+}
+</script>
+</body>
+</html>

@@ -1,983 +1,1453 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Connect - Resource Hub</title>
-    <link rel="icon" href="img/icon.png">
+    <title>Resource Hub – Community Connect</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- Bootstrap & Styles -->
+    <!-- Bootstrap + Animsition -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/example.css">
-    <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/animsition.min.css">
-    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/icon.png">
 
-    <!-- Spotlight CSS (Task 1) -->
-    <link rel="stylesheet" href="css/spotlight.css">
+    <script defer src="js/components.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Firebase config — replace with your actual values from Firebase Console
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadSubmittedResources() {
+            try {
+                // Load approved submissions from Firestore
+                const q = query(
+                    collection(db, 'submissions'),
+                    where('status', '==', 'approved')
+                );
+                const snapshot = await getDocs(q);
+
+                const submitted = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    submitted.push({
+                        title:       d.title       || 'Community Resource',
+                        category:    d.category    || 'Community Projects',
+                        icon:        getCategoryIcon(d.category),
+                        description: d.description || '',
+                        phone:       d.phone       || '',
+                        email:       d.email       || '',
+                        hours:       d.hours       || '',
+                        location:    d.location    || 'Bothell, WA',
+                        fromFirebase: true
+                    });
+                });
+
+                if (submitted.length > 0) {
+                    // Merge with static resources array
+                    if (window.resourcesData) {
+                        window.resourcesData.push(...submitted);
+                        if (window.renderResources) window.renderResources();
+                    } else {
+                        window.pendingFirebaseResources = submitted;
+                    }
+                }
+
+                // Update count badge
+                const countEl = document.querySelector('.hub-hero .hero-eyebrow');
+                if (countEl && submitted.length > 0) {
+                    const total = (window.resourcesData?.length || 15) + submitted.length;
+                    countEl.textContent = total + '+ Resources';
+                }
+            } catch (err) {
+                console.log('Firestore load skipped (not configured):', err.message);
+            }
+        }
+
+        function getCategoryIcon(cat) {
+            const map = {
+                'Education': 'fa-graduation-cap',
+                'Career': 'fa-briefcase',
+                'Health': 'fa-heartbeat',
+                'Volunteering': 'fa-hands-helping',
+                'Community Projects': 'fa-seedling',
+                'Events': 'fa-calendar-alt'
+            };
+            return map[cat] || 'fa-star';
+        }
+
+        // Run after DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadSubmittedResources);
+        } else {
+            loadSubmittedResources();
+        }
+    </script>
 
     <style>
+        /* ============================================
+           VARIABLES
+        ============================================ */
+        :root {
+            --green-deep:  #2d4a28;
+            --green-mid:   #4a6741;
+            --green-light: #6d8c5f;
+            --green-pale:  #91b08a;
+            --green-wash:  #d9e5d4;
+            --green-mist:  #f0f4ed;
+            --white:       #ffffff;
+            --text-dark:   #1a2718;
+            --text-body:   #3d5038;
+            --text-muted:  #7a9171;
+            --section-bg:  #f8fbf7;
+            --radius-md:   14px;
+            --radius-lg:   24px;
+            --transition:  all 0.3s cubic-bezier(0.4,0,0.2,1);
+            --card-shadow: 0 4px 24px rgba(74,103,65,0.10);
+        }
+
+        [data-theme="dark"] {
+            --white:      #0f1a0e;
+            --text-dark:  #e8f0e6;
+            --text-body:  #b8c8b5;
+            --text-muted: #7a9171;
+            --section-bg: #131f11;
+            --green-mist: #182416;
+            --green-wash: #263d22;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(to right, #4a6741, #6d8c5f);
-            min-height: 100vh;
+            background: var(--white);
+            color: var(--text-dark);
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated Background Shapes */
-        .bg-shape {
-            position: fixed;
+        /* ============================================
+           HERO
+        ============================================ */
+        .hub-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2d4a28 0%, #4a6741 50%, #6d8c5f 100%);
+        }
+
+        .hub-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse at 20% 30%, rgba(145,176,138,0.3) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(45,74,40,0.6) 0%, transparent 50%);
+        }
+
+        /* animated floating nodes */
+        .hero-node {
+            position: absolute;
             border-radius: 50%;
-            opacity: 0.08;
+            background: rgba(255,255,255,0.06);
             pointer-events: none;
-            z-index: 0;
+            animation: nodeFloat ease-in-out infinite;
+        }
+        .hero-node-1 { width:320px;height:320px;top:-80px;right:5%;animation-duration:14s; }
+        .hero-node-2 { width:180px;height:180px;bottom:-40px;left:5%;animation-duration:10s;animation-delay:-4s; }
+        .hero-node-3 { width:100px;height:100px;top:40%;left:22%;animation-duration:8s;animation-delay:-2s;background:rgba(145,176,138,0.1); }
+
+        @keyframes nodeFloat {
+            0%,100% { transform:translateY(0) scale(1); }
+            50% { transform:translateY(-28px) scale(1.04); }
         }
 
-        .shape-1 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #4a6741, #6d8c5f);
-            top: -100px;
-            left: -100px;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .shape-2 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #6d8c5f, #91b08a);
-            top: 40%;
-            right: -80px;
-            animation: float 15s ease-in-out infinite reverse;
-        }
-
-        .shape-3 {
-            width: 250px;
-            height: 250px;
-            background: linear-gradient(135deg, #4a6741, #91b08a);
-            bottom: -80px;
-            left: 20%;
-            animation: float 18s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -50px) rotate(120deg); }
-            66% { transform: translate(-20px, 40px) rotate(240deg); }
-        }
-
-        /* White Section for Content */
-        .form-section {
-            background: white;
-            padding: 80px 0;
-            margin-top: 0;
+        .hub-hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 780px;
         }
 
-        /* Search Section */
-        .search-section {
-            max-width: 900px;
-            margin: 0 auto 50px auto;
-            padding: 30px;
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeUp 0.7s ease both;
         }
 
-        .search-bar {
+        .hero-eyebrow .dot {
+            width:6px;height:6px;border-radius:50%;
+            background:#91b08a;animation:pulse 2s ease infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+
+        .hub-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            animation: fadeUp 0.7s ease 0.1s both;
+        }
+
+        .hub-hero p {
+            font-size: clamp(15px, 2vw, 18px);
+            color: rgba(255,255,255,0.75);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.65;
+            animation: fadeUp 0.7s ease 0.2s both;
+        }
+
+        /* Inline search bar in hero */
+        .hero-search {
+            max-width: 560px;
+            margin: 0 auto;
             position: relative;
+            animation: fadeUp 0.7s ease 0.3s both;
         }
 
-        .search-bar input {
+        .hero-search input {
             width: 100%;
-            padding: 20px 60px 20px 25px;
-            font-size: 1.15rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            transition: all 0.3s ease;
+            padding: 18px 60px 18px 26px;
+            font-size: 15px;
             font-family: 'Outfit', sans-serif;
-            background: #fafafa;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.95);
+            color: var(--text-dark);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            outline: none;
+            transition: var(--transition);
         }
 
-        .search-bar input:focus {
-            outline: none;
-            border-color: #6d8c5f;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(109, 140, 95, 0.1);
+        .hero-search input:focus {
+            background: #fff;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
             transform: scale(1.02);
         }
 
-        .search-bar i {
+        .hero-search input::placeholder { color: #999; }
+
+        .hero-search-icon {
             position: absolute;
-            right: 28px;
+            right: 22px;
             top: 50%;
             transform: translateY(-50%);
-            color: #6d8c5f;
-            font-size: 1.4rem;
+            color: var(--green-mid);
+            font-size: 18px;
         }
 
-        /* Sort Controls (Task 3) */
-        .sort-controls {
+        .hero-stats-row {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 36px;
+            animation: fadeUp 0.7s ease 0.45s both;
+        }
+
+        .hero-stat-pill {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            margin-top: 15px;
-            gap: 10px;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 30px;
+            padding: 8px 18px;
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        .sort-controls label {
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-            font-family: 'Outfit', sans-serif;
+        .hero-stat-pill i { color: #91b08a; font-size: 12px; }
+
+        /* ============================================
+           SHARED SECTION STYLES
+        ============================================ */
+        .section { padding: 96px 0; }
+        .section-sm { padding: 64px 0; }
+
+        .section-eyebrow {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green-light);
+            margin-bottom: 10px;
         }
 
-        .sort-controls select {
-            padding: 8px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-family: 'Outfit', sans-serif;
-            color: #555;
-            cursor: pointer;
-            background: white;
-            outline: none;
-            transition: border-color 0.3s ease;
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(26px, 3.5vw, 42px);
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+            margin-bottom: 14px;
         }
 
-        .sort-controls select:focus {
-            border-color: #6d8c5f;
+        .section-subtext {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 520px;
         }
 
-        /* Category Filters */
-        .category-filters {
-            margin-top: 20px;
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity:1; transform:none; }
+
+        /* ============================================
+           SPOTLIGHT SECTION
+        ============================================ */
+        .spotlight-section {
+            background: var(--section-bg);
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 56px;
+        }
+
+        .spotlight-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--green-wash);
+            transition: var(--transition);
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
+            flex-direction: column;
         }
 
-        .category-btn {
-            padding: 12px 30px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            color: #555;
+        .spotlight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 56px rgba(74,103,65,0.14);
+            border-color: var(--green-light);
+        }
+
+        .spotlight-img-wrap {
+            height: 220px;
             position: relative;
             overflow: hidden;
+        }
+
+        .spotlight-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .spotlight-card:hover .spotlight-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .spotlight-img-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .spotlight-img-1 { background: linear-gradient(135deg, #1a4d3a, #2d8c60); }
+        .spotlight-img-2 { background: linear-gradient(135deg, #1a3d6b, #2d6b9a); }
+        .spotlight-img-3 { background: linear-gradient(135deg, #4a3d1a, #8c6b2d); }
+
+        .spotlight-cat-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(255,255,255,0.92);
+            color: var(--green-mid);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .spotlight-featured-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: linear-gradient(135deg, #f4b942, #e8960c);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .spotlight-body {
+            padding: 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spotlight-body h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .spotlight-body > p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+            flex: 1;
+        }
+
+        /* Service tags */
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .service-tag {
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            color: var(--green-mid);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 12px;
             font-family: 'Outfit', sans-serif;
         }
 
-        .category-btn::before {
-            content: '';
+        /* Stats row */
+        .spotlight-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--green-wash);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .spotlight-stat {
+            text-align: center;
+            padding: 12px 8px;
+            border-right: 1px solid var(--green-wash);
+        }
+
+        .spotlight-stat:last-child { border-right: none; }
+
+        .spotlight-stat .s-val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green-mid);
+            line-height: 1;
+            display: block;
+        }
+
+        .spotlight-stat .s-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+            display: block;
+        }
+
+        /* Contact rows */
+        .spotlight-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 18px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        .contact-row i {
+            color: var(--green-light);
+            font-size: 12px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            width: 14px;
+        }
+
+        /* Testimonial */
+        .spotlight-testimonial {
+            background: var(--green-mist);
+            border-left: 3px solid var(--green-pale);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 13px;
+            font-style: italic;
+            color: var(--text-body);
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        .testimonial-author {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spotlight-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 11px 22px;
+            border-radius: 10px;
+            transition: var(--transition);
+            width: fit-content;
+        }
+
+        .spotlight-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(74,103,65,0.3);
+            color: #fff;
+            gap: 12px;
+        }
+
+        /* ============================================
+           DIRECTORY SECTION
+        ============================================ */
+        .directory-section {
+            background: var(--white);
+        }
+
+        /* Filter bar */
+        .directory-controls {
+            background: var(--white);
+            border: 1px solid var(--green-wash);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .controls-top {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            padding: 13px 48px 13px 20px;
+            font-size: 15px;
+            font-family: 'Outfit', sans-serif;
+            border: 2px solid var(--green-wash);
+            border-radius: 50px;
+            outline: none;
+            background: var(--green-mist);
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--green-light);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(109,140,95,0.1);
+        }
+
+        .search-wrap input::placeholder { color: var(--text-muted); }
+
+        .search-wrap i {
             position: absolute;
+            right: 18px;
             top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(109, 140, 95, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            transform: translateY(-50%);
+            color: var(--green-light);
+            font-size: 16px;
         }
 
-        .category-btn:hover::before {
-            width: 300px;
-            height: 300px;
+        .sort-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
-        .category-btn:hover {
-            border-color: #6d8c5f;
-            color: #4a6741;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(109, 140, 95, 0.2);
+        .sort-wrap label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
         }
 
-        .category-btn.active {
-            background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 100%);
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 6px 25px rgba(74, 103, 65, 0.4);
+        .sort-wrap select {
+            padding: 10px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            border: 2px solid var(--green-wash);
+            border-radius: 30px;
+            color: var(--text-dark);
+            background: var(--white);
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .sort-wrap select:focus { border-color: var(--green-light); }
+
+        /* Category pills */
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .cat-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 18px;
+            border: 2px solid var(--green-wash);
+            border-radius: 30px;
+            background: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cat-pill i { font-size: 11px; }
+
+        .cat-pill:hover {
+            border-color: var(--green-light);
+            color: var(--green-mid);
             transform: translateY(-2px);
         }
 
-        .category-btn.active::before {
-            display: none;
+        .cat-pill.active {
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(74,103,65,0.3);
         }
 
-        /* Results Count (Task 4) */
+        /* Results meta */
+        .results-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
         .results-count {
-            max-width: 1200px;
-            margin: 0 auto 20px;
-            padding: 0 20px;
-            font-size: 0.95rem;
-            color: #888;
-            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
         }
 
-        .results-count .count-num {
-            font-weight: 600;
-            color: #4a6741;
-        }
+        .results-count strong { color: var(--green-mid); }
 
-        /* Resource Cards */
+        /* Resource cards grid */
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 24px;
         }
 
         .resource-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 26px;
-            border: 1px solid rgba(109, 140, 95, 0.12);
-            padding: 42px 32px;
-            box-shadow: 0 12px 45px rgba(74, 103, 65, 0.1);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--green-wash);
             overflow: hidden;
-            opacity: 1;
-            transform: translateY(0) scale(1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
         .resource-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #4a6741, #6d8c5f);
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green-mid), var(--green-pale));
             transform: scaleX(0);
-            transition: transform 0.4s ease;
-            border-radius: 24px 24px 0 0;
+            transform-origin: left;
+            transition: transform 0.35s ease;
         }
 
-        .resource-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .resource-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(74, 103, 65, 0.03), rgba(109, 140, 95, 0.03));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            border-radius: 24px;
-            pointer-events: none;
-        }
-
-        .resource-card:hover::after {
-            opacity: 1;
-        }
+        .resource-card:hover::before { transform: scaleX(1); }
 
         .resource-card:hover {
-            transform: translateY(-18px) scale(1.03);
-            box-shadow: 0 25px 75px rgba(74, 103, 65, 0.28), 0 0 40px rgba(109, 140, 95, 0.15);
-            border-color: rgba(109, 140, 95, 0.35);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(74,103,65,0.12);
+            border-color: var(--green-light);
         }
 
-        .card-icon {
-            font-size: 3.5rem;
-            color: #6d8c5f;
-            margin-bottom: 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: inline-block;
-        }
-
-        .resource-card:hover .card-icon {
-            transform: scale(1.15) rotate(5deg);
-            color: #4a6741;
-            filter: drop-shadow(0 4px 8px rgba(109, 140, 95, 0.3));
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #4a6741;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .card-category {
-            display: inline-block;
-            padding: 7px 18px;
-            background: rgba(109, 140, 95, 0.12);
-            color: #4a6741;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .card-description {
-            font-size: 0.98rem;
-            color: #666;
-            line-height: 1.7;
-            margin-bottom: 25px;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .card-link {
-            display: inline-flex;
+        /* Card image/icon header */
+        .card-header-img {
+            height: 140px;
+            display: flex;
             align-items: center;
-            gap: 10px;
-            color: #6d8c5f;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            justify-content: center;
+            font-size: 52px;
+            color: rgba(255,255,255,0.25);
             position: relative;
-            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            flex-shrink: 0;
         }
 
-        .card-link::after {
-            content: '';
+        /* Category-specific gradients */
+        .card-header-img.cat-Education    { background: linear-gradient(135deg,#1a3d6b,#2d6b9a); }
+        .card-header-img.cat-Career       { background: linear-gradient(135deg,#4a1a6b,#7a2d9a); }
+        .card-header-img.cat-Health       { background: linear-gradient(135deg,#1a4d3a,#2d8c60); }
+        .card-header-img.cat-Volunteering { background: linear-gradient(135deg,#4a6741,#91b08a); }
+        .card-header-img.cat-Community    { background: linear-gradient(135deg,#6b3a1a,#9a6b2d); }
+        .card-header-img.cat-Events       { background: linear-gradient(135deg,#1a4a6b,#2d7a9a); }
+
+        .card-cat-pill {
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #4a6741, #6d8c5f);
-            transition: width 0.3s ease;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255,255,255,0.9);
+            color: var(--green-mid);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 12px;
         }
 
-        .card-link:hover::after {
-            width: calc(100% - 30px);
+        /* Card body */
+        .card-body-content {
+            padding: 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        .card-link:hover {
-            gap: 15px;
-            color: #4a6741;
+        .card-body-content h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
 
-        .card-link i {
-            transition: transform 0.3s ease;
+        .card-body-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 16px;
+            flex: 1;
         }
 
-        .card-link:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Expanded card content */
-        .card-expanded-content {
+        /* Expandable details */
+        .card-details {
             max-height: 0;
             overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
             opacity: 0;
-            transition: max-height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
         }
 
-        .card-expanded-content.active {
-            max-height: 400px;
+        .card-details.open {
+            max-height: 300px;
             opacity: 1;
         }
 
-        .expanded-details {
-            background: rgba(109, 140, 95, 0.05);
-            border-left: 4px solid #6d8c5f;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
+        .card-detail-inner {
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
         }
 
-        .detail-item {
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 12px;
+            color: var(--text-body);
+        }
+
+        .detail-row i {
+            color: var(--green-light);
+            font-size: 11px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            width: 13px;
+        }
+
+        .detail-row strong {
+            color: var(--green-mid);
+            margin-right: 4px;
+        }
+
+        /* Toggle button */
+        .card-toggle {
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: #555;
-            font-size: 0.95rem;
-            margin: 12px 0;
-            line-height: 1.5;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid var(--green-wash);
+            background: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            cursor: pointer;
+            width: 100%;
             font-family: 'Outfit', sans-serif;
-        }
-
-        .detail-item i {
-            color: #6d8c5f;
-            font-size: 1.1rem;
-            width: 20px;
-        }
-
-        .detail-label {
+            font-size: 13px;
             font-weight: 600;
-            color: #4a6741;
-            min-width: 80px;
+            color: var(--green-mid);
+            transition: color 0.2s;
         }
 
-        /* No Results */
+        .card-toggle:hover { color: var(--green-deep); }
+
+        .card-toggle .toggle-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            transition: var(--transition);
+        }
+
+        .card-toggle.open .toggle-icon {
+            background: var(--green-mid);
+            border-color: var(--green-mid);
+            color: #fff;
+            transform: rotate(180deg);
+        }
+
+        /* No results */
         .no-results {
+            display: none;
             text-align: center;
             padding: 80px 20px;
-            color: #4a6741;
-            display: none;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 24px;
-            margin: 40px 0;
+            grid-column: 1 / -1;
         }
 
         .no-results i {
-            font-size: 5rem;
-            margin-bottom: 25px;
-            opacity: 0.3;
+            font-size: 56px;
+            color: var(--green-wash);
+            margin-bottom: 20px;
+            display: block;
         }
 
         .no-results h3 {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            font-weight: 600;
             font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
         }
 
         .no-results p {
-            font-size: 1.15rem;
-            opacity: 0.7;
-            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: var(--text-muted);
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        footer a {
-            color: white;
+        /* ============================================
+           BACK TO TOP
+        ============================================ */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
             text-decoration: none;
+            box-shadow: 0 6px 20px rgba(74,103,65,0.35);
+            transition: var(--transition);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 500;
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .resources-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
+        .back-to-top.visible { opacity:1; pointer-events:all; }
+        .back-to-top:hover { transform:translateY(-3px); color:#fff; }
+
+        /* ============================================
+           DARK MODE
+        ============================================ */
+        [data-theme="dark"] .spotlight-card,
+        [data-theme="dark"] .resource-card,
+        [data-theme="dark"] .directory-controls {
+            background: #182416;
+            border-color: #263d22;
         }
 
-        @media (max-width: 768px) {
-            .search-section {
-                padding: 30px 25px;
-                margin: -40px 20px 40px 20px;
-            }
-
-            .resources-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .category-filters {
-                gap: 8px;
-            }
-
-            .category-btn {
-                padding: 10px 22px;
-                font-size: 0.88rem;
-            }
-
-            .resource-card {
-                padding: 30px 25px;
-            }
-
-            .sort-controls {
-                justify-content: center;
-            }
+        [data-theme="dark"] .card-detail-inner,
+        [data-theme="dark"] .spotlight-testimonial {
+            background: #1e2e1c;
+            border-color: #263d22;
         }
-    </style>
+
+        [data-theme="dark"] .cat-pill {
+            background: #182416;
+            border-color: #263d22;
+            color: var(--text-muted);
+        }
+
+        [data-theme="dark"] .sort-wrap select,
+        [data-theme="dark"] .search-wrap input {
+            background: #182416;
+            border-color: #263d22;
+            color: var(--text-dark);
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 1024px) {
+            .spotlight-grid { grid-template-columns: repeat(2, 1fr); }
+            .resources-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .spotlight-grid { grid-template-columns: 1fr; }
+            .resources-grid { grid-template-columns: 1fr; }
+            .controls-top { flex-direction: column; }
+            .hero-stats-row { flex-direction: column; align-items: center; gap: 10px; }
+        }
+    
+        /* ============================================
+           CUSTOM SCROLLBAR
+        ============================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--green-mist);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--green-mid), var(--green-pale));
+            border-radius: 4px;
+            border: 2px solid var(--green-mist);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--green-deep), var(--green-mid));
+        }
+
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: var(--green-mid) var(--green-mist);
+        }
+</style>
 </head>
 
-<body data-spy="scroll" data-target="#navbar" data-offset="30">
-    <!-- Background Shapes -->
-    <div class="bg-shape shape-1"></div>
-    <div class="bg-shape shape-2"></div>
-    <div class="bg-shape shape-3"></div>
+<body>
+<div id="navbar-placeholder"></div>
 
-    <div id="ani" class="animsition">
-        <!-- Navbar -->
-        <div id="navbar-placeholder"></div>
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="hub-hero" id="home">
+    <div class="hub-hero-bg"></div>
+    <div class="hero-node hero-node-1"></div>
+    <div class="hero-node hero-node-2"></div>
+    <div class="hero-node hero-node-3"></div>
 
-        <!-- Hero Section with Particles -->
-        <header class="bg-gradient2" id="home">
-            <div class="backgrounddiv2">
-                <div id="container">
-                    <header class="info">
-                        <hgroup class="about">
-                            <h1>Explore Resources</h1>
-                            <h2 class="text-white" style="font-size: 24px; font-weight: 300; margin-top: 20px;">Discover community programs and services</h2>
-                        </hgroup>
-                    </header>
+    <div class="hub-hero-content">
+        <div class="hero-eyebrow">
+            <span class="dot"></span>
+            500+ Resources Listed
+        </div>
+        <h1>Community Resource Hub</h1>
+        <p>Find non-profits, support services, health programs, and opportunities — all verified, all free to access.</p>
+
+        <div class="hero-search">
+            <input type="text" id="heroSearch" placeholder="Search by name, category, or keyword…" autocomplete="off">
+            <i class="fas fa-search hero-search-icon"></i>
+        </div>
+
+        <div class="hero-stats-row">
+            <div class="hero-stat-pill"><i class="fas fa-list-alt"></i> 15 Resources Listed</div>
+            <div class="hero-stat-pill"><i class="fas fa-tags"></i> 6 Categories</div>
+            <div class="hero-stat-pill"><i class="fas fa-check-circle"></i> All Verified</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     SPOTLIGHT SECTION
+============================================ -->
+<section class="spotlight-section section" id="spotlights">
+    <div class="container">
+        <div class="text-center reveal">
+            <span class="section-eyebrow">Featured Resources</span>
+            <h2 class="section-heading">Community Spotlights</h2>
+            <p class="section-subtext mx-auto">These three organizations go above and beyond to serve residents. Get to know the programs making the biggest impact right now.</p>
+        </div>
+
+        <div class="spotlight-grid">
+
+            <!-- Spotlight 1 -->
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img-wrap spotlight-img-1">
+                    <div class="spotlight-img-fallback"><i class="fas fa-heartbeat"></i></div>
+                    <span class="spotlight-cat-badge">Health</span>
+                    <span class="spotlight-featured-badge"><i class="fas fa-star"></i> Featured</span>
+                </div>
+                <div class="spotlight-body">
+                    <h3>Community Health Clinic</h3>
+                    <p>Providing affordable medical and dental care to uninsured and underinsured residents since 2012. Sliding-scale fees ensure no one is turned away. Multilingual staff serve all ages.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Primary Care</span>
+                        <span class="service-tag">Dental</span>
+                        <span class="service-tag">Mental Health</span>
+                        <span class="service-tag">Pediatrics</span>
+                    </div>
+                    <div class="spotlight-stats">
+                        <div class="spotlight-stat"><span class="s-val">8,200+</span><span class="s-label">Patients</span></div>
+                        <div class="spotlight-stat"><span class="s-val">$0</span><span class="s-label">Min Fee</span></div>
+                        <div class="spotlight-stat"><span class="s-val">5</span><span class="s-label">Languages</span></div>
+                    </div>
+                    <div class="spotlight-contact">
+                        <div class="contact-row"><i class="fas fa-map-marker-alt"></i><span>321 Wellness Dr, Health Center</span></div>
+                        <div class="contact-row"><i class="fas fa-phone"></i><span>(555) 456-7890</span></div>
+                        <div class="contact-row"><i class="fas fa-clock"></i><span>Mon–Fri 9AM–5PM, Walk-ins welcome</span></div>
+                    </div>
+                    <div class="spotlight-testimonial">
+                        <p class="testimonial-text">"When I lost my insurance, the clinic was there for me and my kids. They treated us with dignity and never asked about money first."</p>
+                        <span class="testimonial-author">— Rosa M., Patient since 2021</span>
+                    </div>
+                    <a href="#directory" class="spotlight-cta">View in Directory <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-        </header>
 
-        <!-- ========== SPOTLIGHT SECTION (Task 1) ========== -->
-        <section class="spotlight-section">
-            <div class="container">
-                <!-- Section Header -->
-                <div class="spotlight-header">
-                    <span class="spotlight-badge"><i class="fas fa-star" style="margin-right: 6px;"></i> Featured Resources</span>
-                    <h2>Community Spotlights</h2>
-                    <p>Get to know the organizations making the biggest impact in our community. These featured resources go above and beyond to serve residents.</p>
+            <!-- Spotlight 2 -->
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img-wrap spotlight-img-2">
+                    <div class="spotlight-img-fallback"><i class="fas fa-book-open"></i></div>
+                    <span class="spotlight-cat-badge">Education</span>
+                    <span class="spotlight-featured-badge"><i class="fas fa-fire"></i> Popular</span>
                 </div>
-
-                <!-- Spotlight Cards Grid -->
-                <div class="spotlight-grid">
-
-                    <!-- Spotlight 1: Community Health Clinic -->
-                    <div class="spotlight-card">
-                        <div class="spotlight-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600"
-                                 alt="Community Health Clinic interior with medical staff"
-                                 class="spotlight-image" loading="lazy">
-                            <span class="spotlight-category-tag">Health</span>
-                        </div>
-                        <div class="spotlight-body">
-                            <h3 class="spotlight-card-title">Community Health Clinic</h3>
-                            <p class="spotlight-description">
-                                Providing affordable medical and dental care to uninsured and underinsured residents since 2012.
-                                The clinic operates on a sliding-scale fee model, ensuring no one is turned away regardless of ability to pay.
-                                Multilingual staff serve a diverse patient population across all ages.
-                            </p>
-
-                            <div class="spotlight-services">
-                                <span class="service-tag">Primary Care</span>
-                                <span class="service-tag">Dental</span>
-                                <span class="service-tag">Mental Health</span>
-                                <span class="service-tag">Vaccinations</span>
-                                <span class="service-tag">Pediatrics</span>
-                            </div>
-
-                            <div class="spotlight-stats">
-                                <div class="stat-item">
-                                    <span class="stat-value">8,200+</span>
-                                    <span class="stat-desc">Patients Served</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">$0</span>
-                                    <span class="stat-desc">Minimum Fee</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">5</span>
-                                    <span class="stat-desc">Languages</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-contact">
-                                <div class="contact-row">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>321 Wellness Dr, Community Health Center</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-phone"></i>
-                                    <span>(555) 456-7890</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Mon–Fri 9 AM – 5 PM, Walk-ins welcome</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-testimonial">
-                                <p class="testimonial-text">"When I lost my insurance, the clinic was there for me and my kids. They treated us with dignity and never once asked about money first."</p>
-                                <span class="testimonial-author">— Rosa M., Patient since 2021</span>
-                            </div>
-
-                            <a href="#" class="spotlight-cta" onclick="scrollToResource('Community Health Clinic'); return false;">
-                                View in Directory <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                <div class="spotlight-body">
+                    <h3>After-School Tutoring Network</h3>
+                    <p>District-wide network of volunteer tutors providing free K–12 academic support every weekday. One-on-one and small group sessions at multiple community center locations.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Math</span>
+                        <span class="service-tag">Science</span>
+                        <span class="service-tag">Reading</span>
+                        <span class="service-tag">SAT Prep</span>
                     </div>
-
-                    <!-- Spotlight 2: After-School Tutoring Network -->
-                    <div class="spotlight-card">
-                        <div class="spotlight-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600"
-                                 alt="Students studying together at a tutoring session"
-                                 class="spotlight-image" loading="lazy">
-                            <span class="spotlight-category-tag">Education</span>
-                        </div>
-                        <div class="spotlight-body">
-                            <h3 class="spotlight-card-title">After-School Tutoring Network</h3>
-                            <p class="spotlight-description">
-                                A district-wide network of volunteer tutors providing free academic support to K–12 students every weekday.
-                                The program pairs students with trained tutors for one-on-one and small group sessions across multiple
-                                community center locations, closing achievement gaps and building confidence.
-                            </p>
-
-                            <div class="spotlight-services">
-                                <span class="service-tag">Math</span>
-                                <span class="service-tag">Science</span>
-                                <span class="service-tag">Reading</span>
-                                <span class="service-tag">Writing</span>
-                                <span class="service-tag">SAT/ACT Prep</span>
-                            </div>
-
-                            <div class="spotlight-stats">
-                                <div class="stat-item">
-                                    <span class="stat-value">1,400+</span>
-                                    <span class="stat-desc">Students Helped</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">92%</span>
-                                    <span class="stat-desc">Grade Improvement</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">6</span>
-                                    <span class="stat-desc">Locations</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-contact">
-                                <div class="contact-row">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>Various locations — call for nearest site</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-phone"></i>
-                                    <span>(555) 234-5679</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Mon–Fri 3 PM – 6 PM during school year</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-testimonial">
-                                <p class="testimonial-text">"My son went from failing algebra to getting a B+ in one semester. His tutor didn't just teach math — she taught him that he's capable of learning anything."</p>
-                                <span class="testimonial-author">— James T., Parent</span>
-                            </div>
-
-                            <a href="#" class="spotlight-cta" onclick="scrollToResource('After-School Tutoring Network'); return false;">
-                                View in Directory <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                    <div class="spotlight-stats">
+                        <div class="spotlight-stat"><span class="s-val">1,400+</span><span class="s-label">Students</span></div>
+                        <div class="spotlight-stat"><span class="s-val">92%</span><span class="s-label">Improved</span></div>
+                        <div class="spotlight-stat"><span class="s-val">6</span><span class="s-label">Locations</span></div>
                     </div>
-
-                    <!-- Spotlight 3: Youth Mentorship Network -->
-                    <div class="spotlight-card">
-                        <div class="spotlight-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=600"
-                                 alt="Mentor and student working together"
-                                 class="spotlight-image" loading="lazy">
-                            <span class="spotlight-category-tag">Education</span>
-                        </div>
-                        <div class="spotlight-body">
-                            <h3 class="spotlight-card-title">Youth Mentorship Network</h3>
-                            <p class="spotlight-description">
-                                Connecting young people ages 12–18 with vetted adult mentors who provide guidance on academics,
-                                career exploration, and personal development. All mentors pass background checks and complete
-                                training. The program runs year-round with flexible scheduling to fit any lifestyle.
-                            </p>
-
-                            <div class="spotlight-services">
-                                <span class="service-tag">1-on-1 Mentoring</span>
-                                <span class="service-tag">Career Guidance</span>
-                                <span class="service-tag">College Prep</span>
-                                <span class="service-tag">Life Skills</span>
-                            </div>
-
-                            <div class="spotlight-stats">
-                                <div class="stat-item">
-                                    <span class="stat-value">340+</span>
-                                    <span class="stat-desc">Active Matches</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">96%</span>
-                                    <span class="stat-desc">Retention Rate</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value">3 yrs</span>
-                                    <span class="stat-desc">Avg. Match Length</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-contact">
-                                <div class="contact-row">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>Youth Services Office, 345 Hope Blvd</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-phone"></i>
-                                    <span>(555) 901-2345</span>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Flexible — matches set their own schedule</span>
-                                </div>
-                            </div>
-
-                            <div class="spotlight-testimonial">
-                                <p class="testimonial-text">"My mentor helped me believe college was possible. I'm the first in my family to apply, and I got accepted with a scholarship. I owe so much to this program."</p>
-                                <span class="testimonial-author">— Aiden K., Mentee since 2022</span>
-                            </div>
-
-                            <a href="#" class="spotlight-cta" onclick="scrollToResource('Youth Mentorship Network'); return false;">
-                                View in Directory <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                    <div class="spotlight-contact">
+                        <div class="contact-row"><i class="fas fa-map-marker-alt"></i><span>Various Bothell sites — call for location</span></div>
+                        <div class="contact-row"><i class="fas fa-phone"></i><span>(555) 234-5679</span></div>
+                        <div class="contact-row"><i class="fas fa-clock"></i><span>Mon–Fri 3PM–6PM (school year)</span></div>
                     </div>
-
-                </div><!-- /.spotlight-grid -->
-
-                <!-- Divider to directory -->
-                <div class="section-divider" style="text-align: center; padding: 50px 0 20px; position: relative;">
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%); width: 120px; height: 2px; background: linear-gradient(90deg, transparent, #6d8c5f, transparent);"></div>
-                    <p style="font-size: 1rem; color: #888; margin-top: 25px; font-family: 'Outfit', sans-serif;">
-                        <i class="fas fa-arrow-down" style="margin-right: 8px;"></i> Browse all resources below
-                    </p>
+                    <div class="spotlight-testimonial">
+                        <p class="testimonial-text">"My son went from failing algebra to a B+ in one semester. His tutor didn't just teach math — she taught him he's capable of anything."</p>
+                        <span class="testimonial-author">— James T., Parent</span>
+                    </div>
+                    <a href="#directory" class="spotlight-cta">View in Directory <i class="fas fa-arrow-right"></i></a>
                 </div>
+            </div>
 
-            </div><!-- /.container -->
-        </section>
-        <!-- ========== END SPOTLIGHT SECTION ========== -->
-
-        <!-- Resources Directory Section -->
-        <div class="form-section">
-            <div class="container">
-                <!-- Search & Filter -->
-                <div class="search-section">
-                    <div class="search-bar">
-                        <input type="text" id="searchInput" placeholder="Search resources by name, category, or description..." autocomplete="off" aria-label="Search community resources">
-                        <i class="fas fa-search"></i>
-                    </div>
-
-                    <!-- Sort Dropdown (Task 3) -->
-                    <div class="sort-controls">
-                        <label for="sortSelect">Sort by:</label>
-                        <select id="sortSelect" aria-label="Sort resources">
-                            <option value="default">Default</option>
-                            <option value="az">Name (A–Z)</option>
-                            <option value="za">Name (Z–A)</option>
-                            <option value="category">Category</option>
-                        </select>
-                    </div>
-
-                    <div class="category-filters">
-                        <button class="category-btn active" data-category="all" aria-label="Show all resources">All Resources</button>
-                        <button class="category-btn" data-category="Education" aria-label="Filter by Education">Education</button>
-                        <button class="category-btn" data-category="Career" aria-label="Filter by Career">Career</button>
-                        <button class="category-btn" data-category="Health" aria-label="Filter by Health">Health</button>
-                        <button class="category-btn" data-category="Volunteering" aria-label="Filter by Volunteering">Volunteering</button>
-                        <button class="category-btn" data-category="Community Projects" aria-label="Filter by Community Projects">Community Projects</button>
-                        <button class="category-btn" data-category="Events" aria-label="Filter by Events">Events</button>
-                    </div>
+            <!-- Spotlight 3 -->
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img-wrap spotlight-img-3">
+                    <div class="spotlight-img-fallback"><i class="fas fa-user-friends"></i></div>
+                    <span class="spotlight-cat-badge">Education</span>
+                    <span class="spotlight-featured-badge"><i class="fas fa-certificate"></i> Top Rated</span>
                 </div>
-
-                <!-- Results Count (Task 4) -->
-                <div class="results-count" id="resultsCount">
-                    Showing <span class="count-num" id="resultNum">15</span> of 15 resources
+                <div class="spotlight-body">
+                    <h3>Youth Mentorship Network</h3>
+                    <p>Connecting young people ages 12–18 with vetted adult mentors for guidance on academics, career exploration, and personal development. All mentors pass background checks.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">1-on-1 Mentoring</span>
+                        <span class="service-tag">Career Guidance</span>
+                        <span class="service-tag">College Prep</span>
+                    </div>
+                    <div class="spotlight-stats">
+                        <div class="spotlight-stat"><span class="s-val">340+</span><span class="s-label">Matches</span></div>
+                        <div class="spotlight-stat"><span class="s-val">96%</span><span class="s-label">Retention</span></div>
+                        <div class="spotlight-stat"><span class="s-val">3 yrs</span><span class="s-label">Avg Match</span></div>
+                    </div>
+                    <div class="spotlight-contact">
+                        <div class="contact-row"><i class="fas fa-map-marker-alt"></i><span>Youth Services, 345 Hope Blvd</span></div>
+                        <div class="contact-row"><i class="fas fa-phone"></i><span>(555) 901-2345</span></div>
+                        <div class="contact-row"><i class="fas fa-clock"></i><span>Flexible — matches set own schedule</span></div>
+                    </div>
+                    <div class="spotlight-testimonial">
+                        <p class="testimonial-text">"My mentor helped me believe college was possible. I'm the first in my family to apply — and I got in with a scholarship."</p>
+                        <span class="testimonial-author">— Aiden K., Mentee since 2022</span>
+                    </div>
+                    <a href="#directory" class="spotlight-cta">View in Directory <i class="fas fa-arrow-right"></i></a>
                 </div>
+            </div>
 
-                <!-- Resources Grid -->
-                <div class="resources-grid" id="resourcesGrid">
-                    <!-- Cards dynamically inserted by JS -->
-                </div>
+        </div>
+    </div>
+</section>
 
-                <!-- No Results Message -->
-                <div class="no-results" id="noResults">
+<!-- ============================================
+     DIRECTORY SECTION
+============================================ -->
+<section class="directory-section section" id="directory">
+    <div class="container">
+
+        <div class="text-center reveal" style="margin-bottom: 48px;">
+            <span class="section-eyebrow">Full Directory</span>
+            <h2 class="section-heading">All Community Resources</h2>
+            <p class="section-subtext mx-auto">Search, filter, and explore every verified resource in our hub. Click any card to see contact info, hours, and location.</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="directory-controls reveal">
+            <div class="controls-top">
+                <div class="search-wrap">
+                    <input type="text" id="directorySearch" placeholder="Search by name, description, or category…" autocomplete="off">
                     <i class="fas fa-search"></i>
-                    <h3>No resources found</h3>
-                    <p>Try adjusting your search or filter criteria</p>
                 </div>
+                <div class="sort-wrap">
+                    <label for="sortSelect">Sort:</label>
+                    <select id="sortSelect">
+                        <option value="default">Default</option>
+                        <option value="az">A → Z</option>
+                        <option value="za">Z → A</option>
+                        <option value="category">By Category</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="category-pills">
+                <button class="cat-pill active" data-cat="all"><i class="fas fa-th-large"></i> All Resources</button>
+                <button class="cat-pill" data-cat="Education"><i class="fas fa-graduation-cap"></i> Education</button>
+                <button class="cat-pill" data-cat="Career"><i class="fas fa-briefcase"></i> Career</button>
+                <button class="cat-pill" data-cat="Health"><i class="fas fa-heartbeat"></i> Health</button>
+                <button class="cat-pill" data-cat="Volunteering"><i class="fas fa-hands-helping"></i> Volunteering</button>
+                <button class="cat-pill" data-cat="Community Projects"><i class="fas fa-seedling"></i> Community</button>
+                <button class="cat-pill" data-cat="Events"><i class="fas fa-calendar-alt"></i> Events</button>
             </div>
         </div>
 
-        <!-- Footer -->
-        <div id="footer-placeholder"></div>
+        <!-- Results meta -->
+        <div class="results-meta reveal">
+            <div class="results-count">Showing <strong id="resultCount">15</strong> of 15 resources</div>
+        </div>
+
+        <!-- Grid -->
+        <div class="resources-grid" id="resourcesGrid">
+            <!-- injected by JS -->
+        </div>
+
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No resources found</h3>
+            <p>Try a different keyword or category filter.</p>
+        </div>
+
     </div>
+</section>
 
-    <!-- Scripts — single jQuery, no duplicates (Task 8) -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/animsition.min.js"></script>
-    <script src="js/sketch.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/spotlight.js"></script>
+<a href="#home" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Resources Data, Filtering, Sorting, Rendering -->
-    <script>
-        // Resources Data
-        var resources = [
-            { title: "Scholarship Discovery Program", category: "Education", icon: "fa-graduation-cap", description: "Find and apply for local and national scholarships. Free guidance on application essays, financial aid forms, and deadline tracking for college-bound students.", phone: "(555) 234-5678", email: "scholarships@communityconnect.org", hours: "Mon-Fri 9AM-6PM, Sat 10AM-2PM", location: "Community Center, 123 Main St" },
-            { title: "After-School Tutoring Network", category: "Education", icon: "fa-book-reader", description: "Free K-12 tutoring in math, science, reading, and writing. Volunteer tutors available weekdays 3-6 PM at multiple community centers across the district.", phone: "(555) 234-5679", email: "tutoring@communityconnect.org", hours: "Mon-Fri 3PM-6PM", location: "Various locations - call for nearest site" },
-            { title: "Youth Career Internship Portal", category: "Career", icon: "fa-briefcase", description: "Connect high school and college students with paid internships at local businesses. Gain real-world experience while earning college credit and building your resume.", phone: "(555) 345-6789", email: "internships@communityconnect.org", hours: "Mon-Fri 9AM-5PM", location: "Workforce Development Center, 456 Business Pkwy" },
-            { title: "Job Search Workshop Series", category: "Career", icon: "fa-search-dollar", description: "Monthly workshops covering resume building, interview techniques, LinkedIn optimization, and networking strategies. Free and open to all community members.", phone: "(555) 345-6790", email: "workshops@communityconnect.org", hours: "2nd & 4th Tuesday 6PM-8PM", location: "Public Library Meeting Room, 789 Oak Ave" },
-            { title: "Community Health Clinic", category: "Health", icon: "fa-medkit", description: "Affordable medical and dental services with sliding scale fees. Walk-in hours Monday-Friday 9 AM-5 PM. No insurance required, multilingual staff available.", phone: "(555) 456-7890", email: "clinic@healthcenter.org", hours: "Mon-Fri 9AM-5PM, Walk-ins welcome", location: "Community Health Center, 321 Wellness Dr" },
-            { title: "Mental Wellness Support Line", category: "Health", icon: "fa-phone-volume", description: "24/7 confidential crisis support and counseling services. Connect with trained professionals anytime for mental health support, stress management, and emotional guidance.", phone: "(555) 911-HELP", email: "support@mentalhealthline.org", hours: "24/7 - Call anytime", location: "Confidential phone and online support" },
-            { title: "Neighborhood Cleanup Initiative", category: "Volunteering", icon: "fa-hands-helping", description: "Join monthly community cleanups in local parks and neighborhoods. Tools and supplies provided. Volunteers of all ages welcome to help beautify our community.", phone: "(555) 567-8901", email: "cleanup@greenneighborhood.org", hours: "1st Saturday monthly 9AM-12PM", location: "Meetup at Riverside Park entrance" },
-            { title: "Senior Companion Program", category: "Volunteering", icon: "fa-user-friends", description: "Match with local seniors for weekly visits, companionship, and light assistance. Training provided. Make a meaningful impact in an elder's life through friendship.", phone: "(555) 567-8902", email: "companions@seniorcare.org", hours: "Flexible - match with your schedule", location: "Training at Senior Center, 234 Elder St" },
-            { title: "Community Garden Collective", category: "Community Projects", icon: "fa-seedling", description: "Rent a plot and grow your own vegetables! Workshops on sustainable gardening, composting, and organic growing. Tools shared, water included. All skill levels welcome.", phone: "(555) 678-9012", email: "garden@greengrow.org", hours: "Open daily dawn to dusk", location: "Community Garden, Corner of 5th & Maple" },
-            { title: "Little Free Library Network", category: "Community Projects", icon: "fa-book", description: "Build and maintain Little Free Libraries in neighborhoods. Free books for all ages, workshops on woodworking and library setup. Promote literacy and community connection.", phone: "(555) 678-9013", email: "books@littlefreelibrary.org", hours: "Workshop 2nd Sat 10AM-2PM", location: "Makerspace, 567 Creative Way" },
-            { title: "Monthly Town Hall Meetings", category: "Events", icon: "fa-comments", description: "Attend monthly forums to discuss community issues, meet local leaders, and voice your concerns. First Thursday of every month, 7 PM at City Hall. Open to all residents.", phone: "(555) 789-0123", email: "townhall@citygovernment.gov", hours: "1st Thursday monthly 7PM-9PM", location: "City Hall Council Chambers, 100 Civic Plaza" },
-            { title: "Community Resource Fair", category: "Events", icon: "fa-calendar-alt", description: "Annual event connecting residents with local services, nonprofits, health providers, and educational resources. Free health screenings, food, activities for kids. Third Saturday in September.", phone: "(555) 789-0124", email: "fair@communityconnect.org", hours: "Annual - 3rd Sat in Sept 10AM-4PM", location: "Central Park Main Field" },
-            { title: "Financial Literacy Workshops", category: "Career", icon: "fa-dollar-sign", description: "Learn budgeting, saving, investing, and credit management. Free evening workshops covering essential money skills for individuals and families. Materials provided in English and Spanish.", phone: "(555) 890-1234", email: "finance@moneywise.org", hours: "Wednesdays 6PM-8PM", location: "Credit Union Community Room, 890 Bank St" },
-            { title: "Youth Mentorship Network", category: "Education", icon: "fa-child", description: "Pair young people ages 12-18 with caring adult mentors for guidance, academic support, and personal development. Background checks required for mentors. Applications open year-round.", phone: "(555) 901-2345", email: "mentors@youthprogram.org", hours: "Match meetings flexible", location: "Youth Services Office, 345 Hope Blvd" },
-            { title: "Fitness in the Park", category: "Health", icon: "fa-heartbeat", description: "Free outdoor fitness classes every weekend! Yoga, Zumba, bootcamp, and tai chi for all fitness levels. Bring a mat and water bottle. Rain or shine under pavilion.", phone: "(555) 012-3456", email: "fitness@parksprogram.org", hours: "Sat-Sun 8AM, 10AM, 4PM classes", location: "Riverside Park Pavilion" }
-        ];
+<div id="footer-placeholder"></div>
 
-        // Filter / sort state
-        var currentCategory = 'all';
-        var currentSearch = '';
-        var currentSort = 'default';
+<!-- Scripts -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script src="js/components.js"></script>
 
-        function updateResultsCount(count) {
-            var el = document.getElementById('resultNum');
-            if (el) el.textContent = count;
-        }
+<script>
+// ===== RESOURCE DATA =====
+var resources = [
+    { title:"Scholarship Discovery Program",    category:"Education",         icon:"fa-graduation-cap", description:"Find and apply for local and national scholarships. Free guidance on application essays, financial aid, and deadline tracking for college-bound students.", phone:"(555) 234-5678", email:"scholarships@communityconnect.org", hours:"Mon–Fri 9AM–6PM, Sat 10AM–2PM", location:"Bothell Community Center, 9919 NE 180th St" },
+    { title:"After-School Tutoring Network",    category:"Education",         icon:"fa-book-reader",     description:"Free K–12 tutoring in math, science, reading, and writing. Volunteer tutors available weekdays 3–6PM at multiple community centers.", phone:"(555) 234-5679", email:"tutoring@communityconnect.org", hours:"Mon–Fri 3PM–6PM", location:"Various Bothell sites — call for location" },
+    { title:"Youth Career Internship Portal",   category:"Career",            icon:"fa-briefcase",       description:"Connect high school and college students with paid internships at local businesses. Earn real-world experience and college credit while building your resume.", phone:"(555) 345-6789", email:"internships@communityconnect.org", hours:"Mon–Fri 9AM–5PM", location:"Bothell Workforce Dev. Center, 18411 NE Woodinville-Duvall Rd" },
+    { title:"Job Search Workshop Series",       category:"Career",            icon:"fa-search-dollar",   description:"Monthly workshops covering resume building, interview techniques, LinkedIn, and networking. Free and open to all community members.", phone:"(555) 345-6790", email:"workshops@communityconnect.org", hours:"2nd & 4th Tuesday 6PM–8PM", location:"Bothell Regional Library, 18215 98th Ave NE" },
+    { title:"Community Health Clinic",          category:"Health",            icon:"fa-medkit",          description:"Affordable medical and dental services with sliding-scale fees. Walk-in hours Monday–Friday 9AM–5PM. No insurance required, multilingual staff.", phone:"(555) 456-7890", email:"clinic@healthcenter.org", hours:"Mon–Fri 9AM–5PM, Walk-ins welcome", location:"EvergreenHealth Bothell, 10010 NE 195th St" },
+    { title:"Mental Wellness Support Line",     category:"Health",            icon:"fa-phone-volume",    description:"24/7 confidential crisis support and counseling. Connect with trained professionals for mental health support, stress management, and emotional guidance.", phone:"(555) 911-HELP", email:"support@mentalhealthline.org", hours:"24/7 — Call anytime", location:"Confidential — phone & online support" },
+    { title:"Neighborhood Cleanup Initiative",  category:"Volunteering",      icon:"fa-hands-helping",   description:"Join monthly community cleanups in local parks. Tools and supplies provided. Volunteers of all ages welcome to help beautify our community.", phone:"(555) 567-8901", email:"cleanup@communityconnect.org", hours:"1st Saturday monthly 9AM–12PM", location:"Bothell Landing Park, 9919 NE 180th St" },
+    { title:"Senior Companion Program",         category:"Volunteering",      icon:"fa-user-friends",    description:"Match with local seniors for weekly visits, companionship, and light assistance. Training provided. Make a meaningful difference through friendship.", phone:"(555) 567-8902", email:"companions@seniorcare.org", hours:"Flexible — match your schedule", location:"Training at Senior Center, 234 Elder St" },
+    { title:"Community Garden Collective",      category:"Community Projects", icon:"fa-seedling",        description:"Rent a plot and grow your own vegetables. Workshops on sustainable gardening, composting, and organic growing. Tools shared, water included.", phone:"(555) 678-9012", email:"garden@greengrow.org", hours:"Open daily dawn to dusk", location:"Community Garden, Corner of 5th & Maple" },
+    { title:"Little Free Library Network",      category:"Community Projects", icon:"fa-book",            description:"Build and maintain Little Free Libraries in neighborhoods. Free books for all ages, woodworking workshops, and library setup support.", phone:"(555) 678-9013", email:"books@littlefreelibrary.org", hours:"Workshop 2nd Sat 10AM–2PM", location:"Bothell Makerspace, 10810 NE 195th St" },
+    { title:"Monthly Town Hall Meetings",       category:"Events",            icon:"fa-comments",        description:"Monthly forums to discuss community issues, meet local leaders, and voice your concerns. First Thursday of every month, 7PM at City Hall.", phone:"(555) 789-0123", email:"townhall@citygovernment.gov", hours:"1st Thursday monthly 7PM–9PM", location:"City Hall Council Chambers, 100 Civic Plaza" },
+    { title:"Community Resource Fair",          category:"Events",            icon:"fa-calendar-alt",    description:"Annual event connecting residents with local services, nonprofits, health providers, and educational resources. Free health screenings, food, and kids' activities.", phone:"(555) 789-0124", email:"fair@communityconnect.org", hours:"Annual — 3rd Sat in Sept 10AM–4PM", location:"Central Park Main Field" },
+    { title:"Financial Literacy Workshops",     category:"Career",            icon:"fa-dollar-sign",     description:"Learn budgeting, saving, investing, and credit management. Free evening workshops in English and Spanish. Materials provided.", phone:"(555) 890-1234", email:"finance@moneywise.org", hours:"Wednesdays 6PM–8PM", location:"Credit Union Community Room, 890 Bank St" },
+    { title:"Youth Mentorship Network",         category:"Education",         icon:"fa-child",           description:"Pair young people ages 12–18 with vetted adult mentors for guidance, academic support, and personal development. Background checks required. Open year-round.", phone:"(555) 901-2345", email:"mentors@youthprogram.org", hours:"Match meetings flexible", location:"Youth Services Office, 345 Hope Blvd" },
+    { title:"Fitness in the Park",              category:"Health",            icon:"fa-heartbeat",       description:"Free outdoor fitness classes every weekend! Yoga, Zumba, bootcamp, and tai chi for all fitness levels. Bring a mat and water bottle.", phone:"(555) 012-3456", email:"fitness@parksprogram.org", hours:"Sat–Sun 8AM, 10AM, 4PM", location:"Riverside Park Pavilion" }
+];
 
-        function renderResources(list) {
-            var grid = document.getElementById('resourcesGrid');
-            var noResults = document.getElementById('noResults');
-            grid.innerHTML = '';
-            updateResultsCount(list.length);
+const catIconMap = {
+    'Education': 'cat-Education',
+    'Career': 'cat-Career',
+    'Health': 'cat-Health',
+    'Volunteering': 'cat-Volunteering',
+    'Community Projects': 'cat-Community',
+    'Events': 'cat-Events'
+};
 
-            if (list.length === 0) {
-                noResults.style.display = 'block';
-                return;
-            }
-            noResults.style.display = 'none';
+let currentCat = 'all', currentSearch = '', currentSort = 'default';
 
-            list.forEach(function (r) {
-                var card = document.createElement('div');
-                card.className = 'resource-card';
-                card.innerHTML =
-                    '<i class="fas ' + r.icon + ' card-icon"></i>' +
-                    '<h3 class="card-title">' + r.title + '</h3>' +
-                    '<span class="card-category">' + r.category + '</span>' +
-                    '<p class="card-description">' + r.description + '</p>' +
-                    '<div class="card-expanded-content">' +
-                        '<div class="expanded-details">' +
-                            '<div class="detail-item"><i class="fas fa-map-marker-alt"></i><span class="detail-label">Location:</span><span>' + r.location + '</span></div>' +
-                            '<div class="detail-item"><i class="fas fa-phone"></i><span class="detail-label">Phone:</span><span>' + r.phone + '</span></div>' +
-                            '<div class="detail-item"><i class="fas fa-clock"></i><span class="detail-label">Hours:</span><span>' + r.hours + '</span></div>' +
-                            '<div class="detail-item"><i class="fas fa-envelope"></i><span class="detail-label">Email:</span><span>' + r.email + '</span></div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<a href="#" class="card-link"><span class="link-text">Learn More</span> <i class="fas fa-arrow-right"></i></a>';
-                grid.appendChild(card);
+function sortList(arr) {
+    const s = arr.slice();
+    if (currentSort === 'az') s.sort((a,b) => a.title.localeCompare(b.title));
+    else if (currentSort === 'za') s.sort((a,b) => b.title.localeCompare(a.title));
+    else if (currentSort === 'category') s.sort((a,b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title));
+    return s;
+}
 
-                // Expand/collapse handler
-                var link = card.querySelector('.card-link');
-                var expanded = card.querySelector('.card-expanded-content');
-                var linkText = card.querySelector('.link-text');
-                var linkIcon = card.querySelector('.card-link i');
+function renderResources(list) {
+    const grid = document.getElementById('resourcesGrid');
+    const noRes = document.getElementById('noResults');
+    const countEl = document.getElementById('resultCount');
+    
+    // Remove old cards
+    grid.querySelectorAll('.resource-card').forEach(c => c.remove());
+    noRes.style.display = 'none';
+    countEl.textContent = list.length;
 
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelectorAll('.card-expanded-content.active').forEach(function (c) {
-                        if (c !== expanded) {
-                            c.classList.remove('active');
-                            var oc = c.closest('.resource-card');
-                            oc.querySelector('.link-text').textContent = 'Learn More';
-                            oc.querySelector('.card-link i').className = 'fas fa-arrow-right';
-                        }
-                    });
-                    expanded.classList.toggle('active');
-                    if (expanded.classList.contains('active')) {
-                        linkText.textContent = 'Show Less';
-                        linkIcon.className = 'fas fa-arrow-up';
-                    } else {
-                        linkText.textContent = 'Learn More';
-                        linkIcon.className = 'fas fa-arrow-right';
-                    }
-                });
+    if (list.length === 0) {
+        noRes.style.display = 'block';
+        return;
+    }
+
+    list.forEach((r, i) => {
+        const card = document.createElement('div');
+        card.className = 'resource-card reveal';
+        card.innerHTML = `
+            <div class="card-header-img ${catIconMap[r.category] || ''}">
+                <i class="fas ${r.icon}"></i>
+                <span class="card-cat-pill">${r.category}</span>
+            </div>
+            <div class="card-body-content">
+                <h4>${r.title}</h4>
+                <p>${r.description}</p>
+                <div class="card-details" id="details-${i}">
+                    <div class="card-detail-inner">
+                        <div class="detail-row"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong>${r.location}</span></div>
+                        <div class="detail-row"><i class="fas fa-phone"></i><span><strong>Phone:</strong>${r.phone}</span></div>
+                        <div class="detail-row"><i class="fas fa-clock"></i><span><strong>Hours:</strong>${r.hours}</span></div>
+                        <div class="detail-row"><i class="fas fa-envelope"></i><span><strong>Email:</strong>${r.email}</span></div>
+                    </div>
+                </div>
+                <button class="card-toggle" id="toggle-${i}">
+                    <span class="toggle-text">View Details</span>
+                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                </button>
+            </div>
+        `;
+        grid.appendChild(card);
+
+        // Staggered reveal
+        setTimeout(() => card.classList.add('visible'), 60 * (i % 6));
+
+        // Toggle
+        const btn = card.querySelector(`#toggle-${i}`);
+        const details = card.querySelector(`#details-${i}`);
+        btn.addEventListener('click', () => {
+            // Close all others
+            grid.querySelectorAll('.card-details.open').forEach(d => {
+                if (d !== details) {
+                    d.classList.remove('open');
+                    const otherBtn = d.closest('.card-body-content').querySelector('.card-toggle');
+                    otherBtn.classList.remove('open');
+                    otherBtn.querySelector('.toggle-text').textContent = 'View Details';
+                }
             });
-        }
-
-        function sortResources(arr) {
-            var sorted = arr.slice();
-            switch (currentSort) {
-                case 'az': sorted.sort(function (a, b) { return a.title.localeCompare(b.title); }); break;
-                case 'za': sorted.sort(function (a, b) { return b.title.localeCompare(a.title); }); break;
-                case 'category': sorted.sort(function (a, b) { return a.category.localeCompare(b.category) || a.title.localeCompare(b.title); }); break;
-            }
-            return sorted;
-        }
-
-        function applyFilters() {
-            var filtered = resources;
-            if (currentCategory !== 'all') {
-                filtered = filtered.filter(function (r) { return r.category === currentCategory; });
-            }
-            if (currentSearch) {
-                var q = currentSearch.toLowerCase();
-                filtered = filtered.filter(function (r) {
-                    return r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) || r.category.toLowerCase().includes(q);
-                });
-            }
-            renderResources(sortResources(filtered));
-        }
-
-        // Category buttons
-        document.querySelectorAll('.category-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.category-btn').forEach(function (b) { b.classList.remove('active'); });
-                this.classList.add('active');
-                currentCategory = this.dataset.category;
-                applyFilters();
-            });
+            details.classList.toggle('open');
+            btn.classList.toggle('open');
+            btn.querySelector('.toggle-text').textContent = details.classList.contains('open') ? 'Hide Details' : 'View Details';
         });
+    });
+}
 
-        // Search with debounce
-        var searchTimeout;
-        document.getElementById('searchInput').addEventListener('input', function (e) {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function () { currentSearch = e.target.value; applyFilters(); }, 300);
-        });
+function applyFilters() {
+    let filtered = resources;
+    if (currentCat !== 'all') filtered = filtered.filter(r => r.category === currentCat);
+    if (currentSearch) {
+        const q = currentSearch.toLowerCase();
+        filtered = filtered.filter(r =>
+            r.title.toLowerCase().includes(q) ||
+            r.description.toLowerCase().includes(q) ||
+            r.category.toLowerCase().includes(q)
+        );
+    }
+    renderResources(sortList(filtered));
+}
 
-        // Sort dropdown
-        document.getElementById('sortSelect').addEventListener('change', function () {
-            currentSort = this.value;
-            applyFilters();
-        });
+// Sync hero search → directory search
+function syncSearch(val) {
+    currentSearch = val;
+    document.getElementById('directorySearch').value = val;
+    document.getElementById('heroSearch').value = val;
+    // Scroll to directory
+    document.getElementById('directory').scrollIntoView({ behavior: 'smooth' });
+    applyFilters();
+}
 
-        // Init
-        document.addEventListener('DOMContentLoaded', function () {
-            renderResources(resources);
-        });
-    </script>
+document.getElementById('heroSearch').addEventListener('input', function() {
+    currentSearch = this.value;
+    document.getElementById('directorySearch').value = this.value;
+    applyFilters();
+});
 
-    <!-- Animsition init -->
-    <script>
-        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if (isChrome) {
-            $(document).ready(function () {
-                $(".animsition").animsition({
-                    inClass: 'zoom-in', outClass: 'zoom-out',
-                    inDuration: 1500, outDuration: 800,
-                    linkElement: '.animsition-link',
-                    loading: true, loadingParentElement: 'body',
-                    loadingClass: 'animsition-loading', loadingInner: '',
-                    timeout: false, timeoutCountdown: 5000, onLoadEvent: true,
-                    browser: ['animation-duration', '-webkit-animation-duration'],
-                    overlay: false, overlayClass: 'animsition-overlay-slide',
-                    overlayParentElement: 'body',
-                    transition: function (url) { window.location.href = url; }
-                });
-            });
+let searchTimer;
+document.getElementById('directorySearch').addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    const val = this.value;
+    searchTimer = setTimeout(() => {
+        currentSearch = val;
+        document.getElementById('heroSearch').value = val;
+        applyFilters();
+    }, 280);
+});
+
+document.querySelectorAll('.cat-pill').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentCat = this.dataset.cat;
+        applyFilters();
+    });
+});
+
+document.getElementById('sortSelect').addEventListener('change', function() {
+    currentSort = this.value;
+    applyFilters();
+});
+
+// Scroll reveal
+const ro = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), 70 * (i % 4));
+            ro.unobserve(entry.target);
         }
-    </script>
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// Back to top
+window.addEventListener('scroll', () => {
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+// Init
+document.addEventListener('DOMContentLoaded', () => applyFilters());
+
+// Animsition
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+if (isChrome && typeof $ !== 'undefined') {
+    $(document).ready(function() {
+        $(".animsition").animsition({
+            inClass:'zoom-in',outClass:'zoom-out',
+            inDuration:1500,outDuration:800,
+            linkElement:'.animsition-link',
+            loading:true,loadingParentElement:'body',
+            loadingClass:'animsition-loading',loadingInner:'',
+            timeout:false,timeoutCountdown:5000,onLoadEvent:true,
+            browser:['animation-duration','-webkit-animation-duration'],
+            overlay:false,overlayClass:'animsition-overlay-slide',
+            overlayParentElement:'body',
+            transition:function(url){window.location.href=url;}
+        });
+    });
+}
+</script>
 </body>
 </html>
