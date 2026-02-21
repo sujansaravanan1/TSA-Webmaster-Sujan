@@ -1,33 +1,308 @@
-<!DOCTYPE html>    
-    <div class="nav-menu fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <nav class="navbar navbar-dark navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html"><b>Community Connect</b></a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbar">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="cte.html">How it Works</a></li>
-                                <li class="nav-item"><a class="nav-link" href="upcoming-events.html">Upcoming Events</a></li>
-                                <li class="nav-item"><a class="nav-link" href="impact.html">Impact</a></li>
-                                <li class="nav-item"><a class="nav-link" href="eventfinder.html">Resources</a></li>
-                                <li class="nav-item"><a class="nav-link" href="about.html">Submit</a></li>
-                                <li class="nav-item"><a class="nav-link" href="documentation.html">Documentation</a></li>
-                                <li class="nav-item">
-                                    <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-                                        <i class="fas fa-sun icon-sun"></i>
-                                        <i class="fas fa-moon icon-moon"></i>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+<nav class="nav-menu" id="mainNav">
+    <div class="container">
+        <div class="nav-inner">
+            <!-- Logo -->
+            <a href="index.html" class="nav-logo animsition-link">
+                <div class="logo-mark">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="16" r="14" stroke="#91b08a" stroke-width="2"/>
+                        <path d="M10 16 Q16 8 22 16 Q16 24 10 16Z" fill="#6d8c5f"/>
+                        <circle cx="16" cy="16" r="3" fill="#fff"/>
+                    </svg>
                 </div>
+                <span class="logo-text">Community<strong>Connect</strong></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="nav-link animsition-link">Home</a></li>
+                <li><a href="upcoming-events.html" class="nav-link animsition-link">Events</a></li>
+                <li><a href="eventfinder.html" class="nav-link animsition-link">Resources</a></li>
+                <li><a href="submit.html" class="nav-link animsition-link">Submit</a></li>
+                <li><a href="about.html" class="nav-link animsition-link">About</a></li>
+            </ul>
+
+            <!-- Right Actions -->
+            <div class="nav-actions">
+                <button class="dark-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon moon-icon"></i>
+                    <i class="fas fa-sun sun-icon"></i>
+                </button>
+                <a href="submit.html" class="nav-cta animsition-link">
+                    <i class="fas fa-plus"></i> Add Resource
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </div>
-</DOCTYPE>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html" class="animsition-link">Home</a></li>
+            <li><a href="upcoming-events.html" class="animsition-link">Events</a></li>
+            <li><a href="eventfinder.html" class="animsition-link">Resources</a></li>
+            <li><a href="submit.html" class="animsition-link">Submit a Resource</a></li>
+            <li><a href="about.html" class="animsition-link">About Us</a></li>
+        </ul>
+    </div>
+</nav>
+
+<style>
+/* ===== NAVBAR STYLES ===== */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-menu.scrolled {
+    padding: 10px 0;
+    background: rgba(27, 45, 24, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(145, 176, 138, 0.15);
+}
+
+[data-theme="dark"] .nav-menu.scrolled {
+    background: rgba(15, 25, 14, 0.95);
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.logo-mark {
+    transition: transform 0.4s ease;
+}
+.nav-logo:hover .logo-mark {
+    transform: rotate(20deg);
+}
+
+.logo-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+}
+.logo-text strong {
+    font-weight: 700;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+}
+
+.nav-links .nav-link {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.nav-links .nav-link:hover,
+.nav-links .nav-link.active {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+.nav-links .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    background: #91b08a;
+    border-radius: 2px;
+}
+
+/* Nav Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.dark-toggle {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.dark-toggle:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.sun-icon { display: none; }
+[data-theme="dark"] .moon-icon { display: none; }
+[data-theme="dark"] .sun-icon { display: block; }
+
+.nav-cta {
+    background: linear-gradient(135deg, #6d8c5f, #91b08a);
+    color: #fff !important;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(109,140,95,0.4);
+    color: #fff !important;
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    background: rgba(20, 36, 18, 0.97);
+    backdrop-filter: blur(20px);
+    padding: 16px 0 20px;
+    border-top: 1px solid rgba(145, 176, 138, 0.15);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.mobile-menu.open {
+    max-height: 400px;
+}
+
+.mobile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.mobile-menu ul li a {
+    display: block;
+    padding: 12px 4px;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: color 0.2s;
+}
+
+.mobile-menu ul li:last-child a { border-bottom: none; }
+.mobile-menu ul li a:hover { color: #91b08a; }
+
+@media (max-width: 991px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: block; }
+}
+
+@media (max-width: 480px) {
+    .logo-text { font-size: 15px; }
+}
+</style>
+
+<script>
+(function() {
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            const spans = hamburger.querySelectorAll('span');
+            hamburger.classList.toggle('active');
+        });
+    }
+
+    // Scroll effect
+    const nav = document.getElementById('mainNav');
+    if (nav) {
+        const handleScroll = () => {
+            if (window.scrollY > 60) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+    }
+
+    // Active link
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+})();
+</script>

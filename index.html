@@ -1,528 +1,1722 @@
 <!doctype html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="Akshit Dewan">
-        <title>Community Connect - Home</title>
-        <link rel="stylesheet" href="css/example.css">
-        <link rel="stylesheet" href="css/carousel.css">
-        <link rel = "stylesheet" href = "css/competitions.css">
-        <link rel="stylesheet" href="css/animsition.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-        <link rel="icon" href="img/icon.png">
-        <link rel="stylesheet" href="css/theme.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Connect - Home</title>
+    <meta name="description" content="Community Connect is your local hub for finding volunteers, community events, support services, and non-profits in your area.">
 
-        <style type="text/css">
-            html, body {
-                background: linear-gradient(to right, #4a6741, #6d8c5f);
-                scroll-behavior: smooth; /* sleek native smooth scrolling */
-            }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-            /* Scroll-animated intro text */
-            .scroll-animate {
-                opacity: 0;
-                transform: translateY(18px);
-                transition: opacity 0.7s cubic-bezier(0.2,0.8,0.2,1), transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
-            }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-            .scroll-animate.is-visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-            /* Small helper to make intro text warm and readable */
-            #intro .lead { font-size: 1.05rem; color: #333; max-width: 900px; margin: 0 auto 16px; }
-            
-            /* Dark mode for intro text */
-            [data-theme="dark"] #intro .lead {
-                color: #B8C8BA;
-            }
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
 
-            /* Dark mode for Our Services section */
-            [data-theme="dark"] .section.bg-light {
-                background: var(--bg-secondary) !important;
-            }
+    <!-- Animsition -->
+    <link rel="stylesheet" href="css/animsition.min.css">
 
-            [data-theme="dark"] .section-title h3 {
-                color: var(--text-primary) !important;
-            }
+    <!-- Your existing styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/icon.png">
 
-            [data-theme="dark"] .nav-tabs .nav-link {
-                color: var(--bg-secondary) !important;
-                border-color: var(--card-border) !important;
-            }
+    <!-- Components loader -->
+    <script defer src="js/components.js"></script>
 
-            [data-theme="dark"] .nav-tabs .nav-link.active {
-                background: var(--card-bg) !important;
-                color: var(--text-primary) !important;
-                border-color: var(--accent) !important;
-            }
+    <style>
+        /* ============================================
+           CSS VARIABLES & THEME
+        ============================================ */
+        :root {
+            --green-deep:   #2d4a28;
+            --green-mid:    #4a6741;
+            --green-light:  #6d8c5f;
+            --green-pale:   #91b08a;
+            --green-wash:   #d9e5d4;
+            --green-mist:   #f0f4ed;
+            --white:        #ffffff;
+            --text-dark:    #1a2718;
+            --text-body:    #3d5038;
+            --text-muted:   #7a9171;
+            --section-bg:   #f8fbf7;
+            --card-shadow:  0 4px 24px rgba(74,103,65,0.10);
+            --radius-sm:    8px;
+            --radius-md:    14px;
+            --radius-lg:    24px;
+            --transition:   all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
 
-            [data-theme="dark"] .nav-tabs .nav-link:hover {
-                border-color: var(--accent) !important;
-            }
+        [data-theme="dark"] {
+            --white:        #0f1a0e;
+            --text-dark:    #e8f0e6;
+            --text-body:    #b8c8b5;
+            --text-muted:   #7a9171;
+            --section-bg:   #131f11;
+            --green-mist:   #182416;
+            --card-shadow:  0 4px 24px rgba(0,0,0,0.4);
+        }
 
-            [data-theme="dark"] .tab-content {
-                background: var(--card-bg) !important;
-                color: var(--text-secondary) !important;
-            }
+        *, *::before, *::after { box-sizing: border-box; }
 
-            [data-theme="dark"] .tab-content h2 {
-                color: var(--text-primary) !important;
-            }
+        html { scroll-behavior: smooth; }
 
-            [data-theme="dark"] .tab-content p {
-                color: var(--text-secondary) !important;
-            }
-        </style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-top: 0;
+        }
 
-        <!-- Font -->
-        <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2d4a28 0%, #4a6741 45%, #6d8c5f 100%);
+        }
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        /* Animated mesh background */
+        .hero-bg-mesh {
+            position: absolute;
+            inset: 0;
+            opacity: 0.35;
+            background-image:
+                radial-gradient(ellipse at 20% 20%, rgba(145,176,138,0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(45,74,40,0.8) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 10%, rgba(217,229,212,0.3) 0%, transparent 40%);
+        }
 
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        /* Floating orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: orbFloat 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero-orb-1 { width: 400px; height: 400px; background: rgba(145,176,138,0.25); top: -100px; right: -100px; animation-delay: 0s; }
+        .hero-orb-2 { width: 300px; height: 300px; background: rgba(74,103,65,0.4); bottom: -50px; left: -50px; animation-delay: -3s; }
+        .hero-orb-3 { width: 200px; height: 200px; background: rgba(217,229,212,0.2); top: 50%; left: 20%; animation-delay: -6s; }
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/themify-icons.css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link href="css/style.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
 
-        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
-        <link rel = "stylesheet" type = "text/css" href = "css/awards.css">
-        <link rel = "stylesheet" type = "text/css" href = "css/officers.css">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
+        /* Canvas for particles */
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
 
-    <div id="ani" class="animsition">
-        <body data-spy="scroll" data-target="#navbar" data-offset="30">
-            <!-- Navigation -->
-            <div id="navbar-placeholder"></div>
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 900px;
+        }
 
-            <header class="bg-gradient2"id="home">
-                <div class = "backgrounddiv2">
-                    <div id="container">
-                        <header class="info">
-                            <hgroup class="about">
-                                <h1>Community Connect</h1>
-                                <h2 class="text-white" style="font-size: 24px; font-weight: 300; margin-top: 20px;">Building stronger communities through collaboration and service.</h2>
-                                <div style="margin-top: 30px;">
-                                    <a href="#impact" class="btn btn-primary" style="margin-right: 15px; padding: 12px 30px; font-weight: 500;">Join the Movement</a>
-                                    <a href="#impact" class="btn btn-outline-light" style="padding: 12px 30px; font-weight: 500;">Learn More</a>
-                                </div>
-                            </hgroup>
-                        </header>
-                    </div>
-                </div>
-            </header>
-            <script src="./js/sketch.js"></script>
-            <script  src="./js/timeline.js"></script>
-            <script src = "js/jquery-3.2.1.min.js"></script>
-            <script src="js/components.js"></script>
-            <script src="./js/bootstrap.bundle.min.js"></script>
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            animation: fadeSlideUp 0.8s ease both;
+        }
 
-            <script src="./js/owl.carousel.min.js"></script>
-            <script src="./js/script.js"></script>
-            <script src="./js/cards.js"></script>
+        .hero-eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #91b08a;
+            animation: pulse 2s ease infinite;
+        }
 
-            <script>
-                if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-                } else {
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
 
-                    function Particle( x, y, radius ) {
-                        this.init( x, y, radius );
-                    }
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(44px, 7vw, 80px);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeSlideUp 0.8s ease 0.15s both;
+        }
 
-                    Particle.prototype = {
+        .hero-title .accent {
+            color: #91b08a;
+            position: relative;
+            display: inline-block;
+        }
 
-                        init: function( x, y, radius ) {
+        .hero-title .accent::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #91b08a, #d9e5d4);
+            border-radius: 2px;
+            animation: lineGrow 1s ease 1s both;
+            transform-origin: left;
+        }
 
-                            this.alive = true;
+        @keyframes lineGrow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
 
-                            this.radius = radius || 10;
-                            this.wander = 0.15;
-                            this.theta = random( TWO_PI );
-                            this.drag = 0.92;
-                            this.color = '#fff';
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: 400;
+            color: rgba(255,255,255,0.75);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            animation: fadeSlideUp 0.8s ease 0.3s both;
+        }
 
-                            this.x = x || 0.0;
-                            this.y = y || 0.0;
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 0.8s ease 0.45s both;
+            margin-bottom: 60px;
+        }
 
-                            this.vx = 0.0;
-                            this.vy = 0.0;
-                        },
+        .btn-hero-primary {
+            background: #fff;
+            color: #4a6741;
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 15px 32px;
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
 
-                        move: function() {
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+            color: #2d4a28;
+            text-decoration: none;
+        }
 
-                            this.x += this.vx;
-                            this.y += this.vy;
+        .btn-hero-outline {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 15px 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(8px);
+        }
 
-                            this.vx *= this.drag;
-                            this.vy *= this.drag;
+        .btn-hero-outline:hover {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            text-decoration: none;
+            transform: translateY(-3px);
+        }
 
-                            this.theta += random( -0.5, 0.5 ) * this.wander;
-                            this.vx += sin( this.theta ) * 0.1;
-                            this.vy += cos( this.theta ) * 0.1;
+        /* Hero stats */
+        .hero-stats {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            animation: fadeSlideUp 0.8s ease 0.6s both;
+        }
 
-                            this.radius *= 0.96;
-                            this.alive = this.radius > 0.5;
-                        },
+        .hero-stat {
+            text-align: center;
+            padding: 0 32px;
+            border-right: 1px solid rgba(255,255,255,0.15);
+        }
 
-                        draw: function( ctx ) {
+        .hero-stat:last-child { border-right: none; }
 
-                            ctx.beginPath();
-                            ctx.arc( this.x, this.y, this.radius, 0, TWO_PI );
-                            ctx.fillStyle = this.color;
-                            ctx.fill();
-                        }
-                    };
+        .hero-stat-num {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
 
-                    var MAX_PARTICLES = 280;
-                    
-                    // Theme-aware particle colors
-                    function getParticleColors() {
-                        const theme = document.documentElement.getAttribute('data-theme');
-                        if (theme === 'dark') {
-                            return ['rgba(232, 240, 234, 0.6)', 'rgba(184, 200, 186, 0.6)', 'rgba(143, 170, 145, 0.6)'];
-                        } else {
-                            return ['#f0f4ed', '#91b08a', '#6d8c5f'];
-                        }
-                    }
-                    
-                    var COLOURS = getParticleColors();
+        .hero-stat-label {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-                    var particles = [];
-                    var pool = [];
+        /* Scroll arrow */
+        .hero-scroll {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.5);
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            animation: fadeSlideUp 1s ease 1.2s both;
+        }
 
-                    var demo = Sketch.create({
-                        container: document.getElementById( 'container' ),
-                        retina: 'auto'
-                    });
+        .hero-scroll-arrow {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounceDown 2s ease infinite;
+        }
 
-                    demo.setup = function() {
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
 
-                        var i, x, y;
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-                        for ( i = 0; i < 50; i++ ) {
-                            x = ( demo.width * 0.5 ) + random( -100, 100 );
-                            y = ( demo.height * 0.5 ) + random( -100, 100 );
-                            demo.spawn( x, y);
-                        }
-                    };
+        /* ============================================
+           MISSION STRIP
+        ============================================ */
+        .mission-strip {
+            background: var(--green-mid);
+            padding: 20px 0;
+            overflow: hidden;
+        }
 
-                    demo.spawn = function( x, y ) {
+        .mission-ticker {
+            display: flex;
+            gap: 60px;
+            animation: tickerScroll 30s linear infinite;
+            white-space: nowrap;
+        }
 
-                        var particle, theta, force;
+        .mission-ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+            flex-shrink: 0;
+        }
 
-                        if ( particles.length >= MAX_PARTICLES )
-                            pool.push( particles.shift() );
+        .mission-ticker-item i { color: #d9e5d4; font-size: 12px; }
 
-                        particle = pool.length ? pool.pop() : new Particle();
-                        particle.init( x, y, random( 5, 40 ) );
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
 
-                        particle.wander = random( 0.5, 2.0 );
-                        particle.color = random( COLOURS );
-                        particle.drag = random( 0.9, 0.99 );
+        /* ============================================
+           SECTION BASE
+        ============================================ */
+        .section { padding: 96px 0; }
+        .section-sm { padding: 64px 0; }
 
-                        theta = random( TWO_PI );
-                        force = random( 2, 8 );
+        .section-eyebrow {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green-light);
+            margin-bottom: 12px;
+        }
 
-                        particle.vx = sin( theta ) * force;
-                        particle.vy = cos( theta ) * force;
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
 
-                        particles.push( particle );
-                    };
+        .section-subtext {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 560px;
+        }
 
-                    demo.update = function() {
+        /* ============================================
+           ABOUT / MISSION
+        ============================================ */
+        .about-section {
+            background: var(--white);
+        }
 
-                        var i, particle;
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
 
-                        for ( i = particles.length - 1; i >= 0; i-- ) {
+        .about-image-wrap {
+            position: relative;
+        }
 
-                            particle = particles[i];
+        .about-image-main {
+            width: 100%;
+            height: 420px;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #4a6741, #91b08a);
+        }
 
-                            if ( particle.alive ) particle.move();
-                            else pool.push( particles.splice( i, 1 )[0] );
-                        }
-                    };
+        .about-image-placeholder {
+            width: 100%;
+            height: 420px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, #4a6741 0%, #6d8c5f 50%, #91b08a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-                    demo.draw = function() {
+        .about-image-placeholder .placeholder-icon {
+            font-size: 80px;
+            color: rgba(255,255,255,0.3);
+        }
 
-                        demo.globalCompositeOperation  = 'lighter';
+        .about-floating-card {
+            position: absolute;
+            bottom: -24px;
+            right: -24px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--green-wash);
+            min-width: 180px;
+        }
 
-                        for ( var i = particles.length - 1; i >= 0; i-- ) {
-                            particles[i].draw( demo );
-                        }
-                    };
+        .about-floating-card .card-stat {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--green-mid);
+            line-height: 1;
+        }
 
-                    demo.mousemove = function() {
+        .about-floating-card .card-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
 
-                        var particle, theta, force, touch, max, i, j, n;
+        .about-second-card {
+            position: absolute;
+            top: 24px;
+            left: -24px;
+            background: var(--green-mid);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            box-shadow: 0 8px 32px rgba(74,103,65,0.3);
+            color: #fff;
+        }
 
-                        for ( i = 0, n = demo.touches.length; i < n; i++ ) {
+        .about-second-card .card-icon { font-size: 24px; margin-bottom: 6px; }
+        .about-second-card .card-text { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; }
 
-                            touch = demo.touches[i], max = random( 1, 4 );
-                            for ( j = 0; j < max; j++ ) {
-                                demo.spawn( touch.x, touch.y );
-                            }
+        .about-values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
 
-                        }
-                    };
-                    
-                    // Update particle colors when theme changes
-                    const observer = new MutationObserver(function(mutations) {
-                        mutations.forEach(function(mutation) {
-                            if (mutation.attributeName === 'data-theme') {
-                                COLOURS = getParticleColors();
-                            }
-                        });
-                    });
-                    
-                    observer.observe(document.documentElement, {
-                        attributes: true,
-                        attributeFilter: ['data-theme']
-                    });
-                };
+        .value-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            transition: var(--transition);
+        }
 
-            </script>
-            <!-- Intro / Welcome copy (replaces homepage Our Impact duplicate) -->
-            <section id="intro" class="section bg-white">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-10 col-lg-12 mx-auto text-center">
-                            <h3 class="section-heading mb-4">Welcome to Community Connect</h3>
-                            <p class="lead scroll-animate">We bring neighbors, volunteers, and local organizations together to solve problems, share resources, and celebrate community wins. Whether you want to give a few hours, share a skill, or find help, this hub connects people and ideas to make lasting, meaningful change.</p>
-                            <p class="scroll-animate">Our mission is simple: make it easy to find ways to help, make it rewarding to participate, and make the results visible so everyone can see the difference we make together. Join a cleanup, mentor a student, donate to a food drive, or start a local project — every action creates a ripple.</p>
-                            <div style="margin-top:20px;"><a href="upcoming-events.html" class="btn btn-primary animsition-link">Find Events</a> <a href="impact.html" class="btn btn-outline-primary animsition-link" style="margin-left:10px;">See Impact Dashboard</a></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    <!--
-Who We Are / About Section
--->
-        <div class="section" id="about" style="background: linear-gradient(to bottom, rgba(74, 103, 65, 1) 0%, rgba(109, 140, 95, 0.7) 70%, rgba(109, 140, 95, 0) 100%); padding: 60px 0 40px 0;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-10 col-lg-12 mx-auto">
-                        <h3 class="section-heading mb-4 text-white">
-                            Who We Are
-                        </h3>
-                        <p class="text-white">Community Connect is a volunteer-driven platform dedicated to strengthening local communities through meaningful service projects. We bring together volunteers, organizations, and those in need to create lasting positive impact. Whether you're looking to give back, find support, or collaborate on community initiatives, we're here to connect you with opportunities that matter.</p>
-                    </div>
-                </div>
+        .value-item:hover {
+            border-color: var(--green-light);
+            transform: translateY(-2px);
+        }
+
+        .value-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .value-item h5 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0 0 4px;
+        }
+
+        .value-item p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           SERVICES / HOW IT WORKS
+        ============================================ */
+        .services-section {
+            background: var(--section-bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 36px 28px;
+            border: 1px solid var(--green-wash);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--green-mid), var(--green-pale));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(74,103,65,0.12);
+            border-color: var(--green-light);
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 26px;
+            color: #fff;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon-wrap {
+            transform: rotate(10deg) scale(1.05);
+        }
+
+        .service-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .service-card a {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green-mid);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease;
+        }
+
+        .service-card a:hover { gap: 10px; color: var(--green-deep); }
+
+        /* ============================================
+           SPOTLIGHTS / FEATURED RESOURCES
+        ============================================ */
+        .spotlight-section {
+            background: var(--white);
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 56px;
+        }
+
+        .spotlight-card {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--green-wash);
+            background: var(--white);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 56px rgba(74,103,65,0.14);
+        }
+
+        .spotlight-img {
+            height: 200px;
+            background: linear-gradient(135deg, #4a6741, #91b08a);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spotlight-img-1 { background: linear-gradient(135deg, #2d5a27, #5a8f52); }
+        .spotlight-img-2 { background: linear-gradient(135deg, #4a6741, #7aaa6d); }
+        .spotlight-img-3 { background: linear-gradient(135deg, #3d6b35, #91b08a); }
+
+        .spotlight-img .img-icon {
+            font-size: 64px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .spotlight-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(255,255,255,0.9);
+            color: var(--green-mid);
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .spotlight-body {
+            padding: 24px;
+        }
+
+        .spotlight-tag {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .spotlight-body h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .spotlight-body p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .spotlight-meta {
+            display: flex;
+            gap: 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .spotlight-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .spotlight-meta i { color: var(--green-light); }
+
+        /* ============================================
+           IMPACT STATS
+        ============================================ */
+        .impact-section {
+            background: linear-gradient(135deg, #2d4a28, #4a6741);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(ellipse at 30% 50%, rgba(145,176,138,0.15) 0%, transparent 60%),
+                              radial-gradient(ellipse at 70% 20%, rgba(217,229,212,0.1) 0%, transparent 50%);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .impact-item {
+            text-align: center;
+            padding: 48px 24px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .impact-item:last-child { border-right: none; }
+
+        .impact-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 22px;
+            color: #d9e5d4;
+            transition: var(--transition);
+        }
+
+        .impact-item:hover .impact-icon {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .impact-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 52px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .impact-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            color: rgba(255,255,255,0.65);
+            font-weight: 500;
+        }
+
+        /* ============================================
+           TESTIMONIALS
+        ============================================ */
+        .testimonials-section {
+            background: var(--section-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            border: 1px solid var(--green-wash);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+            border-color: var(--green-light);
+        }
+
+        .testimonial-quote-icon {
+            font-size: 40px;
+            color: var(--green-wash);
+            line-height: 1;
+            font-family: Georgia, serif;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .testimonial-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--text-body);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-stars {
+            color: #f4b942;
+            font-size: 13px;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-pale));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .author-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .author-role {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           FOUNDERS / TEAM
+        ============================================ */
+        .founders-section {
+            background: var(--white);
+        }
+
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 56px;
+        }
+
+        .founder-card {
+            text-align: center;
+            padding: 28px 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--green-wash);
+            background: var(--white);
+            transition: var(--transition);
+        }
+
+        .founder-card:hover {
+            border-color: var(--green-light);
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .founder-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            border: 3px solid var(--green-wash);
+            transition: border-color 0.3s;
+        }
+
+        .founder-card:hover .founder-avatar { border-color: var(--green-light); }
+
+        .founder-av-1 { background: linear-gradient(135deg, #4a6741, #6d8c5f); }
+        .founder-av-2 { background: linear-gradient(135deg, #2d5a27, #5a8f52); }
+        .founder-av-3 { background: linear-gradient(135deg, #3d5038, #7a9a70); }
+        .founder-av-4 { background: linear-gradient(135deg, #5a7a50, #91b08a); }
+
+        .founder-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .founder-role {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: var(--green-light);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .founder-bio {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           CTA SECTION
+        ============================================ */
+        .cta-section {
+            background: var(--section-bg);
+            border-top: 1px solid var(--green-wash);
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #2d4a28, #4a6741);
+            border-radius: var(--radius-lg);
+            padding: 72px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(ellipse at 20% 50%, rgba(145,176,138,0.2) 0%, transparent 60%),
+                              radial-gradient(ellipse at 80% 20%, rgba(217,229,212,0.1) 0%, transparent 50%);
+        }
+
+        .cta-box > * { position: relative; z-index: 1; }
+
+        .cta-box h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           AUDIENCE BADGES
+        ============================================ */
+        .audience-strip {
+            background: var(--white);
+            border-bottom: 1px solid var(--green-wash);
+            padding: 20px 0;
+        }
+
+        .audience-inner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .audience-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 4px;
+        }
+
+        .audience-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--green-mist);
+            border: 1px solid var(--green-wash);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: var(--text-body);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .audience-badge:hover {
+            border-color: var(--green-light);
+            background: var(--white);
+        }
+
+        .audience-badge i { color: var(--green-mid); font-size: 12px; }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 1024px) {
+            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .spotlight-grid { grid-template-columns: repeat(2, 1fr); }
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .founders-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .section { padding: 64px 0; }
+            .services-grid { grid-template-columns: 1fr; }
+            .spotlight-grid { grid-template-columns: 1fr; }
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .founders-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-stats { gap: 0; }
+            .hero-stat { padding: 0 16px; }
+            .hero-stat-num { font-size: 24px; }
+            .about-values { grid-template-columns: 1fr; }
+            .cta-box { padding: 48px 24px; }
+            .about-floating-card { display: none; }
+            .about-second-card { display: none; }
+        }
+
+        /* ============================================
+           DARK MODE OVERRIDES
+        ============================================ */
+        [data-theme="dark"] .service-card,
+        [data-theme="dark"] .testimonial-card,
+        [data-theme="dark"] .founder-card,
+        [data-theme="dark"] .spotlight-card {
+            background: #182416;
+            border-color: #263d22;
+        }
+
+        [data-theme="dark"] .value-item {
+            background: #182416;
+            border-color: #263d22;
+        }
+
+        [data-theme="dark"] .about-floating-card {
+            background: #182416;
+            border-color: #263d22;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation -->
+<div id="navbar-placeholder"></div>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="hero" id="home">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <span class="dot"></span>
+            Serving Our Community Since 2020
+        </div>
+
+        <h1 class="hero-title">
+            Your Community,<br>
+            <span class="accent">Connected.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Find non-profits, support services, events, and volunteers — all in one place, built for every resident.
+        </p>
+
+        <div class="hero-actions">
+            <a href="eventfinder.html" class="btn-hero-primary animsition-link">
+                <i class="fas fa-search"></i> Explore Resources
+            </a>
+            <a href="upcoming-events.html" class="btn-hero-outline animsition-link">
+                <i class="fas fa-calendar"></i> Upcoming Events
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num" data-count="500">0</span>
+                <span class="hero-stat-label">Resources Listed</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num" data-count="1200">0</span>
+                <span class="hero-stat-label">Volunteers</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num" data-count="48">0</span>
+                <span class="hero-stat-label">Partner Orgs</span>
             </div>
         </div>
     </div>
-    <!-- Who We Are closing-->
-    <!-- Our Services Section -->
-    <div class="section bg-light" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h3>Our Services</h3>
-            </div>
 
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#volunteer-matching">Volunteer Matching</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#community-projects">Community Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#resource-sharing">Resource Sharing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#impact-tracking">Impact Tracking</a>
-                </li>
-            </ul>
+    <div class="hero-scroll">
+        <div class="hero-scroll-arrow">
+            <i class="fas fa-chevron-down" style="font-size:12px; color:rgba(255,255,255,0.7);"></i>
+        </div>
+        <span>Scroll</span>
+    </div>
+</section>
 
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="volunteer-matching">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div>
-                            <h2>Find Your Perfect Volunteer Opportunity</h2>
-                            <p>Our smart matching system connects volunteers with opportunities that align with their skills, interests, and availability. Whether you have an hour or a day, we'll help you find meaningful ways to make a difference in your community.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="community-projects">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div>
-                            <h2>Collaborative Community Initiatives</h2>
-                            <p>Join or launch community-driven projects that address local needs. From neighborhood cleanups to tutoring programs, we facilitate projects that bring people together to solve real challenges and strengthen community bonds.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="resource-sharing">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div>
-                            <h2>Share and Discover Community Resources</h2>
-                            <p>Access our comprehensive directory of community resources including educational materials, support services, and local organizations. Community members can submit and share resources that have helped them succeed.</p>
-                            <a href="eventfinder.html" class="btn btn-primary" style="margin-top: 20px;">Browse Resources</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="impact-tracking">
-                    <div class="d-flex flex-column flex-lg-row">
-                        <div>
-                            <h2>See Your Impact Grow</h2>
-                            <p>Track your volunteer hours, see the communities you've helped, and watch your contributions create ripple effects. Our impact dashboard celebrates every act of service and shows how individual actions combine to transform communities.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<!-- ============================================
+     AUDIENCE BADGES
+============================================ -->
+<div class="audience-strip">
+    <div class="container">
+        <div class="audience-inner">
+            <span class="audience-label">For Everyone:</span>
+            <span class="audience-badge"><i class="fas fa-child"></i> Kids &amp; Families</span>
+            <span class="audience-badge"><i class="fas fa-user-graduate"></i> Students</span>
+            <span class="audience-badge"><i class="fas fa-briefcase"></i> Job Seekers</span>
+            <span class="audience-badge"><i class="fas fa-hands-helping"></i> Volunteers</span>
+            <span class="audience-badge"><i class="fas fa-user-alt"></i> Seniors</span>
+            <span class="audience-badge"><i class="fas fa-globe"></i> All Residents</span>
         </div>
     </div>
-    <!-- Our Services closing-->
-    <div class="section text-white" id="stories">
-        <div class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h3 class="text-white">Community Stories</h3>
-                </div>
-                <div class="testimonials owl-carousel">
-                    <div class="testimonials-single">
-                        <h3 class="text-white">Tutoring Success</h3>
-                        <br>
-                        <div class="row">
-                            <div class="bqcontainer col col-lg-12">
-                                <blockquote class="blockquote text-white">Through Community Connect, I found amazing volunteer tutors who helped my daughter excel in math. What started as weekly tutoring sessions turned into a lasting mentorship that changed her academic trajectory.
-                                </blockquote>
-                                <p class="text-white" style="font-style: italic; margin-top: 15px;">- Maria Rodriguez, Parent</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonials-single">
-                        <h3 class="text-white">Volunteer Impact</h3>
-                        <br>
-                        <div class="row">
-                            <div class="bqcontainer col col-lg-12">
-                                <blockquote class="blockquote text-white">I wanted to give back to my community but didn't know where to start. Community Connect matched me with a local food bank, and now I volunteer every weekend. It's become one of the most rewarding parts of my life.
-                                </blockquote>
-                                <p class="text-white" style="font-style: italic; margin-top: 15px;">- James Chen, Volunteer</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonials-single">
-                        <h3 class="text-white">Community Project</h3>
-                        <br>
-                        <div class="row">
-                            <div class="bqcontainer col col-lg-12">
-                                <blockquote class="blockquote text-white">We used Community Connect to organize a neighborhood cleanup. Over 50 volunteers showed up! What was once a neglected park is now a beautiful space where families gather. This platform made it all possible.
-                                </blockquote>
-                                <p class="text-white" style="font-style: italic; margin-top: 15px;">- The Riverside Neighborhood Committee</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-
-    <script src="js/animsition.min.js"></script>
-
-    <script>
-        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-
-        if(isChrome)
-        {
-            $(document).ready(function() {
-                $(".animsition").animsition({
-                    inClass: 'zoom-in',
-                    outClass: 'zoom-out',
-                    inDuration: 1500,
-                    outDuration: 800,
-                    linkElement: '.animsition-link',
-                    loading: true,
-                    loadingParentElement: 'body',
-                    loadingClass: 'animsition-loading',
-                    loadingInner: '',
-                    timeout: false,
-                    timeoutCountdown: 5000,
-                    onLoadEvent: true,
-                    browser: [ 'animation-duration', '-webkit-animation-duration'],
-                    overlay : false,
-                    overlayClass : 'animsition-overlay-slide',
-                    overlayParentElement : 'body',
-                    transition: function(url){ window.location.href = url; }
-                });
-            });
-        }
-
-        else
-        {
-            var NAME = document.getElementById("ani");
-            NAME.className = "";
-        }
-
-        // Stat Counter Animation
-        function animateCount(element, target, duration = 2000) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const timer = setInterval(function() {
-                start += increment;
-                if (start >= target) {
-                    element.textContent = target + '+';
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(start) + '+';
-                }
-            }, 16);
-        }
-
-        // IntersectionObserver for stat counters
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px'
-        };
-
-        const statsObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                    entry.target.classList.add('counted');
-                    const target = parseInt(entry.target.dataset.target);
-                    animateCount(entry.target, target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all stat numbers on page load
-        $(document).ready(function() {
-            document.querySelectorAll('.stat-number').forEach(function(stat) {
-                statsObserver.observe(stat);
-            });
-        });
-    </script>
-    <script>
-        // Scroll-triggered intro text animations
-        document.addEventListener('DOMContentLoaded', function () {
-            const items = document.querySelectorAll('.scroll-animate');
-            if (!items || items.length === 0) return;
-
-            const io = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // small stagger for multiple items
-                        setTimeout(() => entry.target.classList.add('is-visible'), 80 * (Array.from(items).indexOf(entry.target) % 6));
-                        // unobserve once visible
-                        io.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.18 });
-
-            items.forEach(item => io.observe(item));
-        });
-    </script>
-    </body>
 </div>
+
+<!-- ============================================
+     MISSION TICKER
+============================================ -->
+<div class="mission-strip">
+    <div class="mission-ticker">
+        <!-- duplicated for seamless loop -->
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Education Support</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Health &amp; Wellness</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Career Resources</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Community Events</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Volunteer Matching</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Non-Profit Directory</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Crisis Services</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Youth Programs</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Education Support</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Health &amp; Wellness</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Career Resources</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Community Events</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Volunteer Matching</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Non-Profit Directory</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Crisis Services</span>
+        <span class="mission-ticker-item"><i class="fas fa-circle"></i> Youth Programs</span>
+    </div>
+</div>
+
+<!-- ============================================
+     ABOUT / MISSION
+============================================ -->
+<section class="about-section section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image-wrap reveal">
+                <div class="about-image-placeholder">
+                    <i class="fas fa-hands-helping placeholder-icon"></i>
+                </div>
+                <div class="about-floating-card">
+                    <div class="card-stat" id="vol-count">1,200+</div>
+                    <div class="card-label">Active Volunteers</div>
+                </div>
+                <div class="about-second-card">
+                    <div class="card-icon">🏘️</div>
+                    <div class="card-text">Locally Trusted</div>
+                </div>
+            </div>
+            <div class="reveal">
+                <span class="section-eyebrow">Our Mission</span>
+                <h2 class="section-heading">We exist to connect neighbors with the help they need.</h2>
+                <p class="section-subtext">Community Connect is a volunteer-driven platform that breaks down barriers between residents and the resources around them — from food pantries and job training to after-school programs and health clinics.</p>
+
+                <div class="about-values">
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-heart"></i></div>
+                        <div>
+                            <h5>Inclusive</h5>
+                            <p>Resources for every age, background, and need — no one left behind.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h5>Trusted</h5>
+                            <p>Every resource is reviewed and verified before listing.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-users"></i></div>
+                        <div>
+                            <h5>Community-Led</h5>
+                            <p>Built by residents, for residents — you shape the hub.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-bolt"></i></div>
+                        <div>
+                            <h5>Impactful</h5>
+                            <p>We track the difference we make and celebrate every win.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     SERVICES
+============================================ -->
+<section class="services-section section" id="services">
+    <div class="container">
+        <div class="text-center reveal">
+            <span class="section-eyebrow">What We Offer</span>
+            <h2 class="section-heading">Everything your community needs, in one place.</h2>
+            <p class="section-subtext mx-auto">From finding volunteers to discovering local programs, our platform simplifies community engagement for everyone.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-search-location"></i></div>
+                <h4>Resource Directory</h4>
+                <p>Search and filter hundreds of verified local resources by category, location, and availability. Find exactly what you or someone you know needs.</p>
+                <a href="eventfinder.html" class="animsition-link">Browse Resources <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-calendar-check"></i></div>
+                <h4>Community Events</h4>
+                <p>Discover upcoming cleanups, food drives, workshops, and neighborhood events. Join in person or find out how to organize your own.</p>
+                <a href="upcoming-events.html" class="animsition-link">View Events <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-hand-holding-heart"></i></div>
+                <h4>Volunteer Matching</h4>
+                <p>Tell us your skills and availability, and we'll connect you with organizations that need exactly what you can offer.</p>
+                <a href="eventfinder.html" class="animsition-link">Start Volunteering <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-plus-circle"></i></div>
+                <h4>Submit a Resource</h4>
+                <p>Know of a program that helped you or someone in your community? Add it so others can benefit too. All submissions reviewed by our team.</p>
+                <a href="submit.html" class="animsition-link">Submit Now <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-chart-line"></i></div>
+                <h4>Impact Tracking</h4>
+                <p>See the real-world difference our community is making — volunteer hours logged, families helped, and events organized, all visualized.</p>
+                <a href="impact.html" class="animsition-link">See Our Impact <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon-wrap"><i class="fas fa-map-marked-alt"></i></div>
+                <h4>Interactive Map</h4>
+                <p>Find resources near you using our integrated Google Maps feature. Get directions, hours, and contact info at a glance.</p>
+                <a href="eventfinder.html" class="animsition-link">Open Map <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     SPOTLIGHT RESOURCES
+============================================ -->
+<section class="spotlight-section section" id="spotlight">
+    <div class="container">
+        <div class="text-center reveal">
+            <span class="section-eyebrow">Featured Resources</span>
+            <h2 class="section-heading">Three resources making a difference right now.</h2>
+        </div>
+
+        <div class="spotlight-grid">
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img spotlight-img-1">
+                    <i class="fas fa-apple-alt img-icon"></i>
+                    <span class="spotlight-badge">⭐ Featured</span>
+                </div>
+                <div class="spotlight-body">
+                    <span class="spotlight-tag">Food &amp; Nutrition</span>
+                    <h4>Community Food Bank</h4>
+                    <p>Providing nutritious meals and groceries to families in need every week. No income verification required for first visit.</p>
+                    <div class="spotlight-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Downtown District</span>
+                        <span><i class="fas fa-clock"></i> Mon–Sat 9am–5pm</span>
+                    </div>
+                </div>
+            </div>
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img spotlight-img-2">
+                    <i class="fas fa-book-open img-icon"></i>
+                    <span class="spotlight-badge">🔥 Popular</span>
+                </div>
+                <div class="spotlight-body">
+                    <span class="spotlight-tag">Education</span>
+                    <h4>Free Tutoring Center</h4>
+                    <p>Volunteer tutors available for K–12 and adult learners in math, reading, and science. Drop-in and appointment options.</p>
+                    <div class="spotlight-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Eastside Library</span>
+                        <span><i class="fas fa-users"></i> All Ages</span>
+                    </div>
+                </div>
+            </div>
+            <div class="spotlight-card reveal">
+                <div class="spotlight-img spotlight-img-3">
+                    <i class="fas fa-heartbeat img-icon"></i>
+                    <span class="spotlight-badge">🆕 New</span>
+                </div>
+                <div class="spotlight-body">
+                    <span class="spotlight-tag">Health</span>
+                    <h4>Community Health Clinic</h4>
+                    <p>Free and sliding-scale medical, dental, and mental health services for uninsured and underinsured residents.</p>
+                    <div class="spotlight-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Westpark Ave</span>
+                        <span><i class="fas fa-phone"></i> (555) 010-2020</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center" style="margin-top:40px;">
+            <a href="eventfinder.html" class="btn-hero-primary animsition-link" style="display:inline-flex; background: linear-gradient(135deg,#4a6741,#91b08a); color:#fff;">
+                <i class="fas fa-th-large"></i> View All Resources
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     IMPACT STATS
+============================================ -->
+<section class="impact-section section">
+    <div class="container">
+        <div class="text-center reveal" style="position:relative;z-index:1;margin-bottom:56px;">
+            <span class="section-eyebrow" style="color:#91b08a;">Our Impact</span>
+            <h2 class="section-heading" style="color:#fff;">Real numbers. Real change.</h2>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-item reveal">
+                <div class="impact-icon"><i class="fas fa-list-alt"></i></div>
+                <div class="impact-num" data-count="500">0+</div>
+                <div class="impact-label">Resources Listed</div>
+            </div>
+            <div class="impact-item reveal">
+                <div class="impact-icon"><i class="fas fa-user-check"></i></div>
+                <div class="impact-num" data-count="1200">0+</div>
+                <div class="impact-label">Active Volunteers</div>
+            </div>
+            <div class="impact-item reveal">
+                <div class="impact-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="impact-num" data-count="320">0+</div>
+                <div class="impact-label">Events Organized</div>
+            </div>
+            <div class="impact-item reveal">
+                <div class="impact-icon"><i class="fas fa-building"></i></div>
+                <div class="impact-num" data-count="48">0+</div>
+                <div class="impact-label">Partner Organizations</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     TESTIMONIALS
+============================================ -->
+<section class="testimonials-section section" id="stories">
+    <div class="container">
+        <div class="text-center reveal">
+            <span class="section-eyebrow">Community Stories</span>
+            <h2 class="section-heading">Hear from the people we've helped.</h2>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <span class="testimonial-quote-icon">&ldquo;</span>
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">Through Community Connect, I found amazing volunteer tutors who helped my daughter excel in math. What started as weekly sessions turned into a lasting mentorship that changed her academic trajectory.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MR</div>
+                    <div>
+                        <div class="author-name">Maria Rodriguez</div>
+                        <div class="author-role">Parent, Eastside Neighborhood</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <span class="testimonial-quote-icon">&ldquo;</span>
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">I wanted to give back but didn't know where to start. Community Connect matched me with our local food bank, and now I volunteer every weekend. It's become one of the most rewarding parts of my life.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JC</div>
+                    <div>
+                        <div class="author-name">James Chen</div>
+                        <div class="author-role">Volunteer, 2 years</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <span class="testimonial-quote-icon">&ldquo;</span>
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">We used Community Connect to organize a neighborhood cleanup and over 50 volunteers showed up. What was a neglected park is now a beautiful space where families gather every weekend.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">RN</div>
+                    <div>
+                        <div class="author-name">Riverside Neighbors</div>
+                        <div class="author-role">Community Group</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     FOUNDERS / TEAM
+============================================ -->
+<section class="founders-section section" id="team">
+    <div class="container">
+        <div class="text-center reveal">
+            <span class="section-eyebrow">Our Founders</span>
+            <h2 class="section-heading">Built by community members, for the community.</h2>
+            <p class="section-subtext mx-auto">Our founding team came together with one shared belief: every resident deserves easy access to the resources around them.</p>
+        </div>
+
+        <div class="founders-grid">
+            <div class="founder-card reveal">
+                <div class="founder-avatar founder-av-1">AK</div>
+                <div class="founder-name">Aisha Kimani</div>
+                <div class="founder-role">Co-Founder &amp; Executive Director</div>
+                <p class="founder-bio">Former social worker with 10 years of experience in community outreach and nonprofit leadership.</p>
+            </div>
+            <div class="founder-card reveal">
+                <div class="founder-avatar founder-av-2">MO</div>
+                <div class="founder-name">Marcus Osei</div>
+                <div class="founder-role">Co-Founder &amp; Tech Lead</div>
+                <p class="founder-bio">Software engineer turned civic tech advocate, passionate about making public services more accessible.</p>
+            </div>
+            <div class="founder-card reveal">
+                <div class="founder-avatar founder-av-3">LP</div>
+                <div class="founder-name">Lucia Perez</div>
+                <div class="founder-role">Director of Partnerships</div>
+                <p class="founder-bio">Brings 7 years of nonprofit partnership experience, growing our network to 48 organizations and counting.</p>
+            </div>
+            <div class="founder-card reveal">
+                <div class="founder-avatar founder-av-4">TW</div>
+                <div class="founder-name">Theo Williams</div>
+                <div class="founder-role">Community Outreach Lead</div>
+                <p class="founder-bio">Youth advocate and former city council aide who believes in grassroots solutions to neighborhood challenges.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     CTA
+============================================ -->
+<section class="cta-section section">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2>Ready to connect with your community?</h2>
+            <p>Whether you're looking for help, want to give back, or know of a resource others should know about — start here.</p>
+            <div class="cta-actions">
+                <a href="eventfinder.html" class="btn-hero-primary animsition-link" style="background:#fff; color:#4a6741;">
+                    <i class="fas fa-search"></i> Find Resources
+                </a>
+                <a href="submit.html" class="btn-hero-outline animsition-link">
+                    <i class="fas fa-plus"></i> Submit a Resource
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<!-- Scripts -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/animsition.min.js"></script>
+<script src="js/components.js"></script>
+
+<script>
+// ===== HERO CANVAS PARTICLE EFFECT =====
+(function() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let W, H;
+
+    function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function Particle() {
+        this.reset();
+    }
+
+    Particle.prototype.reset = function() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.r = Math.random() * 2 + 0.5;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.4 + 0.1;
+    };
+
+    Particle.prototype.update = function() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    };
+
+    Particle.prototype.draw = function() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(217,229,212,' + this.alpha + ')';
+        ctx.fill();
+    };
+
+    for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+    function loop() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => { p.update(); p.draw(); });
+        // draw connecting lines
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(217,229,212,' + (0.08 * (1 - dist / 100)) + ')';
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(loop);
+    }
+
+    loop();
+})();
+
+// ===== ANIMATED COUNTERS =====
+function animateCount(el, target) {
+    let current = 0;
+    const duration = 2000;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            el.textContent = target.toLocaleString() + '+';
+            clearInterval(timer);
+        } else {
+            el.textContent = Math.floor(current).toLocaleString() + '+';
+        }
+    }, 16);
+}
+
+// ===== SCROLL REVEAL =====
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, 80 * (i % 4));
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== COUNTER OBSERVER =====
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+            entry.target.dataset.counted = true;
+            const target = parseInt(entry.target.getAttribute('data-count'));
+            animateCount(entry.target, target);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+// ===== ANIMSITION =====
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+if (isChrome && typeof $ !== 'undefined') {
+    $(document).ready(function() {
+        $(".animsition").animsition({
+            inClass: 'zoom-in', outClass: 'zoom-out',
+            inDuration: 1500, outDuration: 800,
+            linkElement: '.animsition-link',
+            loading: true, loadingParentElement: 'body',
+            loadingClass: 'animsition-loading', loadingInner: '',
+            timeout: false, timeoutCountdown: 5000, onLoadEvent: true,
+            browser: ['animation-duration', '-webkit-animation-duration'],
+            overlay: false, overlayClass: 'animsition-overlay-slide',
+            overlayParentElement: 'body',
+            transition: function(url) { window.location.href = url; }
+        });
+    });
+} else {
+    var ani = document.getElementById('ani');
+    if (ani) ani.className = '';
+}
+</script>
+</body>
 </html>

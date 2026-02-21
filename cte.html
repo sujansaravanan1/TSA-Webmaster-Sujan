@@ -3,13 +3,26 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Community Connect - How It Works</title>
-        <link rel="stylesheet" href="css/cards.css">
         <link rel="stylesheet" href="css/example.css">
         <link rel="stylesheet" href="css/carousel.css">
         <link rel="stylesheet" href="css/timeline.css">
         <link rel="stylesheet" href="css/animsition.min.css">
         <link rel="icon" href="img/icon.png">
         <link rel="stylesheet" href="css/theme.css">
+
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+        <!-- Bootstrap & Other -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/themify-icons.css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link href="css/style.css" rel="stylesheet">
 
         <style type="text/css">
             /* Font Declarations */
@@ -49,8 +62,11 @@
                 transform-style: preserve-3d;
             }
 
-            .flip-card:hover .flip-card-inner {
-                transform: rotateY(180deg);
+            /* Hover flip for desktop only — JS handles mobile tap */
+            @media (hover: hover) and (pointer: fine) {
+                .flip-card:hover .flip-card-inner {
+                    transform: rotateY(180deg);
+                }
             }
 
             .flip-card-front, .flip-card-back {
@@ -197,13 +213,13 @@
                 transform: translateY(0);
             }
 
-            /* Stagger delays for cards */
-            .flip-card:nth-child(1) { transition-delay: 0s; }
-            .flip-card:nth-child(2) { transition-delay: 0.15s; }
-            .flip-card:nth-child(3) { transition-delay: 0.3s; }
-            .flip-card:nth-child(4) { transition-delay: 0.45s; }
+            /* Stagger delays */
+            .flip-card:nth-child(1) .fade-in-up { transition-delay: 0s; }
+            .flip-card:nth-child(2) .fade-in-up { transition-delay: 0.15s; }
+            .flip-card:nth-child(3) .fade-in-up { transition-delay: 0.3s; }
+            .flip-card:nth-child(4) .fade-in-up { transition-delay: 0.45s; }
 
-            /* Impact section with gradient */
+            /* Impact section */
             .impact-cta-section {
                 background: linear-gradient(135deg, #f0f4ed 0%, #d9e5d4 100%);
                 padding: 100px 0;
@@ -235,23 +251,17 @@
                 color: #B8C8BA;
             }
 
-            /* Use external CSS from example.css for typewriter, info, and about - no overrides needed */
+            /* Mobile flip card hint */
+            @media (max-width: 992px) {
+                .flip-card {
+                    height: 340px;
+                }
+            }
         </style>
-
-        <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/themify-icons.css">
-        <link rel="stylesheet" href="css/owl.carousel.min.css">
-        <link href="css/style.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-        <link href='https://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
     </head>
 
-    <div id="ani" class="animsition">
-        <body data-spy="scroll" data-target="#navbar" data-offset="30">
+    <body data-spy="scroll" data-target="#navbar" data-offset="30">
+        <div id="ani" class="animsition">
 
             <!-- Navigation -->
             <div id="navbar-placeholder"></div>
@@ -269,102 +279,104 @@
                 </div>
             </header>
 
-            <!-- Introduction Section -->
+            <!-- Introduction Section (Task 6 — updated content) -->
             <div class="intro-section">
                 <div class="container">
                     <h2>Our Simple 4-Step Process</h2>
-                    <p>Community Connect makes it easy to get involved in your community. Whether you're a volunteer looking to give back or someone seeking support, follow these four simple steps to get started.</p>
+                    <p>Community Connect makes it easy to find help, give back, and stay connected. Whether you're looking for local resources, volunteering your time, or sharing a new service, here's how to get started.</p>
                 </div>
             </div>
 
-            <!-- Flip Cards Section -->
+            <!-- Flip Cards Section (Task 6 — updated to match actual site features) -->
             <div class="flip-card-container">
                 <div class="container">
                     <div class="row">
-                        <!-- Card 1: Create Account -->
+
+                        <!-- Card 1: Explore Resources -->
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="flip-card fade-in-up">
                                 <div class="flip-card-inner">
                                     <div class="flip-card-front">
                                         <div class="card-number">1</div>
-                                        <i class="fas fa-user-plus card-icon"></i>
-                                        <h3>Create Account</h3>
+                                        <i class="fas fa-search card-icon"></i>
+                                        <h3>Explore Resources</h3>
                                     </div>
                                     <div class="flip-card-back">
-                                        <h4>Sign Up in Seconds</h4>
-                                        <p>Register with your email or social media account. Tell us about your interests, skills, and availability so we can match you with perfect opportunities.</p>
+                                        <h4>Find What You Need</h4>
+                                        <p>Browse our interactive Resource Hub to discover community programs, health services, education opportunities, and more. Use search and filters to find exactly what you're looking for.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 2: Browse or Post -->
+                        <!-- Card 2: Get Connected -->
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="flip-card fade-in-up">
                                 <div class="flip-card-inner">
                                     <div class="flip-card-front">
                                         <div class="card-number">2</div>
-                                        <i class="fas fa-search card-icon"></i>
-                                        <h3>Browse or Post</h3>
+                                        <i class="fas fa-hands-helping card-icon"></i>
+                                        <h3>Get Connected</h3>
                                     </div>
                                     <div class="flip-card-back">
-                                        <h4>Find What You Need</h4>
-                                        <p>Browse volunteer opportunities, community resources, or post your own project. Use filters to find exactly what matches your goals and schedule.</p>
+                                        <h4>Reach Out Directly</h4>
+                                        <p>Each resource listing includes contact details, hours, and location. Reach out directly to organizations, sign up for events, or join volunteer initiatives that match your interests.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 3: Connect -->
+                        <!-- Card 3: Share & Submit -->
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="flip-card fade-in-up">
                                 <div class="flip-card-inner">
                                     <div class="flip-card-front">
                                         <div class="card-number">3</div>
-                                        <i class="fas fa-handshake card-icon"></i>
-                                        <h3>Connect</h3>
+                                        <i class="fas fa-plus-circle card-icon"></i>
+                                        <h3>Share & Submit</h3>
                                     </div>
                                     <div class="flip-card-back">
-                                        <h4>Make Connections</h4>
-                                        <p>Connect directly with volunteers, organizations, or community members. Our messaging system makes coordination simple and secure.</p>
+                                        <h4>Add New Resources</h4>
+                                        <p>Know of a great community resource that isn't listed? Use our submission form to suggest new programs, services, and organizations. All submissions are reviewed before being added to the hub.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 4: Make Impact -->
+                        <!-- Card 4: See the Impact -->
                         <div class="col-lg-3 col-md-6 col-sm-12">
                             <div class="flip-card fade-in-up">
                                 <div class="flip-card-inner">
                                     <div class="flip-card-front">
                                         <div class="card-number">4</div>
-                                        <i class="fas fa-heart card-icon"></i>
-                                        <h3>Make Impact</h3>
+                                        <i class="fas fa-chart-line card-icon"></i>
+                                        <h3>See the Impact</h3>
                                     </div>
                                     <div class="flip-card-back">
-                                        <h4>See Your Impact</h4>
-                                        <p>Complete projects, log hours, and watch your impact grow. Share your story and inspire others to get involved in their community.</p>
+                                        <h4>Track Community Growth</h4>
+                                        <p>Visit our Impact Dashboard to see volunteer hours, events completed, and lives changed. Every contribution matters — watch how individual actions combine to transform our community.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <!-- Impact Section -->
+            <!-- Impact CTA Section -->
             <div class="intro-section impact-cta-section">
                 <div class="container">
                     <h2>Making a Real Difference</h2>
                     <p style="margin-bottom: 30px;">
-                        Community Connect isn't just a platform—it's a movement. Every connection made, every hour volunteered, and every project completed creates ripples of positive change throughout our community. Whether you're seeking support or offering your skills, you're part of a network of thousands working together to build a brighter future.
+                        Community Connect isn't just a platform — it's a movement. Every connection made, every hour volunteered, and every project completed creates ripples of positive change throughout our community. Whether you're seeking support or offering your skills, you're part of a network of thousands working together to build a brighter future.
                     </p>
                     <p>
-                        From students finding mentorship to neighbors helping neighbors, from local nonprofits gaining volunteers to families accessing vital resources—Community Connect bridges gaps and strengthens bonds. Join us today and discover how simple it is to make an impact that matters.
+                        From students finding mentorship to neighbors helping neighbors, from local nonprofits gaining volunteers to families accessing vital resources — Community Connect bridges gaps and strengthens bonds. Join us today and discover how simple it is to make an impact that matters.
                     </p>
                     <div style="margin-top: 50px;">
                         <a href="./eventfinder.html" class="btn btn-primary" style="margin-right: 15px; padding: 15px 40px; font-weight: 600; font-size: 18px; background: linear-gradient(135deg, #6d8c5f 0%, #91b08a 100%); border: none; border-radius: 50px;">Explore Resources</a>
-                        <a href="./about.html" class="btn btn-outline-primary" style="padding: 15px 40px; font-weight: 600; font-size: 18px; border: 2px solid #4a6741; color: #4a6741; border-radius: 50px;">Get Started</a>
+                        <a href="./about.html" class="btn btn-outline-primary" style="padding: 15px 40px; font-weight: 600; font-size: 18px; border: 2px solid #4a6741; color: #4a6741; border-radius: 50px;">Submit a Resource</a>
                     </div>
                 </div>
             </div>
@@ -372,182 +384,95 @@
             <!-- Footer -->
             <div id="footer-placeholder"></div>
 
-            <!-- Scripts -->
-            <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-            <script src='http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
-            <script src="js/components.js"></script>
-            <script src="./js/sketch.js"></script>
-            <script src="./js/jquery-3.2.1.min.js"></script>
-            <script src="./js/bootstrap.bundle.min.js"></script>
-            <script src="./js/owl.carousel.min.js"></script>
-            <script src="./js/script.js"></script>
+        </div><!-- /.animsition -->
 
-            <!-- Particle Animation Script -->
-            <script>
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-                } else {
-                    function Particle(x, y, radius) {
-                        this.init(x, y, radius);
+        <!-- Scripts — single jQuery load (Task 8) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/components.js"></script>
+        <script src="./js/sketch.js"></script>
+        <script src="js/particles.js"></script>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="./js/owl.carousel.min.js"></script>
+        <script src="./js/script.js"></script>
+
+        <!-- Scroll Animation for Cards -->
+        <script>
+            var observerOptions = { threshold: 0.2, rootMargin: '0px' };
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry, index) {
+                    if (entry.isIntersecting) {
+                        setTimeout(function () {
+                            entry.target.classList.add('animated');
+                        }, index * 150);
+                        observer.unobserve(entry.target);
                     }
+                });
+            }, observerOptions);
 
-                    Particle.prototype = {
-                        init: function(x, y, radius) {
-                            this.alive = true;
-                            this.radius = radius || 10;
-                            this.wander = 0.15;
-                            this.theta = random(TWO_PI);
-                            this.drag = 0.92;
-                            this.color = '#fff';
-                            this.x = x || 0.0;
-                            this.y = y || 0.0;
-                            this.vx = 0.0;
-                            this.vy = 0.0;
-                        },
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.fade-in-up').forEach(function (card) {
+                    observer.observe(card);
+                });
+            });
+        </script>
 
-                        move: function() {
-                            this.x += this.vx;
-                            this.y += this.vy;
-                            this.vx *= this.drag;
-                            this.vy *= this.drag;
-                            this.theta += random(-0.5, 0.5) * this.wander;
-                            this.vx += sin(this.theta) * 0.1;
-                            this.vy += cos(this.theta) * 0.1;
-                            this.radius *= 0.96;
-                            this.alive = this.radius > 0.5;
-                        },
+        <!-- Mobile Flip Card Fix (Task 10) -->
+        <script>
+            (function () {
+                var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                if (!isTouchDevice) return;
 
-                        draw: function(ctx) {
-                            ctx.beginPath();
-                            ctx.arc(this.x, this.y, this.radius, 0, TWO_PI);
-                            ctx.fillStyle = this.color;
-                            ctx.fill();
+                document.querySelectorAll('.flip-card').forEach(function (card) {
+                    card.addEventListener('click', function (e) {
+                        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+                        var inner = card.querySelector('.flip-card-inner');
+                        if (inner.style.transform === 'rotateY(180deg)') {
+                            inner.style.transform = 'rotateY(0deg)';
+                        } else {
+                            document.querySelectorAll('.flip-card-inner').forEach(function (otherInner) {
+                                otherInner.style.transform = 'rotateY(0deg)';
+                            });
+                            inner.style.transform = 'rotateY(180deg)';
                         }
-                    };
-
-                    var MAX_PARTICLES = 280;
-                    var COLOURS = ['#f0f4ed', '#91b08a', '#6d8c5f'];
-                    var particles = [];
-                    var pool = [];
-
-                    var demo = Sketch.create({
-                        container: document.getElementById('container'),
-                        retina: 'auto'
-                    });
-
-                    demo.setup = function() {
-                        var i, x, y;
-                        for (i = 0; i < 50; i++) {
-                            x = (demo.width * 0.5) + random(-100, 100);
-                            y = (demo.height * 0.5) + random(-100, 100);
-                            demo.spawn(x, y);
-                        }
-                    };
-
-                    demo.spawn = function(x, y) {
-                        var particle, theta, force;
-                        if (particles.length >= MAX_PARTICLES)
-                            pool.push(particles.shift());
-                        particle = pool.length ? pool.pop() : new Particle();
-                        particle.init(x, y, random(5, 40));
-                        particle.wander = random(0.5, 2.0);
-                        particle.color = random(COLOURS);
-                        particle.drag = random(0.9, 0.99);
-                        theta = random(TWO_PI);
-                        force = random(2, 8);
-                        particle.vx = sin(theta) * force;
-                        particle.vy = cos(theta) * force;
-                        particles.push(particle);
-                    };
-
-                    demo.update = function() {
-                        var i, particle;
-                        for (i = particles.length - 1; i >= 0; i--) {
-                            particle = particles[i];
-                            if (particle.alive) particle.move();
-                            else pool.push(particles.splice(i, 1)[0]);
-                        }
-                    };
-
-                    demo.draw = function() {
-                        demo.globalCompositeOperation = 'lighter';
-                        for (var i = particles.length - 1; i >= 0; i--) {
-                            particles[i].draw(demo);
-                        }
-                    };
-
-                    demo.mousemove = function() {
-                        var particle, theta, force, touch, max, i, j, n;
-                        for (i = 0, n = demo.touches.length; i < n; i++) {
-                            touch = demo.touches[i], max = random(1, 4);
-                            for (j = 0; j < max; j++) {
-                                demo.spawn(touch.x, touch.y);
-                            }
-                        }
-                    }
-                }
-            </script>
-
-            <!-- Scroll Animation for Cards -->
-            <script>
-                // IntersectionObserver for fade-in animations
-                const observerOptions = {
-                    threshold: 0.2,
-                    rootMargin: '0px'
-                };
-
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry, index) {
-                        if (entry.isIntersecting) {
-                            setTimeout(function() {
-                                entry.target.classList.add('animated');
-                            }, index * 150);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.querySelectorAll('.fade-in-up').forEach(function(card) {
-                        observer.observe(card);
                     });
                 });
-            </script>
 
-            <!-- Animsition Script -->
-            <script src="js/animsition.min.js"></script>
-            <script>
-                var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                // Add tap hint on mobile
+                document.querySelectorAll('.flip-card-front').forEach(function (front) {
+                    var hint = document.createElement('p');
+                    hint.textContent = 'Tap to flip';
+                    hint.style.cssText = 'position:absolute;bottom:15px;font-size:12px;color:rgba(255,255,255,0.5);font-family:Outfit,sans-serif;letter-spacing:0.5px;';
+                    front.appendChild(hint);
+                });
+            })();
+        </script>
 
-                if (isChrome) {
-                    $(document).ready(function() {
-                        $(".animsition").animsition({
-                            inClass: 'zoom-in',
-                            outClass: 'zoom-out',
-                            inDuration: 1500,
-                            outDuration: 800,
-                            linkElement: '.animsition-link',
-                            loading: true,
-                            loadingParentElement: 'body',
-                            loadingClass: 'animsition-loading',
-                            loadingInner: '',
-                            timeout: false,
-                            timeoutCountdown: 5000,
-                            onLoadEvent: true,
-                            browser: ['animation-duration', '-webkit-animation-duration'],
-                            overlay: false,
-                            overlayClass: 'animsition-overlay-slide',
-                            overlayParentElement: 'body',
-                            transition: function(url) {
-                                window.location.href = url;
-                            }
-                        });
+        <!-- Animsition -->
+        <script src="js/animsition.min.js"></script>
+        <script>
+            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+            if (isChrome) {
+                $(document).ready(function () {
+                    $(".animsition").animsition({
+                        inClass: 'zoom-in', outClass: 'zoom-out',
+                        inDuration: 1500, outDuration: 800,
+                        linkElement: '.animsition-link',
+                        loading: true, loadingParentElement: 'body',
+                        loadingClass: 'animsition-loading', loadingInner: '',
+                        timeout: false, timeoutCountdown: 5000, onLoadEvent: true,
+                        browser: ['animation-duration', '-webkit-animation-duration'],
+                        overlay: false, overlayClass: 'animsition-overlay-slide',
+                        overlayParentElement: 'body',
+                        transition: function (url) { window.location.href = url; }
                     });
-                } else {
-                    var NAME = document.getElementById("ani");
-                    NAME.className = "";
-                }
-            </script>
+                });
+            } else {
+                var NAME = document.getElementById("ani");
+                if (NAME) NAME.className = "";
+            }
+        </script>
 
-        </body>
-    </div>
+    </body>
 </html>

@@ -1,5 +1,375 @@
-<footer class="my-5 text-center">
-    <small>
-        <a href="" style="text-decoration:none" class="m-2 footer-link">Community Connect © 2025. Building stronger communities together.</a>
-    </small>
+<footer class="site-footer">
+    <!-- Wave top -->
+    <div class="footer-wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#1b2d18"/>
+        </svg>
+    </div>
+
+    <div class="footer-body">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo animsition-link">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="14" stroke="#91b08a" stroke-width="2"/>
+                            <path d="M10 16 Q16 8 22 16 Q16 24 10 16Z" fill="#6d8c5f"/>
+                            <circle cx="16" cy="16" r="3" fill="#fff"/>
+                        </svg>
+                        <span>Community<strong>Connect</strong></span>
+                    </a>
+                    <p class="footer-tagline">Building stronger communities through collaboration, service, and shared resources.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="animsition-link"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="upcoming-events.html" class="animsition-link"><i class="fas fa-chevron-right"></i> Upcoming Events</a></li>
+                        <li><a href="eventfinder.html" class="animsition-link"><i class="fas fa-chevron-right"></i> Resource Hub</a></li>
+                        <li><a href="submit.html" class="animsition-link"><i class="fas fa-chevron-right"></i> Submit a Resource</a></li>
+                        <li><a href="about.html" class="animsition-link"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="eventfinder.html?cat=Education"><i class="fas fa-chevron-right"></i> Education</a></li>
+                        <li><a href="eventfinder.html?cat=Health"><i class="fas fa-chevron-right"></i> Health &amp; Wellness</a></li>
+                        <li><a href="eventfinder.html?cat=Career"><i class="fas fa-chevron-right"></i> Career &amp; Jobs</a></li>
+                        <li><a href="eventfinder.html?cat=Volunteering"><i class="fas fa-chevron-right"></i> Volunteering</a></li>
+                        <li><a href="eventfinder.html?cat=Community Projects"><i class="fas fa-chevron-right"></i> Community Projects</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter / Contact -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">Stay Connected</h4>
+                    <p class="footer-text">Get notified about new resources and community events in your area.</p>
+                    <div class="footer-newsletter">
+                        <input type="email" placeholder="your@email.com" class="footer-email-input">
+                        <button class="footer-email-btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="footer-contact">
+                        <a href="mailto:hello@communityconnect.org"><i class="fas fa-envelope"></i> hello@communityconnect.org</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partners Row -->
+            <div class="footer-partners">
+                <span class="partners-label">Trusted Community Partners</span>
+                <div class="partners-list">
+                    <span class="partner-badge"><i class="fas fa-hands-helping"></i> United Way</span>
+                    <span class="partner-badge"><i class="fas fa-graduation-cap"></i> Local Schools</span>
+                    <span class="partner-badge"><i class="fas fa-heartbeat"></i> Health District</span>
+                    <span class="partner-badge"><i class="fas fa-leaf"></i> Parks Dept.</span>
+                    <span class="partner-badge"><i class="fas fa-utensils"></i> Food Bank</span>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <p class="footer-copy">
+                    &copy; 2025 CommunityConnect &mdash; Built with <i class="fas fa-heart" style="color:#91b08a;font-size:11px;"></i> for TSA Webmaster
+                    &nbsp;|&nbsp; <a href="copyright.html" class="animsition-link">Copyright Checklist</a>
+                    &nbsp;|&nbsp; <a href="worklog.html" class="animsition-link">Work Log</a>
+                </p>
+                <p class="footer-disclaimer">This website was created for educational purposes as part of the TSA Webmaster competition.</p>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<style>
+/* ===== FOOTER STYLES ===== */
+.site-footer {
+    position: relative;
+    background: #1b2d18;
+    color: rgba(255,255,255,0.75);
+}
+
+.footer-wave {
+    line-height: 0;
+    margin-bottom: -2px;
+}
+
+.footer-wave svg {
+    width: 100%;
+    height: 60px;
+    display: block;
+}
+
+.footer-body {
+    padding: 60px 0 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Brand */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 16px;
+}
+
+.footer-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.footer-logo strong { font-weight: 700; }
+
+.footer-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+    max-width: 280px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.footer-social a:hover {
+    background: #6d8c5f;
+    border-color: #6d8c5f;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Columns */
+.footer-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #91b08a;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-links a i {
+    font-size: 9px;
+    color: #6d8c5f;
+    transition: transform 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-links a:hover i {
+    transform: translateX(3px);
+}
+
+/* Newsletter */
+.footer-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 14px;
+}
+
+.footer-newsletter {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 14px;
+}
+
+.footer-email-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: none;
+    padding: 10px 14px;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    outline: none;
+}
+
+.footer-email-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.footer-email-btn {
+    background: #6d8c5f;
+    border: none;
+    color: #fff;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 13px;
+}
+
+.footer-email-btn:hover { background: #91b08a; }
+
+.footer-contact a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.footer-contact a:hover { color: #91b08a; }
+.footer-contact a i { color: #6d8c5f; font-size: 12px; }
+
+/* Partners */
+.footer-partners {
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.partners-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+}
+
+.partners-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.partner-badge {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.partner-badge:hover {
+    border-color: #6d8c5f;
+    color: rgba(255,255,255,0.8);
+}
+
+.partner-badge i { color: #6d8c5f; font-size: 11px; }
+
+/* Bottom */
+.footer-bottom {
+    padding: 20px 0 28px;
+    text-align: center;
+}
+
+.footer-copy {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+}
+
+.footer-copy a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-copy a:hover { color: #91b08a; }
+
+.footer-disclaimer {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .footer-partners {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+</style>
